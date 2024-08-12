@@ -1,0 +1,18 @@
+<div id="align-container">
+    <div id="container">
+        <div id="login-div">
+            <img src="assets/logo.png" alt="">
+            <h1>Login</h1>
+            <div class="inputs">
+                <input type="text" placeholder="Nome" [(ngModel)]="username">
+            </div>
+            <div class="inputs">
+                <input type="password" placeholder="Senha" [(ngModel)]="password">
+            </div>
+            <div class="entrar">
+                <input type="submit" value="Entrar" (click)="Login()">
+                <div *ngIf="invalidInputs" class="error"> {{ errorMessage }} </div>
+            </div>
+        </div>
+    </div>
+</div>

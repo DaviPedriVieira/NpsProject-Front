@@ -1,0 +1,35 @@
+#menu-bar{
+    height: 120px;
+    width: 100%;
+    background-color: rgb(160, 174, 252);
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    box-shadow: 5px 5px 20px gray;
+}
+
+#user {
+    display: flex;
+
+    img{
+        height: 70px;
+    }
+}
+
+#logo img {
+    margin-left: 20px;
+    height: 100px;
+    margin-right: 50px;
+}
+
+.material-symbols-outlined {
+    margin: 20px;
+    font-size: 60px;
+    cursor: pointer;
+}
+
+#username-div{
+    text-align: center;
+    font-size: 25px;
+}
+
