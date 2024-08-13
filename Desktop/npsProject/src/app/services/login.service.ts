@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -14,9 +14,6 @@ export class LoginService {
 
   Login(username: string, password: string): Observable<boolean> {
     return this.http.post<boolean>(`${this.apiUrl}/Users/Login?name=${username}&password=${password}`, null, {withCredentials: true})
-    .pipe(
-      catchError(this.handleError)
-    );
   }
 
   Logout(): Observable<boolean> {
@@ -25,10 +22,6 @@ export class LoginService {
 
   isAuthenticated(): boolean {
     const cookie = this.cookieService.get('NpsProject.AuthCookie');
-    return !!cookie;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    return throwError(() => new Error(error.message));
+    return cookie != '';
   }
 }

@@ -1,10 +1,10 @@
 #container {
     margin-top: 50px;
-    width: 100%;
+    border-radius: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: red;
+    background-color: lightgray;
 }
 
 .groups-container{
@@ -16,5 +16,5 @@
     justify-content: center;
     flex-direction: column;
     border-radius: 1rem;
-    background-color: blue;
+    background-color: white;
 }

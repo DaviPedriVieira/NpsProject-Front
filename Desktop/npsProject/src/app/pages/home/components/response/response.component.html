@@ -1,8 +1,7 @@
 <div id="container">
-    <div class="groups-container"></div>
-    <div class="groups-container"></div>
-    <div class="groups-container"></div>
-    <div class="groups-container"></div>
-
-    
+    <div *ngFor="let group of formsGroups">
+      <div class="groups-container">
+        {{ group.name }}
+      </div>
+    </div> 
 </div>
