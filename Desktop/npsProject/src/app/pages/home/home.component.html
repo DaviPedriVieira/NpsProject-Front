@@ -1,5 +1,7 @@
 <app-header></app-header>
-<app-create></app-create>
+<div *ngIf="authorized">
+    <app-create></app-create>
+</div>
 <div id="response-container">
-<app-response></app-response>
+    <app-response></app-response>
 </div>

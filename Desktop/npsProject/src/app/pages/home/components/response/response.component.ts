@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsGroupService } from 'src/app/services/formsgroup.service';
+import { FormsGroupService } from 'src/app/services/group/formsgroup.service';
 import { FormsGroup } from 'src/app/interfaces/forms-group';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormsGroup } from 'src/app/interfaces/forms-group';
   templateUrl: './response.component.html',
   styleUrls: ['./response.component.scss']
 })
-export class ResponseComponent {
+export class ResponseComponent implements OnInit{
 
   formsGroups: FormsGroup[] = [];
 
@@ -17,5 +17,9 @@ export class ResponseComponent {
     this.formsGroupService.GetFormsGroups().subscribe((data) => {
       this.formsGroups = data;
     });
+  }
+
+  showOptions(){
+    
   }
 }

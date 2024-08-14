@@ -7,9 +7,7 @@
     justify-content: center;
 }
 
-.container-create{
-    height: 150px;
-    width: 150px;
+.create-container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +15,7 @@
 }
 
 .create-div{
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(233, 233, 233);
     border-radius: 1rem;
     height: 120px;
     width: 120px;
@@ -27,12 +25,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    
-    span{
-        font-size: 2rem;
-    }   
+    border: 1px solid gray;
+    color: gray;
+    cursor: pointer; 
 }
+
+.create-div:hover{
+    border: 1px solid black;
+
+    span{
+        color: black;
+    }
+}   
 
 .text-div{
     text-align: center;

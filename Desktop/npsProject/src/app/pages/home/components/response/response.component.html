@@ -1,7 +1,35 @@
 <div id="container">
+  <div id="groups-title">
+    <h1>Grupos</h1>
+  </div>
+  <div id="groups-container">
     <div *ngFor="let group of formsGroups">
-      <div class="groups-container">
-        {{ group.name }}
+      <div class="groups-div" onclick="formsmodal.showModal()">
+        <div id="options" (click)="showOptions()">
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+        <div id="group-name-div">{{group.id}}. {{ group.name }}</div>
       </div>
-    </div> 
+    </div>
+  </div>
+
+  <dialog id="formsmodal">
+    <div id="forms-title">
+      <h2>Formulários</h2>
+    </div>
+    <div id="forms-container">
+      <div *ngFor="let group of formsGroups">
+        <div class="forms-div">
+          <div id="options" (click)="showOptions()">
+            <span class="material-symbols-outlined">more_vert</span>
+          </div>
+          <div id="group-name-div">{{group.id}}. {{ group.name }}</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="close-modal-btn" onclick="formsmodal.close()">Fechar</button>
+    </div>
+  </dialog>
+
 </div>
