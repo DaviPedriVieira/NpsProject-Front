@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HeaderComponent } from './pages/home/components/header/header.component';
 import { CreateComponent } from './pages/home/components/create/create.component';
 import { ResponseComponent } from './pages/home/components/response/response.component';
+import { FormsModalComponent } from './pages/home/components/forms-modal/forms-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ResponseComponent } from './pages/home/components/response/response.com
     HeaderComponent,
     CreateComponent,
     ResponseComponent,
+    FormsModalComponent,
 
   ],
   imports: [

@@ -1,4 +1,4 @@
-export interface Answer {
+export interface AnswerModel {
     id: number,
     questionId: number,
     userId: number,

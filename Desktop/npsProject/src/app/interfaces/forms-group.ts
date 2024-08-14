@@ -1,7 +1,7 @@
-import { Form } from "@angular/forms";
+import { FormModel } from "./form";
 
-export interface FormsGroup {
+export interface FormsGroupModel {
     id: number,
     name: string,
-    forms: Form[],
+    forms: FormModel[],
 }

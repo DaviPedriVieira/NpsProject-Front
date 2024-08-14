@@ -1,8 +1,8 @@
-import { Answer } from "./answer";
+import { AnswerModel } from "./answer";
 
-export interface Question {
+export interface QuestionModel {
     id: number,
     formId: number,
     content: string,
-    answers: Answer[],
+    answers: AnswerModel[],
 }

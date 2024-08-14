@@ -1,8 +1,8 @@
-import { Question } from "./question";
+import { QuestionModel } from "./question";
 
-export interface Form {
+export interface FormModel {
     id: number,
     groupId: number,
     name: string,
-    questions: Question[],
+    questions: QuestionModel[],
 }

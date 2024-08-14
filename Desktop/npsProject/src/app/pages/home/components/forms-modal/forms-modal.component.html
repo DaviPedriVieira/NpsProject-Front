@@ -1,0 +1,19 @@
+<dialog id="formsmodal" #formsmodal>
+    <div id="forms-title">
+        <h2>Formulários</h2>
+    </div>
+    <div id="forms-container">
+        <div *ngFor="let form of forms">
+            <div class="forms-div">
+            <div id="options" (click)="showOptions()">
+                <span class="material-symbols-outlined">more_vert</span>
+            </div>
+            <div id="group-name-div">{{ form.name }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+    </div>
+</dialog>
