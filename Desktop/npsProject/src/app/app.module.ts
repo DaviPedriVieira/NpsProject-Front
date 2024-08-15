@@ -11,6 +11,8 @@ import { HeaderComponent } from './pages/home/components/header/header.component
 import { CreateComponent } from './pages/home/components/create/create.component';
 import { ResponseComponent } from './pages/home/components/response/response.component';
 import { FormsModalComponent } from './pages/home/components/forms-modal/forms-modal.component';
+import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
+import { UpdateModalComponent } from './shared/update-modal/update-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { FormsModalComponent } from './pages/home/components/forms-modal/forms-m
     CreateComponent,
     ResponseComponent,
     FormsModalComponent,
+    DeleteModalComponent,
+    UpdateModalComponent,
 
   ],
   imports: [

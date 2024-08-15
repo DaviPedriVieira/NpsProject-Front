@@ -4,18 +4,17 @@
   </div>
   <div id="groups-container">
     <div *ngFor="let group of formsGroups">
-      <div class="groups-div" (click)="GetGroupId($event)">
-        <div id="options" (click)="showOptions()">
-          <span class="material-symbols-outlined">more_vert</span>
+      <div class="groups-div" (click)="openFormsModal($event)">
+        <div id="options">
+          <span class="material-symbols-outlined" (click)="openUpdateModal($event); $event.stopPropagation()">edit</span>
+          <span class="material-symbols-outlined" (click)="openDeleteModal($event); $event.stopPropagation()">delete</span>
         </div>
         <div id="groupId-div">{{ group.id }}</div>
         <div id="group-name-div">{{ group.name }}</div>
       </div>
     </div>
   </div>
-
-  <div *ngIf="showModal">
-    <app-forms-modal [groupId]="groupId"></app-forms-modal>
-  </div>
-
+  <app-forms-modal *ngIf="showFormsModal" [groupId]="groupId"></app-forms-modal>
+  <app-delete-modal *ngIf="showDeleteModal" [itemId]="groupId" [itemType]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
+  <app-update-modal *ngIf="showUpdateModal" [groupId]="groupId"></app-update-modal>
 </div>
