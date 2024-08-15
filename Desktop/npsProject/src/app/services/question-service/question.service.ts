@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Question } from 'src/app/interfaces/question';
+import { QuestionModel } from 'src/app/interfaces/question';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +12,19 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  GetQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.apiUrl}`, {withCredentials: true})
+  GetQuestions(): Observable<QuestionModel[]> {
+    return this.http.get<QuestionModel[]>(`${this.apiUrl}`, {withCredentials: true})
   }
 
-  CreateQuestion(question: Question): Observable<Question> {
-    return this.http.post<Question>(`${this.apiUrl}`, question, {withCredentials: true})
+  CreateQuestion(question: QuestionModel): Observable<QuestionModel> {
+    return this.http.post<QuestionModel>(`${this.apiUrl}`, question, {withCredentials: true})
   }
 
   DeleteQuestion(id: number): Observable<boolean> {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
   }
 
-  UpdateQuestion(id: number, question: Question): Observable<boolean> {
+  UpdateQuestion(id: number, question: QuestionModel): Observable<boolean> {
     return this.http.put<boolean>(`${this.apiUrl}/${id}`, question, {withCredentials: true})
   }
 }

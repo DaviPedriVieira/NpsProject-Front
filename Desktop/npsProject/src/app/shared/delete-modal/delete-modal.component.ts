@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
+import { QuestionService } from 'src/app/services/question-service/question.service';
 
 @Component({
   selector: 'app-delete-modal',
@@ -13,7 +14,7 @@ export class DeleteModalComponent {
   @Input() itemType!: string;
   @Output() itemDeleted = new EventEmitter<void>()
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService) { }
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService) { }
 
   openModal() {
     this.deletemodal.nativeElement.showModal();
@@ -32,6 +33,12 @@ export class DeleteModalComponent {
     }
     else if (this.itemType == 'form') {
       this.formsService.DeleteForm(this.itemId).subscribe(() => {
+        this.closeModal()
+        this.itemDeleted.emit()
+      })
+    }
+    else if (this.itemType == 'question') {
+      this.questionService.DeleteQuestion(this.itemId).subscribe(() => {
         this.closeModal()
         this.itemDeleted.emit()
       })

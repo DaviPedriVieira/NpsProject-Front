@@ -35,10 +35,10 @@ export class ResponseComponent implements OnInit {
   GetGroupId(event: MouseEvent) {
     const clickedOption = event.target as HTMLElement
     const groupDiv = clickedOption.closest('.groups-div');
-    if(groupDiv){
+    if (groupDiv) {
       const groupIdDiv = groupDiv.querySelector('#groupId-div');
 
-      if(groupIdDiv) 
+      if (groupIdDiv)
         this.groupId = Number(groupIdDiv.textContent);
       else
         this.groupId = 0;
@@ -72,11 +72,32 @@ export class ResponseComponent implements OnInit {
     });
   }
 
-  Delete() {
 
-  }
+  openModal(event: MouseEvent, whichModal: string) {
+    this.GetGroupId(event);
 
-  Update() {
-    
+    switch (whichModal) {
+      case 'formsModal':
+        this.showFormsModal = true
+        setTimeout(() => {
+          this.formsModalComponent.openModal();
+        });
+        break
+
+      case 'deleteModal':
+        this.showDeleteModal = true
+        setTimeout(() => {
+          this.deleteModalComponent.openModal();
+        });
+        break
+
+      case 'updateModal':
+        this.showUpdateModal = true
+        setTimeout(() => {
+          this.updateModalComponent.openModal();
+        });
+        break 
+    }
+
   }
 }

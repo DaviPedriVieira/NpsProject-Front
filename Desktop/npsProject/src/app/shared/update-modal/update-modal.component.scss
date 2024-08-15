@@ -1,6 +1,6 @@
 #updatemodal {
     width: 500px;
-    height: 200px;
+    height: 300px;
     text-align: center;
     background-color: white;
     border: none;
@@ -20,11 +20,22 @@
 }
 
 #update-container{
-    height: 200px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+}
+
+#input-container input{
+    margin-bottom: 30px;
+    border-radius: 1rem;
+    outline: none;
+    border: none;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+    background-color: lightgray;
 }
 
 #button-container {

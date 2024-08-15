@@ -4,10 +4,10 @@
   </div>
   <div id="groups-container">
     <div *ngFor="let group of formsGroups">
-      <div class="groups-div" (click)="openFormsModal($event)">
+      <div class="groups-div" (click)="openModal($event, 'formsModal')">
         <div id="options">
-          <span class="material-symbols-outlined" (click)="openUpdateModal($event); $event.stopPropagation()">edit</span>
-          <span class="material-symbols-outlined" (click)="openDeleteModal($event); $event.stopPropagation()">delete</span>
+          <span class="material-symbols-outlined" (click)="openModal($event, 'updateModal'); $event.stopPropagation()">edit</span>
+          <span class="material-symbols-outlined" (click)="openModal($event, 'deleteModal'); $event.stopPropagation()">delete</span>
         </div>
         <div id="groupId-div">{{ group.id }}</div>
         <div id="group-name-div">{{ group.name }}</div>
