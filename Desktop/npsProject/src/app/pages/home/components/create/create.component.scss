@@ -27,11 +27,12 @@
     justify-content: center;
     border: 1px solid gray;
     color: gray;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .create-div:hover{
     border: 1px solid black;
+    transform: scale(1.02);
 
     span{
         color: black;

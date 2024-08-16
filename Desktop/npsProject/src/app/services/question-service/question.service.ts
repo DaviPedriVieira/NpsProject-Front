@@ -12,8 +12,8 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  GetQuestions(): Observable<QuestionModel[]> {
-    return this.http.get<QuestionModel[]>(`${this.apiUrl}`, {withCredentials: true})
+  GetQuestions(formId: number): Observable<QuestionModel[]> {
+    return this.http.get<QuestionModel[]>(`${this.apiUrl}/Form/${formId}`, {withCredentials: true})
   }
 
   CreateQuestion(question: QuestionModel): Observable<QuestionModel> {
@@ -24,7 +24,7 @@ export class QuestionService {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
   }
 
-  UpdateQuestion(id: number, question: QuestionModel): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/${id}`, question, {withCredentials: true})
+  UpdateQuestion(id: number, newName: string): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}/${id}?newName=${newName}`, null, {withCredentials: true})
   }
 }

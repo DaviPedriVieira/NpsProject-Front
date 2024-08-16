@@ -4,6 +4,7 @@ import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { FormsModalComponent } from '../forms-modal/forms-modal.component';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
+import { LoginService } from 'src/app/services/login-service/login.service';
 
 @Component({
   selector: 'app-response',
@@ -18,11 +19,23 @@ export class ResponseComponent implements OnInit {
   showFormsModal: boolean = false;
   showDeleteModal: boolean = false;
   showUpdateModal: boolean = false;
+  authorized!: boolean;
   groupId: number = 0;
 
-  constructor(private formsGroupService: FormsGroupService) { }
+  constructor(private formsGroupService: FormsGroupService, private loginService: LoginService) { }
 
   ngOnInit(): void {
+    const username = localStorage.getItem('Username');
+
+    if (username == null) {
+      this.authorized == false;
+      return
+    }
+    
+    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
+      this.authorized = response;
+    });
+
     this.loadFormsGroups();
   }
 
@@ -44,34 +57,6 @@ export class ResponseComponent implements OnInit {
         this.groupId = 0;
     }
   }
-
-  openFormsModal(event: MouseEvent) {
-    this.GetGroupId(event);
-
-    this.showFormsModal = true
-    setTimeout(() => {
-      this.formsModalComponent.openModal();
-    });
-  }
-
-  openDeleteModal(event: MouseEvent) {
-    this.GetGroupId(event);
-
-    this.showDeleteModal = true
-    setTimeout(() => {
-      this.deleteModalComponent.openModal();
-    });
-  }
-
-  openUpdateModal(event: MouseEvent) {
-    this.GetGroupId(event);
-
-    this.showUpdateModal = true
-    setTimeout(() => {
-      this.updateModalComponent.openModal();
-    });
-  }
-
 
   openModal(event: MouseEvent, whichModal: string) {
     this.GetGroupId(event);
@@ -96,8 +81,7 @@ export class ResponseComponent implements OnInit {
         setTimeout(() => {
           this.updateModalComponent.openModal();
         });
-        break 
+        break
     }
-
   }
 }

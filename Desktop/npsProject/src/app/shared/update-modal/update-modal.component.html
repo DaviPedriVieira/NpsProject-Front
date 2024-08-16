@@ -2,11 +2,12 @@
     <div id="update-container">
         <div id="update-title">Editar</div>
         <div id="input-container">
-            <input type="text" placeholder="Digite o novo nome">
+            <input type="text" placeholder="Digite o novo nome" [(ngModel)]="newName">
         </div>
+        <div *ngIf="invalidInput" class="error">Nome Inválido!</div>
         <div id="button-container">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-            <button class="delete-btn">Confirmar</button>
+            <button class="delete-btn" (click)="update()">Confirmar</button>
         </div>
     </div>
 </dialog>

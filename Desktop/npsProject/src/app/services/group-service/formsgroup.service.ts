@@ -24,7 +24,7 @@ export class FormsGroupService {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
   }
 
-  UpdateFormsGroup(id: number, group: FormsGroupModel): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/${id}`, group, {withCredentials: true})
+  UpdateFormsGroup(id: number, newName: string): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}/${id}?newName=${newName}`, null, {withCredentials: true})
   }
 }

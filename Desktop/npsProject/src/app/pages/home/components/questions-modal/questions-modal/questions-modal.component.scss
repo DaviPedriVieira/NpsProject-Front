@@ -1,0 +1,134 @@
+#questionsmodal {
+    width: 1000px;
+    z-index: 1000;
+    text-align: center;
+    background-color: white;
+    border: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    border-radius: 1rem;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgb(73, 73, 73);
+}
+
+#questions-title {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+#questions-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+}
+
+.second-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.questions-div{
+    height: 150px;
+    width: 200px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: end;
+    border-radius: 1rem;
+    background-color: white;
+    border: 1px solid gray;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.questions-div:hover{
+    border: 1px solid black;
+    transition: 0.3s;
+    transform: scale(1.02);
+} 
+
+#options{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#question-name-div{
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#questionId-div {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#grades-select {
+    width: 200px;
+    height: 30px;
+    border-radius: 1rem;
+    outline: none;
+    border: 1px solid gray;
+    text-align: center;
+    margin-bottom: 10px; 
+}
+
+.description-input input{
+    max-width: 180px;
+    max-height: 30px;
+    border-radius: 1rem;
+    border: 1px solid gray;
+    outline: none;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+    margin-bottom: 40px; 
+}
+
+
+.buttons-div{
+    height: 60px;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 320px;
+}
+
+.close-modal-btn{
+    height: 40px;
+    width: 120px;
+    background-color: rgb(167, 45, 45);
+    border: none;
+    outline: none;
+    border-radius: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover{
+    transition: 0.3s;
+    background-color: rgb(201, 55, 55);
+}
+
+.send-answers-btn{
+    height: 40px;
+    width: 120px;
+    background-color:  rgb(36, 151, 32);
+    border: none;
+    outline: none;
+    border-radius: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.send-answers-btn:hover{
+    transition: 0.3s;
+    background-color: rgb(45, 190, 40);
+}

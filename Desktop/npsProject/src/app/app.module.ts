@@ -13,6 +13,7 @@ import { ResponseComponent } from './pages/home/components/response/response.com
 import { FormsModalComponent } from './pages/home/components/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from './shared/update-modal/update-modal.component';
+import { QuestionsModalComponent } from './pages/home/components/questions-modal/questions-modal/questions-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { UpdateModalComponent } from './shared/update-modal/update-modal.compone
     FormsModalComponent,
     DeleteModalComponent,
     UpdateModalComponent,
-
+    QuestionsModalComponent,
   ],
   imports: [
     BrowserModule,

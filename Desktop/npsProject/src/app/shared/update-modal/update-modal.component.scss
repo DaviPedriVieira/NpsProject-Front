@@ -28,7 +28,6 @@
 }
 
 #input-container input{
-    margin-bottom: 30px;
     border-radius: 1rem;
     outline: none;
     border: none;
@@ -71,4 +70,12 @@
 .delete-btn:hover{
     transition: 0.3s;
     background-color: rgb(45, 190, 40);
+}
+
+.error {
+    color: red;
+    font-size: 15px;
+    height: 10px;
+    width: 300px;
+    margin-top: 20px;;
 }

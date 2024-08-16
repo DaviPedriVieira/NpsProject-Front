@@ -24,7 +24,7 @@ export class FormService {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
   }
 
-  UpdateForm(id: number, form: FormModel): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/${id}`, form, {withCredentials: true})
+  UpdateForm(id: number, newName: string): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}/${id}?newName=${newName}`, null, {withCredentials: true})
   }
 }
