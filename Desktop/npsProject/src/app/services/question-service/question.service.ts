@@ -16,6 +16,10 @@ export class QuestionService {
     return this.http.get<QuestionModel[]>(`${this.apiUrl}/Form/${formId}`, {withCredentials: true})
   }
 
+  GetQuestionsIds(formId: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/ids/Form/${formId}`, {withCredentials: true})
+  }
+
   CreateQuestion(question: QuestionModel): Observable<QuestionModel> {
     return this.http.post<QuestionModel>(`${this.apiUrl}`, question, {withCredentials: true})
   }

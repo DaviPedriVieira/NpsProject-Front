@@ -3,7 +3,7 @@ import { FormService } from 'src/app/services/form-service/form.service';
 import { FormModel } from 'src/app/interfaces/form';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
-import { QuestionsModalComponent } from '../questions-modal/questions-modal/questions-modal.component';
+import { QuestionsModalComponent } from '../questions-modal/questions-modal-component/questions-modal.component';
 import { LoginService } from 'src/app/services/login-service/login.service';
 
 @Component({
@@ -31,14 +31,15 @@ export class FormsModalComponent {
 
     const username = localStorage.getItem('Username');
 
-    if (username == null) {
+    if (username != null) {
+      this.loginService.isAuthorized(username).subscribe((response: boolean) => {
+        this.authorized = response;
+      });
+    }
+    else {
       this.authorized == false;
       return
     }
-    
-    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-      this.authorized = response;
-    });
 
     this.loadForms()
   }

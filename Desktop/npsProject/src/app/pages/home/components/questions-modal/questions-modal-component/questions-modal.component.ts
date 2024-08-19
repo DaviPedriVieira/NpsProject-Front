@@ -23,26 +23,28 @@ export class QuestionsModalComponent {
   showUpdateModal: boolean = false;
   authorized!: boolean;
   questionId: number = 0
+  questionIdsList: number[] = [];
   selectedGrades: number[] = [];
   descriptions: string[] = [];
-  newAnswer!: AnswerModel;
   answers: AnswerModel[] = [];
+  newAnswer!: AnswerModel;
 
   constructor(private questionService: QuestionService, private loginService: LoginService, private answersService: AnswerService) { }
-  
+
   openModal() {
     this.formsmodal.nativeElement.showModal();
 
     const username = localStorage.getItem('Username');
 
-    if (username == null) {
+    if (username != null) {
+      this.loginService.isAuthorized(username).subscribe((response: boolean) => {
+        this.authorized = response;
+      });
+    }
+    else {
       this.authorized == false;
       return
     }
-    
-    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-      this.authorized = response;
-    });
 
     this.loadQuestions()
   }
@@ -60,12 +62,13 @@ export class QuestionsModalComponent {
   GetQuestionId(event: MouseEvent) {
     const clickedOption = event.target as HTMLElement
     const questionDiv = clickedOption.closest('.questions-div');
-    if(questionDiv){
+    if (questionDiv) {
       const formIdDiv = questionDiv.querySelector('#questionId-div');
 
-      if(formIdDiv) 
+      if (formIdDiv)
         this.questionId = Number(formIdDiv.textContent);
     }
+    console.log("")
   }
 
   openModals(event: MouseEvent, whichModal: string) {
@@ -84,25 +87,46 @@ export class QuestionsModalComponent {
         setTimeout(() => {
           this.updateModalComponent.openModal();
         });
-        break 
+        break
     }
   }
 
-  CreateAnswers() {
+  GetQuestionsIds() {
+    this.questionService.GetQuestionsIds(this.formId).subscribe((data) => {
+      this.questionIdsList = data;
+      this.PopulateAnswers();
+    })
+  }
+
+  PopulateAnswers() {
     for (let i = 0; i < this.selectedGrades.length; i++) {
-      this.newAnswer.grade = this.selectedGrades[i];
-      this.newAnswer.description = this.descriptions[i] || '';
-      this.newAnswer.questionId = this.questionId;
-      this.newAnswer.date = new Date();
+      this.newAnswer = {
+        id: 0,
+        userId: 0,
+        grade: this.selectedGrades[i],
+        description: this.descriptions[i] || '',
+        questionId: this.questionIdsList[i],
+        date: new Date(),
+      }
 
       this.answers[i] = this.newAnswer;
     }
+
+    this.SubmitAnswers()
   }
 
   SubmitAnswers() {
     this.answersService.SubmitAnswers(this.answers).subscribe((data) => {
       this.closeModal()
       this.answersSubmited.emit()
+      this.ResetArrays()
     })
+  }
+
+  ResetArrays() {
+    this.questionIdsList = [];
+    this.selectedGrades = [];
+    this.descriptions = [];
+    this.answers = [];
   }
 }
