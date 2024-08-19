@@ -14,6 +14,7 @@ import { FormsModalComponent } from './pages/home/components/forms-modal/forms-m
 import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from './shared/update-modal/update-modal.component';
 import { QuestionsModalComponent } from './pages/home/components/questions-modal/questions-modal-component/questions-modal.component';
+import { GroupsCreateModalComponent } from './pages/home/components/groups-create-modal/groups-create-modal/groups-create-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { QuestionsModalComponent } from './pages/home/components/questions-modal
     DeleteModalComponent,
     UpdateModalComponent,
     QuestionsModalComponent,
+    GroupsCreateModalComponent,
   ],
   imports: [
     BrowserModule,

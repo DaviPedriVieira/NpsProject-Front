@@ -1,6 +1,6 @@
 <div id="container">
     <div class="create-container">
-        <div class="create-div">
+        <div class="create-div" (click)="openModals('groupsCreateModal')">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar grupo</div>
@@ -17,4 +17,6 @@
         </div>
         <div class="text-div">Criar pergunta</div>
     </div>
+
+    <app-groups-create-modal *ngIf="showGroupsCreateModal"></app-groups-create-modal>
 </div>

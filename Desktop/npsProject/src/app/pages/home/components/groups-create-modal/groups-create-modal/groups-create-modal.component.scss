@@ -1,0 +1,124 @@
+#createGroupsModal {
+    width: 1600px;
+    z-index: 999;
+    text-align: center;
+    background-color: white;
+    border: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    border-radius: 1rem;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgb(73, 73, 73);
+}
+
+#header-div {
+    position: relative;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+    h2 {
+        display: inline-block;
+        margin: 0;
+    }
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#items-div {
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+}
+
+.groups-input-box {
+    width: 500px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.groups-input-box input {
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+    background-color: rgb(233, 233, 233);
+}
+
+.add-form-button {
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 2rem;
+    background-color: rgb(233, 233, 233);
+    cursor: pointer;
+}
+
+.input-box {
+    width: 280px;
+    height: 80px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.input-box input {
+    margin-top: 5px;
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+}
+
+#forms-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    border-radius: 1rem;
+    background-color: rgb(233, 233, 233);
+}
+
+#questions-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.close-modal-btn {
+    height: 40px;
+    width: 100px;
+    background-color: rgb(167, 45, 45);
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    color: white;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover {
+    transition: 0.3s;
+    background-color: rgb(201, 55, 55);
+}
