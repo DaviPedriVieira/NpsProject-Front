@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { GroupsCreateModalComponent } from '../groups-create-modal/groups-create-modal/groups-create-modal.component';
+import { GroupsCreateModalComponent } from './modals/groups-create-modal/groups-create-modal.component';
 
 @Component({
   selector: 'app-create',

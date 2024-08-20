@@ -10,11 +10,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { HeaderComponent } from './pages/home/components/header-component/header.component';
 import { CreateComponent } from './pages/home/components/create-component/create.component';
 import { ResponseComponent } from './pages/home/components/response-component/response.component';
-import { FormsModalComponent } from './pages/home/components/forms-modal/forms-modal.component';
+import { FormsModalComponent } from './pages/home/components/response-component/modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from './shared/update-modal/update-modal.component';
-import { QuestionsModalComponent } from './pages/home/components/questions-modal/questions-modal-component/questions-modal.component';
-import { GroupsCreateModalComponent } from './pages/home/components/groups-create-modal/groups-create-modal/groups-create-modal.component';
+import { QuestionsModalComponent } from './pages/home/components/response-component/modals/questions-modal/questions-modal.component';
+import { GroupsCreateModalComponent } from './pages/home/components/create-component/modals/groups-create-modal/groups-create-modal.component';
+import { FormsCreateModalComponent } from './pages/home/components/create-component/modals/forms-create-modal/forms-create-modal.component';
+import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { GroupsCreateModalComponent } from './pages/home/components/groups-creat
     UpdateModalComponent,
     QuestionsModalComponent,
     GroupsCreateModalComponent,
+    FormsCreateModalComponent,
+    SucessfulMessageModalComponent,
   ],
   imports: [
     BrowserModule,

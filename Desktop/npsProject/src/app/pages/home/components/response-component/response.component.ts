@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
-import { FormsModalComponent } from '../forms-modal/forms-modal.component';
+import { FormsModalComponent } from './modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { LoginService } from 'src/app/services/login-service/login.service';

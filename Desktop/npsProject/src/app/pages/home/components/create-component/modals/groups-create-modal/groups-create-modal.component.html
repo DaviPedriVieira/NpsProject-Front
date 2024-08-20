@@ -48,4 +48,5 @@
       </div>
     </div>
   </div>
+  <app-sucessful-message-modal *ngIf="showSucessfulMessageModal" [message]="'Grupo criado!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
 </dialog>
