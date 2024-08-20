@@ -1,32 +1,51 @@
 <dialog id="createGroupsModal" #createGroupsModal>
-    <div id="header-div">
-      <h2>Criar grupos</h2>
-    </div>
-    <div id="container">
-      <div id="items-div">
-        <div class="groups-input-box">
-          <div>Nome do grupo: </div>
-          <input type="text" placeholder="Nome do grupo" [(ngModel)]="newGroup.name">
-          <button class="add-form-button">+</button>
-        </div>
+  <div id="header-div">
+    <h2>Criar grupos</h2>
+  </div>
+  <div id="container">
+    <div id="items-div">
+      <div class="groups-input-box">
+        <div>Nome do grupo: </div>
+        <input type="text" placeholder="Nome do grupo" [(ngModel)]="newGroup.name">
+        <button class="add-form-button" (click)="CreateForm()">
+          <span class="material-symbols-outlined">add</span>
+        </button>
       </div>
-      <div id="forms-container">
-        <div class="form-container" *ngFor="let form of newGroup.forms; let formIndex = index">
-          <div class="input-box">
-            <div>Nome do formulário {{ formIndex }}: </div>
-            <input type="text" placeholder="Nome do formulário" [(ngModel)]="form.name">
-          </div>
-          <div id="questions-container" *ngFor="let question of form.questions; let questionsIndex = index">
-            <div class="input-box">
-              <div>Pergunta {{ questionsIndex }}: </div>
-              <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
+    </div>
+    <div id="forms-container">
+      <div class="form-container" *ngFor="let form of newGroup.forms; let formIndex = index">
+        <div class="input-box">
+          <div class="forms-header">Nome do {{ formIndex + 1 }}° formulário:
+            <div id="form-buttons-div">
+              <button class="question-buttons" (click)="CreateQuestion(formIndex)">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+              <button class="question-buttons" (click)="DeleteForm(formIndex)">
+                <span class="material-symbols-outlined">close</span>
+              </button>
             </div>
           </div>
+          <input type="text" placeholder="Nome do formulário" [(ngModel)]="form.name">
+        </div>
+        <div class="questions-header" *ngIf="form.questions.length > 0">
+          Perguntas:
+        </div>
+        <div id="questions-container" *ngFor="let question of form.questions; let questionsIndex = index">
+          <div class="questions-input-box">
+            <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
+            <button (click)="DeleteQuestion(formIndex, questionsIndex)">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <div>
-      <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+    <div id="allign-buttons-div">
+      <div class="error" *ngIf="invalidInputs">Todos os nomes são obrigatórios!</div>
+      <div id="button-container">
+        <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+        <button class="submit-btn" (click)="Submit()">Enviar</button>
+      </div>
     </div>
-  </dialog>
-  
+  </div>
+</dialog>

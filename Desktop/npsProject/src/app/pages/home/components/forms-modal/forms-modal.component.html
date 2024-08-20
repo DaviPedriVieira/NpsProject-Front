@@ -2,6 +2,9 @@
     <div id="forms-title">
         <h2>Formulários</h2>
     </div>
+    <div *ngIf="forms.length == 0" class="no-forms-message">
+        Não há formulários nesse grupo.
+    </div>
     <div id="forms-container">
         <div *ngFor="let form of forms">
             <div class="forms-div" (click)="openModals($event, 'questionsModal')">
@@ -14,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div id="footer">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
     <app-delete-modal *ngIf="showDeleteModal" [itemId]="formId" [itemType]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>

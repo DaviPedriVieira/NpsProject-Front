@@ -50,6 +50,7 @@ export class QuestionsModalComponent {
   }
 
   closeModal() {
+    this.ResetArrays()
     this.formsmodal.nativeElement.close();
   }
 
@@ -119,7 +120,6 @@ export class QuestionsModalComponent {
     this.answersService.SubmitAnswers(this.answers).subscribe((data) => {
       this.closeModal()
       this.answersSubmited.emit()
-      this.ResetArrays()
     })
   }
 

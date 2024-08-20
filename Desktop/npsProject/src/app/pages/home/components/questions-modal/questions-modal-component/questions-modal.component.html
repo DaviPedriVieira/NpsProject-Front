@@ -2,6 +2,9 @@
     <div id="questions-title">
         <h2>Perguntas</h2>
     </div>
+    <div *ngIf="questions.length == 0" class="no-forms-message">
+        Não há perguntas nesse formulário.
+    </div>
     <div id="questions-container" (answersSubmited)="loadQuestions()">
         <div *ngFor="let question of questions; let i = index">
             <div class="second-container">
@@ -33,9 +36,9 @@
             </div>
         </div>
     </div>
-    <div class="buttons-div">
+    <div [ngClass]="{'buttons-div': true, 'buttons-div-center': !questions.length}">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-        <button class="send-answers-btn" (click)="GetQuestionsIds()">Enviar</button>
+        <button class="send-answers-btn" (click)="GetQuestionsIds()" *ngIf="questions.length > 0">Enviar</button>
     </div>
     <app-delete-modal *ngIf="showDeleteModal" [itemId]="formId" [itemType]="'question'"(itemDeleted)="loadQuestions()"></app-delete-modal>
     <app-update-modal *ngIf="showUpdateModal" [itemId]="formId" [itemType]="'question'"(itemUpdated)="loadQuestions()"></app-update-modal>

@@ -1,5 +1,6 @@
 #formsmodal {
     width: 1300px;
+    min-height: 220px;
     z-index: 999;
     text-align: center;
     background-color: white;
@@ -63,6 +64,12 @@
     left: 10px;
 }
 
+#footer{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
 .close-modal-btn{
     height: 40px;
     width: 100px;
@@ -77,4 +84,11 @@
 .close-modal-btn:hover{
     transition: 0.3s;
     background-color: rgb(201, 55, 55);
+}
+
+.no-forms-message{
+    margin-top: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 20px;
 }
