@@ -1,0 +1,45 @@
+<dialog id="createQuestionsModal" #createQuestionsModal>
+    <div id="header-div">
+        <h2>Criar perguntas</h2>
+    </div>
+    <div id="container">
+        <div id="items-div">
+            <div>Formulário que irá inserir: </div>
+            <select id="form-select" [(ngModel)]="selectedFormId">
+                <option value="" disabled selected hidden>Selecione um formulário</option>
+                <option *ngFor="let form of forms" [value]="form.id">
+                    {{ form.name }}
+                </option>
+            </select>
+        </div>
+        <div id="questions-container">
+            <div class="question-container" *ngFor="let question of questions; let questionIndex = index">
+                <div class="input-box">
+                    <div class="questions-header">{{ questionIndex + 1 }}° pergunta:
+                        <div>
+                            <button class="question-buttons" (click)="DeleteQuestion(questionIndex)">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
+                </div>
+            </div>
+        </div>
+        <div id="items-div">
+        <div class="add-question-button-box">
+            <button class="add-question-button" (click)="CreateQuestion()">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </div>
+        </div>
+        <div id="allign-buttons-div">
+            <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
+            <div id="button-container">
+                <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+                <button class="submit-btn" (click)="SubmitQuestions()">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <app-sucessful-message-modal [message]="'Perguntas criadas!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
+</dialog>

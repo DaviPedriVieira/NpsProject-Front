@@ -4,17 +4,17 @@
   </div>
   <div id="groups-container">
     <div *ngFor="let group of formsGroups">
-      <div class="groups-div" (click)="openModal($event, 'formsModal')">
+      <div class="groups-div" (click)="openFormsModal($event)">
         <div id="options" *ngIf="authorized">
-          <span class="material-symbols-outlined" (click)="openModal($event, 'updateModal'); $event.stopPropagation()">edit</span>
-          <span class="material-symbols-outlined" (click)="openModal($event, 'deleteModal'); $event.stopPropagation()">delete</span>
+          <span class="material-symbols-outlined" (click)="openUpdateModal($event); $event.stopPropagation()">edit</span>
+          <span class="material-symbols-outlined" (click)="openDeleteModal($event); $event.stopPropagation()">delete</span>
         </div>
         <div id="groupId-div">{{ group.id }}</div>
         <div id="group-name-div">{{ group.name }}</div>
       </div>
     </div>
   </div>
-  <app-forms-modal *ngIf="showFormsModal" [groupId]="groupId"></app-forms-modal>
-  <app-delete-modal *ngIf="showDeleteModal" [itemId]="groupId" [itemType]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
-  <app-update-modal *ngIf="showUpdateModal" [itemId]="groupId" [itemType]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
+  <app-forms-modal [groupId]="groupId"></app-forms-modal>
+  <app-delete-modal [itemId]="groupId" [itemType]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
+  <app-update-modal [itemId]="groupId" [itemType]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
 </div>

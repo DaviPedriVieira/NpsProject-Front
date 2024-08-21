@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
+import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
@@ -12,12 +13,11 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 })
 export class GroupsCreateModalComponent {
   @ViewChild('createGroupsModal') formsmodal!: ElementRef<HTMLDialogElement>
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   newGroup: FormsGroupModel = { id: 0, name: '', forms: [] };
   invalidInputs: boolean = false;
-  showSucessfulMessageModal: boolean = false;
 
-  constructor(private formsGroupService: FormsGroupService) { }
+  constructor(private formsGroupService: FormsGroupService, private groupNotificationService: GroupNotificationService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
@@ -25,6 +25,7 @@ export class GroupsCreateModalComponent {
 
   closeModal() {
     this.newGroup = { id: 0, name: '', forms: [] };
+    this.invalidInputs = false;
     this.formsmodal.nativeElement.close();
   }
 
@@ -63,21 +64,17 @@ export class GroupsCreateModalComponent {
     return false;
   }
 
-  Submit() {
+  CreateGroup() {
     if (this.AreAnyEmptyInputs()) {
       this.invalidInputs = true;
       return
     }
 
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe(() => {
-      this.ShowSucessfulMessageModal()
+      setTimeout(() => {
+        this.sucessfulMessageModal.openModal();
+      });
+      this.groupNotificationService.notifyGroupsCreated();
     })
-  }
-
-  ShowSucessfulMessageModal() {
-    this.showSucessfulMessageModal = true
-    setTimeout(() => {
-      this.sucessfulMessageModalComponent.openModal();
-    });
   }
 }

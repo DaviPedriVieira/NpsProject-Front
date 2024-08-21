@@ -18,9 +18,6 @@ export class FormsModalComponent {
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @Input() groupId!: number;
   forms: FormModel[] = [];
-  showDeleteModal: boolean = false;
-  showUpdateModal: boolean = false;
-  showQuestionsModal: boolean = false
   authorized!: boolean;
   formId: number = 0
 
@@ -28,18 +25,16 @@ export class FormsModalComponent {
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
-
     const username = localStorage.getItem('Username');
 
-    if (username != null) {
-      this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-        this.authorized = response;
-      });
-    }
-    else {
+    if (username == null) {
       this.authorized == false;
-      return
-    }
+      return  
+    } 
+
+    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
+      this.authorized = response;
+    });
 
     this.loadForms()
   }
@@ -65,30 +60,24 @@ export class FormsModalComponent {
     }
   }
 
-  openModals(event: MouseEvent, whichModal: string) {
+  openQuestionsModal(event: MouseEvent) {
     this.GetFormId(event);
+    setTimeout(() => {
+      this.questionsModalComponent.openModal();
+    });
+  }
 
-    switch (whichModal) {
-      case 'questionsModal':
-        this.showQuestionsModal = true
-        setTimeout(() => {
-          this.questionsModalComponent.openModal();
-        });
-        break
+  openDeleteModal(event: MouseEvent) {
+    this.GetFormId(event);
+    setTimeout(() => {
+      this.deleteModalComponent.openModal();
+    });
+  }
 
-      case 'deleteModal':
-        this.showDeleteModal = true
-        setTimeout(() => {
-          this.deleteModalComponent.openModal();
-        });
-        break
-
-      case 'updateModal':
-        this.showUpdateModal = true
-        setTimeout(() => {
-          this.updateModalComponent.openModal();
-        });
-        break 
-    }
+  openUpdateModal(event: MouseEvent) {
+    this.GetFormId(event);
+    setTimeout(() => {
+      this.updateModalComponent.openModal();
+    });
   }
 }

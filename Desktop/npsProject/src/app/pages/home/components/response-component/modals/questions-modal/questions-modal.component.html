@@ -10,9 +10,8 @@
             <div class="second-container">
                 <div class="questions-div">
                     <div id="options" *ngIf="authorized">
-                        <span class="material-symbols-outlined" (click)="openModals($event, 'updateModal')">edit</span>
-                        <span class="material-symbols-outlined"
-                            (click)="openModals($event, 'deleteModal')">delete</span>
+                        <span class="material-symbols-outlined" (click)="openUpdateModal($event)">edit</span>
+                        <span class="material-symbols-outlined"(click)="openDeleteModal($event)">delete</span>
                     </div>
                     <div id="questionId-div">{{ question.id }}</div>
                     <div id="question-name-div">{{ question.content }}</div>
@@ -38,8 +37,9 @@
     </div>
     <div [ngClass]="{'buttons-div': true, 'buttons-div-center': !questions.length}">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-        <button class="send-answers-btn" (click)="GetQuestionsIds()" *ngIf="questions.length > 0">Enviar</button>
+        <button class="send-answers-btn" (click)="GetAllQuestionsIds()" *ngIf="questions.length > 0">Enviar</button>
     </div>
-    <app-delete-modal *ngIf="showDeleteModal" [itemId]="formId" [itemType]="'question'"(itemDeleted)="loadQuestions()"></app-delete-modal>
-    <app-update-modal *ngIf="showUpdateModal" [itemId]="formId" [itemType]="'question'"(itemUpdated)="loadQuestions()"></app-update-modal>
+    <app-delete-modal [itemId]="questionId" [itemType]="'question'"(itemDeleted)="loadQuestions()"></app-delete-modal>
+    <app-update-modal [itemId]="questionId" [itemType]="'question'"(itemUpdated)="loadQuestions()"></app-update-modal>
+    <app-sucessful-message-modal [message]="'Respostas enviadas!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
 </dialog>

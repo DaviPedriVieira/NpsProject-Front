@@ -7,10 +7,10 @@
     </div>
     <div id="forms-container">
         <div *ngFor="let form of forms">
-            <div class="forms-div" (click)="openModals($event, 'questionsModal')">
+            <div class="forms-div" (click)="openQuestionsModal($event)">
             <div id="options" *ngIf="authorized">
-                <span class="material-symbols-outlined" (click)="openModals($event, 'updateModal'); $event.stopPropagation()">edit</span>
-                <span class="material-symbols-outlined" (click)="openModals($event, 'deleteModal'); $event.stopPropagation()">delete</span>
+                <span class="material-symbols-outlined" (click)="openUpdateModal($event); $event.stopPropagation()">edit</span>
+                <span class="material-symbols-outlined" (click)="openDeleteModal($event); $event.stopPropagation()">delete</span>
             </div>
             <div id="formId-div">{{ form.id }}</div>
             <div id="form-name-div">{{ form.name }}</div>
@@ -20,7 +20,7 @@
     <div id="footer">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
-    <app-delete-modal *ngIf="showDeleteModal" [itemId]="formId" [itemType]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
-    <app-update-modal *ngIf="showUpdateModal" [itemId]="formId" [itemType]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
-    <app-questions-modal *ngIf="showQuestionsModal" [formId]="formId"></app-questions-modal>
+    <app-delete-modal [itemId]="formId" [itemType]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
+    <app-update-modal [itemId]="formId" [itemType]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
+    <app-questions-modal [formId]="formId"></app-questions-modal>
 </dialog>

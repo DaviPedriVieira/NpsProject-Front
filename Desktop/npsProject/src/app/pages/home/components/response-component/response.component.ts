@@ -5,6 +5,7 @@ import { FormsModalComponent } from './modals/forms-modal/forms-modal.component'
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { LoginService } from 'src/app/services/login-service/login.service';
+import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
 
 @Component({
   selector: 'app-response',
@@ -16,17 +17,14 @@ export class ResponseComponent implements OnInit {
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   formsGroups: FormsGroupModel[] = [];
-  showFormsModal: boolean = false;
-  showDeleteModal: boolean = false;
-  showUpdateModal: boolean = false;
   authorized!: boolean;
   groupId: number = 0;
 
-  constructor(private formsGroupService: FormsGroupService, private loginService: LoginService) { }
+  constructor(private formsGroupService: FormsGroupService, private loginService: LoginService, private groupNotificationService: GroupNotificationService) { }
 
   ngOnInit(): void {
     const username = localStorage.getItem('Username');
-
+    
     if (username == null) {
       this.authorized == false;
       return
@@ -34,9 +32,12 @@ export class ResponseComponent implements OnInit {
     
     this.loginService.isAuthorized(username).subscribe((response: boolean) => {
       this.authorized = response;
+      this.loadFormsGroups();
     });
 
-    this.loadFormsGroups();
+    this.groupNotificationService.groupCreated$.subscribe(() => {
+      this.loadFormsGroups();
+    })
   }
 
   loadFormsGroups() {
@@ -58,30 +59,24 @@ export class ResponseComponent implements OnInit {
     }
   }
 
-  openModal(event: MouseEvent, whichModal: string) {
+  openFormsModal(event: MouseEvent) {
     this.GetGroupId(event);
+    setTimeout(() => {
+      this.formsModalComponent.openModal();
+    });
+  }
 
-    switch (whichModal) {
-      case 'formsModal':
-        this.showFormsModal = true
-        setTimeout(() => {
-          this.formsModalComponent.openModal();
-        });
-        break
+  openDeleteModal(event: MouseEvent) {
+    this.GetGroupId(event);
+    setTimeout(() => {
+      this.deleteModalComponent.openModal();
+    });
+  }
 
-      case 'deleteModal':
-        this.showDeleteModal = true
-        setTimeout(() => {
-          this.deleteModalComponent.openModal();
-        });
-        break
-
-      case 'updateModal':
-        this.showUpdateModal = true
-        setTimeout(() => {
-          this.updateModalComponent.openModal();
-        });
-        break
-    }
+  openUpdateModal(event: MouseEvent) {
+    this.GetGroupId(event);
+    setTimeout(() => {
+      this.updateModalComponent.openModal();
+    });
   }
 }

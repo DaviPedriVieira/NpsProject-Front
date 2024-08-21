@@ -12,6 +12,10 @@ export class FormService {
 
   constructor(private http: HttpClient) {}
 
+  GetForms(): Observable<FormModel[]> {
+    return this.http.get<FormModel[]>(`${this.apiUrl}`, {withCredentials: true})
+  }
+
   GetFormsByGroupId(groupId: number): Observable<FormModel[]> {
     return this.http.get<FormModel[]>(`${this.apiUrl}/Group/${groupId}`, {withCredentials: true})
   }

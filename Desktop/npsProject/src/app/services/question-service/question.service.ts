@@ -20,8 +20,8 @@ export class QuestionService {
     return this.http.get<number[]>(`${this.apiUrl}/ids/Form/${formId}`, {withCredentials: true})
   }
 
-  CreateQuestion(question: QuestionModel): Observable<QuestionModel> {
-    return this.http.post<QuestionModel>(`${this.apiUrl}`, question, {withCredentials: true})
+  CreateQuestion(questions: QuestionModel[]): Observable<QuestionModel[]> {
+    return this.http.post<QuestionModel[]>(`${this.apiUrl}`, questions, {withCredentials: true})
   }
 
   DeleteQuestion(id: number): Observable<boolean> {

@@ -1,6 +1,6 @@
 <dialog id="createGroupsModal" #createGroupsModal>
   <div id="header-div">
-    <h2>Criar grupos</h2>
+    <h2>Criar grupo</h2>
   </div>
   <div id="container">
     <div id="items-div">
@@ -15,13 +15,13 @@
     <div id="forms-container">
       <div class="form-container" *ngFor="let form of newGroup.forms; let formIndex = index">
         <div class="input-box">
-          <div class="forms-header">Nome do {{ formIndex + 1 }}° formulário:
+          <div class="forms-header">{{ formIndex + 1 }}° formulário:
             <div id="form-buttons-div">
               <button class="question-buttons" (click)="CreateQuestion(formIndex)">
                 <span class="material-symbols-outlined">add</span>
               </button>
               <button class="question-buttons" (click)="DeleteForm(formIndex)">
-                <span class="material-symbols-outlined">close</span>
+                <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
           </div>
@@ -34,19 +34,19 @@
           <div class="questions-input-box">
             <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
             <button (click)="DeleteQuestion(formIndex, questionsIndex)">
-              <span class="material-symbols-outlined">close</span>
+              <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
         </div>
       </div>
     </div>
     <div id="allign-buttons-div">
-      <div class="error" *ngIf="invalidInputs">Todos os nomes são obrigatórios!</div>
+      <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
       <div id="button-container">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-        <button class="submit-btn" (click)="Submit()">Enviar</button>
+        <button class="submit-btn" (click)="CreateGroup()">Enviar</button>
       </div>
     </div>
   </div>
-  <app-sucessful-message-modal *ngIf="showSucessfulMessageModal" [message]="'Grupo criado!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
+  <app-sucessful-message-modal [message]="'Grupo criado!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
 </dialog>

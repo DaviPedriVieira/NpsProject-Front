@@ -1,1 +1,45 @@
-<p>forms-create-modal works!</p>
+<dialog id="createFormsModal" #createFormsModal>
+    <div id="header-div">
+        <h2>Criar formulário</h2>
+    </div>
+    <div id="container">
+        <div id="items-div">
+            <div>Grupo que irá inserir: </div>
+            <select id="group-select" [(ngModel)]="selectedGroupId">
+                <option value="" disabled selected hidden>Selecione um grupo</option>
+                <option *ngFor="let group of groups" [value]="group.id">
+                    {{ group.name }}
+                </option>
+            </select>
+            <div class="forms-input-box">
+                <div>Nome do formulário: </div>
+                <input type="text" placeholder="Nome do formulário" [(ngModel)]="newForm.name">
+                <button class="add-question-button" (click)="CreateQuestion()">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+        </div>
+        <div id="questions-container">
+            <div class="question-container" *ngFor="let question of newForm.questions; let questionIndex = index">
+                <div class="input-box">
+                    <div class="questions-header">{{ questionIndex + 1 }}° pergunta:
+                        <div>
+                            <button class="question-buttons" (click)="DeleteQuestion(questionIndex)">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
+                </div>
+            </div>
+        </div>
+        <div id="allign-buttons-div">
+            <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
+            <div id="button-container">
+                <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+                <button class="submit-btn" (click)="CreateForm()">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <app-sucessful-message-modal [message]="'Formulário criado!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
+</dialog>

@@ -16,7 +16,9 @@ import { UpdateModalComponent } from './shared/update-modal/update-modal.compone
 import { QuestionsModalComponent } from './pages/home/components/response-component/modals/questions-modal/questions-modal.component';
 import { GroupsCreateModalComponent } from './pages/home/components/create-component/modals/groups-create-modal/groups-create-modal.component';
 import { FormsCreateModalComponent } from './pages/home/components/create-component/modals/forms-create-modal/forms-create-modal.component';
+import { QuestionsCreateModalComponent } from './pages/home/components/create-component/modals/questions-create-modal/questions-create-modal.component';
 import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal
     GroupsCreateModalComponent,
     FormsCreateModalComponent,
     SucessfulMessageModalComponent,
+    QuestionsCreateModalComponent,
   ],
   imports: [
     BrowserModule,

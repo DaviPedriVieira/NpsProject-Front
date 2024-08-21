@@ -5,6 +5,7 @@ import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 
 @Component({
@@ -16,35 +17,29 @@ export class QuestionsModalComponent {
   @ViewChild('questionsmodal') formsmodal!: ElementRef<HTMLDialogElement>
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent;
   @Input() formId!: number;
-  @Output() answersSubmited = new EventEmitter<void>();
-  questions: QuestionModel[] = [];
-  showDeleteModal: boolean = false;
-  showUpdateModal: boolean = false;
-  authorized!: boolean;
+  @Output() answersSubmited = new EventEmitter<void>(); 
+  questions: QuestionModel[] = []; 
+  authorized!: boolean; 
   questionId: number = 0
-  questionIdsList: number[] = [];
   selectedGrades: number[] = [];
   descriptions: string[] = [];
-  answers: AnswerModel[] = [];
-  newAnswer!: AnswerModel;
 
   constructor(private questionService: QuestionService, private loginService: LoginService, private answersService: AnswerService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
-
     const username = localStorage.getItem('Username');
 
-    if (username != null) {
-      this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-        this.authorized = response;
-      });
-    }
-    else {
+    if (username == null) {
       this.authorized == false;
       return
-    }
+    } 
+
+    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
+      this.authorized = response;
+    });
 
     this.loadQuestions()
   }
@@ -69,64 +64,61 @@ export class QuestionsModalComponent {
       if (formIdDiv)
         this.questionId = Number(formIdDiv.textContent);
     }
-    console.log("")
   }
 
-  openModals(event: MouseEvent, whichModal: string) {
+  openUpdateModal(event: MouseEvent) {
     this.GetQuestionId(event);
-
-    switch (whichModal) {
-      case 'deleteModal':
-        this.showDeleteModal = true
-        setTimeout(() => {
-          this.deleteModalComponent.openModal();
-        });
-        break
-
-      case 'updateModal':
-        this.showUpdateModal = true
-        setTimeout(() => {
-          this.updateModalComponent.openModal();
-        });
-        break
-    }
+    setTimeout(() => {
+      this.updateModalComponent.openModal();
+    });
   }
 
-  GetQuestionsIds() {
+  openDeleteModal(event: MouseEvent) {
+    this.GetQuestionId(event);
+    setTimeout(() => {
+      this.deleteModalComponent.openModal();
+    });
+  }
+
+  openSucessfullModal(){
+    setTimeout(() => {
+      this.sucessfulMessageModalComponent.openModal();
+    });
+  }
+
+  GetAllQuestionsIds() {
     this.questionService.GetQuestionsIds(this.formId).subscribe((data) => {
-      this.questionIdsList = data;
-      this.PopulateAnswers();
+      const questionIdsList = data;
+      this.PopulateAnswers(questionIdsList);
     })
   }
 
-  PopulateAnswers() {
+  PopulateAnswers(questionIdsList: number[]) {
+    const answers: AnswerModel[] = []
+
     for (let i = 0; i < this.selectedGrades.length; i++) {
-      this.newAnswer = {
+      const newAnswer: AnswerModel = {
         id: 0,
         userId: 0,
         grade: this.selectedGrades[i],
         description: this.descriptions[i] || '',
-        questionId: this.questionIdsList[i],
+        questionId: questionIdsList[i],
         date: new Date(),
       }
-
-      this.answers[i] = this.newAnswer;
+      answers[i] = newAnswer;
     }
-
-    this.SubmitAnswers()
+    this.SubmitAnswers(answers)
   }
 
-  SubmitAnswers() {
-    this.answersService.SubmitAnswers(this.answers).subscribe((data) => {
-      this.closeModal()
+  SubmitAnswers(answers: AnswerModel[]) {
+    this.answersService.SubmitAnswers(answers).subscribe(() => {
+      this.openSucessfullModal();
       this.answersSubmited.emit()
     })
   }
 
   ResetArrays() {
-    this.questionIdsList = [];
     this.selectedGrades = [];
     this.descriptions = [];
-    this.answers = [];
   }
 }

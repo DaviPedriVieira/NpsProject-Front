@@ -1,22 +1,24 @@
 <div id="container">
     <div class="create-container">
-        <div class="create-div" (click)="openModals('groupsCreateModal')">
+        <div class="create-div" (click)="openGroupsCreateModals()">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar grupo</div>
     </div>
     <div class="create-container">
-        <div class="create-div">
+        <div class="create-div" (click)="openFormsCreateModals()">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar formulário</div>
     </div>
     <div class="create-container">
-        <div class="create-div">
+        <div class="create-div" (click)="openQuestionsCreateModals()">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar pergunta</div>
     </div>
 
-    <app-groups-create-modal *ngIf="showGroupsCreateModal"></app-groups-create-modal>
+    <app-groups-create-modal></app-groups-create-modal>
+    <app-forms-create-modal></app-forms-create-modal>
+    <app-questions-create-modal></app-questions-create-modal>
 </div>

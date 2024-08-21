@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { GroupsCreateModalComponent } from './modals/groups-create-modal/groups-create-modal.component';
+import { FormsCreateModalComponent } from './modals/forms-create-modal/forms-create-modal.component';
+import { QuestionsCreateModalComponent } from './modals/questions-create-modal/questions-create-modal.component';
 
 @Component({
   selector: 'app-create',
@@ -8,17 +10,24 @@ import { GroupsCreateModalComponent } from './modals/groups-create-modal/groups-
 })
 export class CreateComponent {
   @ViewChild(GroupsCreateModalComponent) groupsCreateModal!: GroupsCreateModalComponent;
-  showGroupsCreateModal: boolean = false;
+  @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
+  @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
 
-  openModals(whichModal: string) {
-    switch (whichModal) {
-      case 'groupsCreateModal':
-        this.showGroupsCreateModal = true
-        setTimeout(() => {
-          this.groupsCreateModal.openModal();
-        });
-        break
+  openGroupsCreateModals() {
+    setTimeout(() => {
+      this.groupsCreateModal.openModal();
+    });
+  }
 
-    }
+  openFormsCreateModals() {
+    setTimeout(() => {
+      this.formsCreateModal.openModal();
+    });
+  }
+
+  openQuestionsCreateModals() {
+    setTimeout(() => {
+      this.questionsCreateModal.openModal();
+    });
   }
 }
