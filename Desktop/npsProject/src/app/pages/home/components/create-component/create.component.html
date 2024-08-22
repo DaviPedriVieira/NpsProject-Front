@@ -1,24 +1,24 @@
 <div id="container">
     <div class="create-container">
-        <div class="create-div" (click)="openGroupsCreateModals()">
+        <div class="create-div" (click)="openGroupsCreateModal()">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar grupo</div>
     </div>
     <div class="create-container">
-        <div class="create-div" (click)="openFormsCreateModals()">
+        <div class="create-div" (click)="openFormsCreateModal()">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar formulário</div>
     </div>
     <div class="create-container">
-        <div class="create-div" (click)="openQuestionsCreateModals()">
+        <div class="create-div" (click)="openQuestionsCreateModal()">
             <span class="material-symbols-outlined">add</span>
         </div>
         <div class="text-div">Criar pergunta</div>
     </div>
-
     <app-groups-create-modal></app-groups-create-modal>
     <app-forms-create-modal></app-forms-create-modal>
     <app-questions-create-modal></app-questions-create-modal>
+    <app-sucessful-message-modal></app-sucessful-message-modal>
 </div>

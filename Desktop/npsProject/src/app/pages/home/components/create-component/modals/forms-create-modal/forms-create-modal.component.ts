@@ -1,8 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
+import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
@@ -19,7 +20,7 @@ export class FormsCreateModalComponent {
   selectedGroupId: string = '';
   groups: FormsGroupModel[] = [];
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService) {}
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private groupNotificationService: GroupNotificationService) {}
 
   openModal() {
     this.createFormsModal.nativeElement.showModal();
@@ -27,8 +28,7 @@ export class FormsCreateModalComponent {
   }
 
   closeModal() {
-    this.newForm = {id: 0, groupId: 0, name: '', questions: []}
-    this.invalidInputs = false;
+    this.ResetVariables();
     this.createFormsModal.nativeElement.close();
   }
 
@@ -70,9 +70,13 @@ export class FormsCreateModalComponent {
 
     this.newForm.groupId = Number(this.selectedGroupId);
     this.formsService.CreateForm(this.newForm).subscribe(() => {
-      setTimeout(() => {
-        this.sucessfulMessageModal.openModal();
-      });
+      this.closeModal()
+      this.groupNotificationService.notifyGroupsCreated()
     })
+  }
+
+  ResetVariables() {
+    this.newForm = {id: 0, groupId: 0, name: '', questions: []}
+    this.invalidInputs = false;
   }
 }

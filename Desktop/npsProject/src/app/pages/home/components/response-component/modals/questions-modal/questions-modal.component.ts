@@ -2,10 +2,10 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
+import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
-import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 
 @Component({
@@ -17,16 +17,14 @@ export class QuestionsModalComponent {
   @ViewChild('questionsmodal') formsmodal!: ElementRef<HTMLDialogElement>
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent;
   @Input() formId!: number;
-  @Output() answersSubmited = new EventEmitter<void>(); 
   questions: QuestionModel[] = []; 
   authorized!: boolean; 
   questionId: number = 0
   selectedGrades: number[] = [];
   descriptions: string[] = [];
 
-  constructor(private questionService: QuestionService, private loginService: LoginService, private answersService: AnswerService) { }
+  constructor(private questionService: QuestionService, private loginService: LoginService, private answersService: AnswerService, private groupNotificationService: GroupNotificationService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
@@ -80,12 +78,6 @@ export class QuestionsModalComponent {
     });
   }
 
-  openSucessfullModal(){
-    setTimeout(() => {
-      this.sucessfulMessageModalComponent.openModal();
-    });
-  }
-
   GetAllQuestionsIds() {
     this.questionService.GetQuestionsIds(this.formId).subscribe((data) => {
       const questionIdsList = data;
@@ -112,8 +104,8 @@ export class QuestionsModalComponent {
 
   SubmitAnswers(answers: AnswerModel[]) {
     this.answersService.SubmitAnswers(answers).subscribe(() => {
-      this.openSucessfullModal();
-      this.answersSubmited.emit()
+      this.closeModal()
+      this.groupNotificationService.notifyToCloseModals();
     })
   }
 

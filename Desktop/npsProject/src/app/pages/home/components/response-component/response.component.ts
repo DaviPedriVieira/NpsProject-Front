@@ -6,6 +6,7 @@ import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.c
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-response',
@@ -16,6 +17,7 @@ export class ResponseComponent implements OnInit {
   @ViewChild(FormsModalComponent) formsModalComponent!: FormsModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent;
   formsGroups: FormsGroupModel[] = [];
   authorized!: boolean;
   groupId: number = 0;
@@ -37,6 +39,11 @@ export class ResponseComponent implements OnInit {
 
     this.groupNotificationService.groupCreated$.subscribe(() => {
       this.loadFormsGroups();
+    })
+
+    this.groupNotificationService.closeModals$.subscribe(() => {
+      this.formsModalComponent.closeModal()
+      this.sucessfulMessageModalComponent.openModal('Respostas enviadas!')
     })
   }
 
@@ -77,6 +84,12 @@ export class ResponseComponent implements OnInit {
     this.GetGroupId(event);
     setTimeout(() => {
       this.updateModalComponent.openModal();
+    });
+  }
+
+  openSucessfullModal(){
+    setTimeout(() => {
+      this.sucessfulMessageModalComponent.openModal('Respostas enviadas!');
     });
   }
 }

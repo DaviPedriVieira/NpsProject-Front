@@ -7,15 +7,14 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 })
 export class SucessfulMessageModalComponent {
   @ViewChild('sucessfullMessageModal') sucessfulMessageModal!: ElementRef<HTMLDialogElement>
-  @Input() message!: string;
-  @Output() sucessfulModalClosed = new EventEmitter<void>();
+  message!: string;
 
-  openModal() {
+  openModal(message: string) {
+    this.message = message;
     this.sucessfulMessageModal.nativeElement.showModal();
   }
 
   closeModal() {
     this.sucessfulMessageModal.nativeElement.close();
-    this.sucessfulModalClosed.emit()
   }
 }

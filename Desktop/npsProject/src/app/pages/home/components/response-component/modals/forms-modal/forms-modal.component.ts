@@ -5,6 +5,7 @@ import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.c
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { QuestionsModalComponent } from '../questions-modal/questions-modal.component';
 import { LoginService } from 'src/app/services/login-service/login.service';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-forms-modal',

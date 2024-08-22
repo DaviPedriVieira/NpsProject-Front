@@ -14,22 +14,68 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 350px;
-    height: 350px;
+    width: 450px;
+    height: 450px;
     border-radius: 100%;
     background-color: rgb(63, 74, 173);
+    border: 1px solid black;
+    box-shadow: 0px 10px 15px gray;
 }
 
 #graphic-center-div {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     border-radius: 100%;
     background-color: white;
+    border: 1px solid black;
 
     div {
         font-size: 3rem;
     }
 }
+
+#captions-container {
+    width: 400px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between; 
+}
+
+.caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 150px;
+}
+
+#red-caption{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(209, 35, 35);
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-right: 5px;
+}
+
+#blue-caption{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(63, 74, 173);
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-right: 5px;
+}
+
+#green-caption{
+    width: 30px;
+    height: 30px;
+    background-color:rgb(36, 151, 32);
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-right: 5px;
+}
+

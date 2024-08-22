@@ -41,5 +41,4 @@
     </div>
     <app-delete-modal [itemId]="questionId" [itemType]="'question'"(itemDeleted)="loadQuestions()"></app-delete-modal>
     <app-update-modal [itemId]="questionId" [itemType]="'question'"(itemUpdated)="loadQuestions()"></app-update-modal>
-    <app-sucessful-message-modal [message]="'Respostas enviadas!'" (sucessfulModalClosed)="closeModal()"></app-sucessful-message-modal>
 </dialog>

@@ -27,7 +27,7 @@ export class NpsComponent {
       this.graphicBorder.nativeElement.style.backgroundColor = 'rgb(63, 74, 173)';
     } 
     else {
-      this.graphicBorder.nativeElement.style.backgroundColor = 'rgb(192, 32, 32)';
+      this.graphicBorder.nativeElement.style.backgroundColor = 'rgb(209, 35, 35)';
     }
   }
 }

@@ -1,10 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-groups-create-modal',
@@ -13,7 +12,6 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 })
 export class GroupsCreateModalComponent {
   @ViewChild('createGroupsModal') formsmodal!: ElementRef<HTMLDialogElement>
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   newGroup: FormsGroupModel = { id: 0, name: '', forms: [] };
   invalidInputs: boolean = false;
 
@@ -24,8 +22,7 @@ export class GroupsCreateModalComponent {
   }
 
   closeModal() {
-    this.newGroup = { id: 0, name: '', forms: [] };
-    this.invalidInputs = false;
+    this.ResetVariables();
     this.formsmodal.nativeElement.close();
   }
 
@@ -71,10 +68,13 @@ export class GroupsCreateModalComponent {
     }
 
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe(() => {
-      setTimeout(() => {
-        this.sucessfulMessageModal.openModal();
-      });
+      this.closeModal()
       this.groupNotificationService.notifyGroupsCreated();
     })
+  }
+
+  ResetVariables() {
+    this.newGroup = { id: 0, name: '', forms: [] };
+    this.invalidInputs = false;
   }
 }
