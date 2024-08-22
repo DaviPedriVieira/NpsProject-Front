@@ -57,3 +57,16 @@
     cursor: pointer;
 }
 
+#change-screen-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+
+    span {
+        margin: 0;
+        font-size: 70px;
+    }
+}

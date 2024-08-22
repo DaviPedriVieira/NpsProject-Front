@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
 
@@ -8,6 +8,7 @@ import { LoginService } from 'src/app/services/login-service/login.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  @Input() toWhichScreen!: string;
 
   nome: string | null = ''
 
@@ -20,5 +21,13 @@ export class HeaderComponent {
   Logout() {
     this.loginService.Logout().subscribe()
     this.router.navigate(['/login'])
+  }
+
+  goToHomeScreen() {
+    this.router.navigate(['/home'])
+  }
+
+  goToNpsScreen() {
+    this.router.navigate(['/nps'])
   }
 }

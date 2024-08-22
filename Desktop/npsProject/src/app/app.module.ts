@@ -18,6 +18,7 @@ import { GroupsCreateModalComponent } from './pages/home/components/create-compo
 import { FormsCreateModalComponent } from './pages/home/components/create-component/modals/forms-create-modal/forms-create-modal.component';
 import { QuestionsCreateModalComponent } from './pages/home/components/create-component/modals/questions-create-modal/questions-create-modal.component';
 import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
+import { NpsComponent } from './pages/nps-page/nps.component';
 
 
 @NgModule({
@@ -36,12 +37,13 @@ import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal
     FormsCreateModalComponent,
     SucessfulMessageModalComponent,
     QuestionsCreateModalComponent,
+    NpsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
