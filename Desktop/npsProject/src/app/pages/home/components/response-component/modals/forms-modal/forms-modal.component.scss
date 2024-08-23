@@ -8,15 +8,15 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     border-radius: 1rem;
     padding: 20px;
     box-shadow: 0px 5px 15px rgb(73, 73, 73);
-}
 
-#forms-title {
-    margin-top: 10px;
-    margin-bottom: 40px;
+    h2 {
+        margin-top: 10px;
+        margin-bottom: 40px;
+    }
 }
 
 #forms-container {
@@ -26,12 +26,12 @@
     justify-items: center;
 }
 
-.forms-div{
+.forms-div {
     height: 200px;
     width: 300px;
     display: flex;
-    text-align: center;
     flex-direction: column;
+    text-align: center;
     justify-content: end;
     border-radius: 1rem;
     background-color: white;
@@ -40,20 +40,20 @@
     margin-bottom: 30px;
 }
 
-.forms-div:hover{
+.forms-div:hover {
     border: 1px solid black;
     transition: 0.3s;
     transform: scale(1.02);
-} 
+}
 
-#options{
+#options {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
 }
 
-#form-name-div{
+#form-name-div {
     margin-bottom: 10px;
     padding: 5px;
 }
@@ -64,13 +64,13 @@
     left: 10px;
 }
 
-#footer{
+#footer {
     display: flex;
     justify-content: center;
     padding-top: 20px;
 }
 
-.close-modal-btn{
+.close-modal-btn {
     height: 40px;
     width: 100px;
     background-color: rgb(167, 45, 45);
@@ -81,14 +81,13 @@
     cursor: pointer;
 }
 
-.close-modal-btn:hover{
+.close-modal-btn:hover {
     transition: 0.3s;
     background-color: rgb(201, 55, 55);
 }
 
-.no-forms-message{
-    margin-top: 60px;
-    margin-bottom: 40px;
+.no-forms-message {
+    margin: 60px 0px 40px 0px;
     text-align: center;
     font-size: 20px;
 }

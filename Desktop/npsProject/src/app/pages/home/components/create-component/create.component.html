@@ -17,8 +17,15 @@
         </div>
         <div class="text-div">Criar pergunta</div>
     </div>
+    <div class="create-container">
+        <div class="create-div" (click)="openCheckAnswersCreateModal()">
+            <span class="material-symbols-outlined">checkbook</span>
+        </div>
+        <div class="text-div">Consultar respostas</div>
+    </div>
     <app-groups-create-modal></app-groups-create-modal>
     <app-forms-create-modal></app-forms-create-modal>
     <app-questions-create-modal></app-questions-create-modal>
+    <app-check-answers-modal></app-check-answers-modal>
     <app-sucessful-message-modal></app-sucessful-message-modal>
 </div>

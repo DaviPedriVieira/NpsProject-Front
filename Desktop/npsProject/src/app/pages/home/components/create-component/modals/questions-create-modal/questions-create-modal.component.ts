@@ -1,10 +1,9 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
-import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service'; 
 import { QuestionService } from 'src/app/services/question-service/question.service';
-import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-questions-create-modal',
@@ -13,13 +12,12 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 })
 export class QuestionsCreateModalComponent {
   @ViewChild('createQuestionsModal') createQuestionsModal!: ElementRef<HTMLDialogElement>
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   questions: QuestionModel[] = [];
   invalidInputs: boolean = false;
   forms: FormModel[] = []
   selectedFormId: string = '';
 
-  constructor(private formsService: FormService, private questionsService: QuestionService, private groupNotificationService: GroupNotificationService) {}
+  constructor(private formsService: FormService, private questionsService: QuestionService, private notificationService: NotificationService) {}
 
   openModal() {
     this.createQuestionsModal.nativeElement.showModal()
@@ -48,7 +46,7 @@ export class QuestionsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if(this.selectedFormId.trim() == '')
+    if(!this.selectedFormId.trim())
       return true
 
     if(this.questions.length == 0)
@@ -74,7 +72,7 @@ export class QuestionsCreateModalComponent {
 
     this.questionsService.CreateQuestion(this.questions).subscribe(() => {
       this.closeModal()
-      this.groupNotificationService.notifyGroupsCreated()
+      this.notificationService.notifyItemCreated()
     })
   }
 }

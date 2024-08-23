@@ -2,8 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
-import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
-import { LoginService } from 'src/app/services/login-service/login.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
@@ -18,32 +17,22 @@ export class QuestionsModalComponent {
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @Input() formId!: number;
+  @Input() authorized!: boolean;
   questions: QuestionModel[] = []; 
-  authorized!: boolean; 
   questionId: number = 0
+  invalidInputs: boolean = false
   selectedGrades: number[] = [];
   descriptions: string[] = [];
 
-  constructor(private questionService: QuestionService, private loginService: LoginService, private answersService: AnswerService, private groupNotificationService: GroupNotificationService) { }
+  constructor(private questionService: QuestionService, private answersService: AnswerService, private notificationService: NotificationService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
-    const username = localStorage.getItem('Username');
-
-    if (username == null) {
-      this.authorized == false;
-      return
-    } 
-
-    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-      this.authorized = response;
-    });
-
     this.loadQuestions()
   }
 
   closeModal() {
-    this.ResetArrays()
+    this.ResetVariables()
     this.formsmodal.nativeElement.close();
   }
 
@@ -79,10 +68,29 @@ export class QuestionsModalComponent {
   }
 
   GetAllQuestionsIds() {
+    if(!this.ValidateSelects()){
+      this.invalidInputs = true;
+      return
+    }
+
     this.questionService.GetQuestionsIds(this.formId).subscribe((data) => {
       const questionIdsList = data;
       this.PopulateAnswers(questionIdsList);
     })
+  }
+
+  ValidateSelects(): boolean {
+    if(this.selectedGrades.length == 0){
+      return false;
+    }
+
+    for (let i = 0; i < this.selectedGrades.length; i++) {
+      if(this.selectedGrades[i] == null){
+        return false
+      }
+    }
+
+    return true
   }
 
   PopulateAnswers(questionIdsList: number[]) {
@@ -98,6 +106,7 @@ export class QuestionsModalComponent {
         date: new Date(),
       }
       answers[i] = newAnswer;
+      console.log(this.selectedGrades[i])
     }
     this.SubmitAnswers(answers)
   }
@@ -105,12 +114,13 @@ export class QuestionsModalComponent {
   SubmitAnswers(answers: AnswerModel[]) {
     this.answersService.SubmitAnswers(answers).subscribe(() => {
       this.closeModal()
-      this.groupNotificationService.notifyToCloseModals();
+      this.notificationService.notifyAnswersSubmited();
     })
   }
 
-  ResetArrays() {
+  ResetVariables() {
     this.selectedGrades = [];
     this.descriptions = [];
+    this.invalidInputs = false;
   }
 }

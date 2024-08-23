@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login-page/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CookieService } from 'ngx-cookie-service';
-import { HeaderComponent } from './pages/home/components/header-component/header.component';
+import { HeaderComponent } from './shared/header-component/header.component';
 import { CreateComponent } from './pages/home/components/create-component/create.component';
 import { ResponseComponent } from './pages/home/components/response-component/response.component';
 import { FormsModalComponent } from './pages/home/components/response-component/modals/forms-modal/forms-modal.component';
@@ -19,6 +19,7 @@ import { FormsCreateModalComponent } from './pages/home/components/create-compon
 import { QuestionsCreateModalComponent } from './pages/home/components/create-component/modals/questions-create-modal/questions-create-modal.component';
 import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
 import { NpsComponent } from './pages/nps-page/nps.component';
+import { CheckAnswersModalComponent } from './pages/home/components/create-component/modals/check-answers-modal/check-answers-modal/check-answers-modal.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { NpsComponent } from './pages/nps-page/nps.component';
     SucessfulMessageModalComponent,
     QuestionsCreateModalComponent,
     NpsComponent,
+    CheckAnswersModalComponent,
   ],
   imports: [
     BrowserModule,

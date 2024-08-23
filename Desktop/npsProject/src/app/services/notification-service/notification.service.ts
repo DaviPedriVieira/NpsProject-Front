@@ -4,18 +4,18 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GroupNotificationService {
+export class NotificationService {
   private groupCreatedSource = new Subject<void>();
   private closeModalsSource = new Subject<void>();
 
   groupCreated$ = this.groupCreatedSource.asObservable();
   closeModals$ = this.closeModalsSource.asObservable();
 
-  notifyGroupsCreated() {
+  notifyItemCreated() {
     this.groupCreatedSource.next()
   }
 
-  notifyToCloseModals() {
+  notifyAnswersSubmited() {
     this.closeModalsSource.next()
   }
 }

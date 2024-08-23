@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { FormsModalComponent } from './modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
@@ -18,30 +18,20 @@ export class ResponseComponent implements OnInit {
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent;
+  @Input() authorized!: boolean;
   formsGroups: FormsGroupModel[] = [];
-  authorized!: boolean;
   groupId: number = 0;
 
-  constructor(private formsGroupService: FormsGroupService, private loginService: LoginService, private groupNotificationService: GroupNotificationService) { }
+  constructor(private formsGroupService: FormsGroupService, private loginService: LoginService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    const username = localStorage.getItem('Username');
-    
-    if (username == null) {
-      this.authorized == false;
-      return
-    }
-    
-    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-      this.authorized = response;
-      this.loadFormsGroups();
-    });
+    this.loadFormsGroups();
 
-    this.groupNotificationService.groupCreated$.subscribe(() => {
+    this.notificationService.groupCreated$.subscribe(() => {
       this.loadFormsGroups();
     })
 
-    this.groupNotificationService.closeModals$.subscribe(() => {
+    this.notificationService.closeModals$.subscribe(() => {
       this.formsModalComponent.closeModal()
       this.sucessfulMessageModalComponent.openModal('Respostas enviadas!')
     })

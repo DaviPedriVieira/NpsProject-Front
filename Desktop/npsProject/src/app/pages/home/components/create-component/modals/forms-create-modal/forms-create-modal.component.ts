@@ -1,11 +1,10 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
-import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-forms-create-modal',
@@ -14,13 +13,12 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 })
 export class FormsCreateModalComponent {
   @ViewChild('createFormsModal') createFormsModal!: ElementRef<HTMLDialogElement>
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   newForm: FormModel = {id: 0, groupId: 0, name: '', questions: []}
   invalidInputs: boolean = false;
   selectedGroupId: string = '';
   groups: FormsGroupModel[] = [];
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private groupNotificationService: GroupNotificationService) {}
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private notificationService: NotificationService) {}
 
   openModal() {
     this.createFormsModal.nativeElement.showModal();
@@ -48,7 +46,7 @@ export class FormsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if(!this.selectedGroupId.trim())
+    if(!this.selectedGroupId.trim()) 
       return true
 
     if (!this.newForm.name.trim())
@@ -71,7 +69,7 @@ export class FormsCreateModalComponent {
     this.newForm.groupId = Number(this.selectedGroupId);
     this.formsService.CreateForm(this.newForm).subscribe(() => {
       this.closeModal()
-      this.groupNotificationService.notifyGroupsCreated()
+      this.notificationService.notifyItemCreated()
     })
   }
 

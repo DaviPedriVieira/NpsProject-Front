@@ -3,7 +3,8 @@ import { GroupsCreateModalComponent } from './modals/groups-create-modal/groups-
 import { FormsCreateModalComponent } from './modals/forms-create-modal/forms-create-modal.component';
 import { QuestionsCreateModalComponent } from './modals/questions-create-modal/questions-create-modal.component';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
-import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CheckAnswersModalComponent } from './modals/check-answers-modal/check-answers-modal/check-answers-modal.component';
 
 @Component({
   selector: 'app-create',
@@ -14,13 +15,14 @@ export class CreateComponent implements OnInit{
   @ViewChild(GroupsCreateModalComponent) groupsCreateModal!: GroupsCreateModalComponent;
   @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
   @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
+  @ViewChild(CheckAnswersModalComponent) checkAnswersModalComponent!: CheckAnswersModalComponent;
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   message: string = ''
 
-  constructor(private groupNotificationService: GroupNotificationService) {}
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    this.groupNotificationService.groupCreated$.subscribe(() => {
+    this.notificationService.groupCreated$.subscribe(() => {
       this.sucessfulMessageModal.openModal('Criado com sucesso!')
     })
   }
@@ -40,6 +42,12 @@ export class CreateComponent implements OnInit{
   openQuestionsCreateModal() {
     setTimeout(() => {
       this.questionsCreateModal.openModal();
+    });
+  }
+
+  openCheckAnswersCreateModal() {
+    setTimeout(() => {
+      this.checkAnswersModalComponent.openModal();
     });
   }
 }

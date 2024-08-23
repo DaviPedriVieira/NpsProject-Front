@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
-import { GroupNotificationService } from 'src/app/services/group-notification-service/group-notification.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class GroupsCreateModalComponent {
   newGroup: FormsGroupModel = { id: 0, name: '', forms: [] };
   invalidInputs: boolean = false;
 
-  constructor(private formsGroupService: FormsGroupService, private groupNotificationService: GroupNotificationService) { }
+  constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
@@ -69,7 +69,7 @@ export class GroupsCreateModalComponent {
 
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe(() => {
       this.closeModal()
-      this.groupNotificationService.notifyGroupsCreated();
+      this.notificationService.notifyItemCreated();
     })
   }
 

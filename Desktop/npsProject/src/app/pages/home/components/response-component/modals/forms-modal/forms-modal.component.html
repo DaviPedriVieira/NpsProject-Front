@@ -1,7 +1,5 @@
 <dialog id="formsmodal" #formsmodal>
-    <div id="forms-title">
         <h2>Formulários</h2>
-    </div>
     <div *ngIf="forms.length == 0" class="no-forms-message">
         Não há formulários nesse grupo.
     </div>
@@ -22,5 +20,5 @@
     </div>
     <app-delete-modal [itemId]="formId" [itemType]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
     <app-update-modal [itemId]="formId" [itemType]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
-    <app-questions-modal [formId]="formId"></app-questions-modal>
+    <app-questions-modal [formId]="formId" [authorized]="authorized"></app-questions-modal>
 </dialog>

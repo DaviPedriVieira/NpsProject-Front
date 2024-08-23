@@ -3,7 +3,7 @@
         <img src="assets/logo.png" alt="">
     </div>
     <div id="user">
-        <div id="change-screen-div">
+        <div id="change-screen-div" *ngIf="authorized">
             <span class="material-symbols-outlined" *ngIf="toWhichScreen == 'NPS'" (click)="goToNpsScreen()">speed</span>
             <span class="material-symbols-outlined"*ngIf="toWhichScreen == 'Home'" (click)="goToHomeScreen()">home</span>
             {{ toWhichScreen }}

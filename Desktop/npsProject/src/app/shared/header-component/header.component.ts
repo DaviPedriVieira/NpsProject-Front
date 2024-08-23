@@ -9,13 +9,17 @@ import { LoginService } from 'src/app/services/login-service/login.service';
 })
 export class HeaderComponent {
   @Input() toWhichScreen!: string;
-
-  nome: string | null = ''
+  authorized: boolean = false;
+  nome: string = ''
 
   constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
-    this.nome = localStorage.getItem('Username');
+    this.nome = localStorage.getItem('Username') || '';
+
+    this.loginService.isAuthorized(this.nome).subscribe((data) => {
+      this.authorized = data;
+    })
   }
 
   Logout() {

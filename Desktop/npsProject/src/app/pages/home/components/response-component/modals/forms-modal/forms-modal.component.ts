@@ -4,8 +4,6 @@ import { FormModel } from 'src/app/interfaces/form';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { QuestionsModalComponent } from '../questions-modal/questions-modal.component';
-import { LoginService } from 'src/app/services/login-service/login.service';
-import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-forms-modal',
@@ -18,25 +16,14 @@ export class FormsModalComponent {
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @Input() groupId!: number;
+  @Input() authorized!: boolean;
   forms: FormModel[] = [];
-  authorized!: boolean;
   formId: number = 0
 
-  constructor(private formService: FormService, private loginService: LoginService) { }
+  constructor(private formService: FormService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
-    const username = localStorage.getItem('Username');
-
-    if (username == null) {
-      this.authorized == false;
-      return  
-    } 
-
-    this.loginService.isAuthorized(username).subscribe((response: boolean) => {
-      this.authorized = response;
-    });
-
     this.loadForms()
   }
 

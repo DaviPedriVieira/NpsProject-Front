@@ -1,11 +1,8 @@
 <dialog id="createGroupsModal" #createGroupsModal>
-  <div id="header-div">
     <h2>Criar grupo</h2>
-  </div>
-  <div id="container">
-    <div id="items-div">
+    <div id="header-div">
       <div class="groups-input-box">
-        <div>Nome do grupo: </div>
+        <div>Grupo: </div>
         <input type="text" placeholder="Nome do grupo" [(ngModel)]="newGroup.name">
         <button class="add-form-button" (click)="CreateForm()">
           <span class="material-symbols-outlined">add</span>
@@ -15,19 +12,19 @@
     <div id="forms-container">
       <div class="form-container" *ngFor="let form of newGroup.forms; let formIndex = index">
         <div class="input-box">
-          <div class="forms-header">{{ formIndex + 1 }}° formulário:
+          <div class="forms-header">Formulário:
             <div id="form-buttons-div">
-              <button class="question-buttons" (click)="CreateQuestion(formIndex)">
+              <button (click)="CreateQuestion(formIndex)">
                 <span class="material-symbols-outlined">add</span>
               </button>
-              <button class="question-buttons" (click)="DeleteForm(formIndex)">
+              <button (click)="DeleteForm(formIndex)">
                 <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
           </div>
           <input type="text" placeholder="Nome do formulário" [(ngModel)]="form.name">
         </div>
-        <div class="questions-header" *ngIf="form.questions.length > 0">
+        <div id="questions-title" *ngIf="form.questions.length > 0">
           Perguntas:
         </div>
         <div id="questions-container" *ngFor="let question of form.questions; let questionsIndex = index">
@@ -47,5 +44,4 @@
         <button class="submit-btn" (click)="CreateGroup()">Enviar</button>
       </div>
     </div>
-  </div>
 </dialog>
