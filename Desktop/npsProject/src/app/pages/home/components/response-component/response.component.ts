@@ -22,13 +22,17 @@ export class ResponseComponent implements OnInit {
   formsGroups: FormsGroupModel[] = [];
   groupId: number = 0;
 
-  constructor(private formsGroupService: FormsGroupService, private loginService: LoginService, private notificationService: NotificationService) { }
+  constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadFormsGroups();
 
     this.notificationService.groupCreated$.subscribe(() => {
       this.loadFormsGroups();
+    })
+
+    this.notificationService.updated$.subscribe(() => {
+      this.sucessfulMessageModalComponent.openModal('Editado com sucesso!')
     })
 
     this.notificationService.closeModals$.subscribe(() => {

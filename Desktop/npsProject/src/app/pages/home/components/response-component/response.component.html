@@ -12,6 +12,9 @@
       </div>
     </div>
   </div>
+  <div id="no-groups-message" *ngIf="formsGroups.length == 0">
+    Não há grupos de formulários cadastrados
+  </div>
   <app-forms-modal [groupId]="groupId" [authorized]="authorized"></app-forms-modal>
   <app-delete-modal [itemId]="groupId" [itemType]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
   <app-update-modal [itemId]="groupId" [itemType]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>

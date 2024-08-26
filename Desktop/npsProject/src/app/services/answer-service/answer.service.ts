@@ -15,4 +15,12 @@ export class AnswerService {
   SubmitAnswers(answers: AnswerModel[]): Observable<AnswerModel[]> {
     return this.http.post<AnswerModel[]>(`${this.apiUrl}`, answers, {withCredentials: true})
   }
+
+  GetAnswersByUserId(userId: number): Observable<AnswerModel[]> {
+    return this.http.get<AnswerModel[]>(`${this.apiUrl}/User/${userId}`, {withCredentials: true})
+  }
+
+  GetAnswersByQuestionId(questionId: number): Observable<AnswerModel[]> {
+    return this.http.get<AnswerModel[]>(`${this.apiUrl}/Question/${questionId}`, {withCredentials: true})
+  }
 }

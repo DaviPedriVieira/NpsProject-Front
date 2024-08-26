@@ -5,4 +5,6 @@ export interface AnswerModel {
     grade: number,
     description: string,
     date: Date,
+    username?: string,
+    questionContent?: string
 }

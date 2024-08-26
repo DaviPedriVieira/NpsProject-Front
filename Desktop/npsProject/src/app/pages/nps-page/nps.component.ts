@@ -7,7 +7,7 @@ import { NpsService } from 'src/app/services/nps-service/nps.service';
   styleUrls: ['./nps.component.scss']
 })
 export class NpsComponent {
-  @ViewChild('graphicBorderDiv') graphicBorder!: ElementRef<HTMLDivElement>;
+  @ViewChild('npsCircle') graphicBorder!: ElementRef<HTMLDivElement>;
   npsScore: number = 0;
 
   constructor(private npsService: NpsService) {}

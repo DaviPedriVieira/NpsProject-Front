@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class UpdateModalComponent {
   newName: string = '';
   invalidInput: boolean = false;
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService) { }
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notifyService: NotificationService) { }
 
   openModal() {
     this.updatemodal.nativeElement.showModal();
@@ -29,6 +30,7 @@ export class UpdateModalComponent {
   update() {
     if (this.itemType == 'group' && this.NewNameValidator()) {
       this.formsGroupService.UpdateFormsGroup(this.itemId, this.newName).subscribe(() => {
+        this.notifyService.notifyItemCreated()
         this.closeModal()
         this.itemUpdated.emit()
         this.newName = '';
@@ -36,6 +38,7 @@ export class UpdateModalComponent {
     }
     else if (this.itemType == 'form' && this.NewNameValidator()) {
       this.formsService.UpdateForm(this.itemId, this.newName).subscribe(() => {
+        this.notifyService.notifyItemCreated()
         this.closeModal()
         this.itemUpdated.emit()
         this.newName = '';
@@ -43,6 +46,7 @@ export class UpdateModalComponent {
     }
     else if (this.itemType == 'question' && this.NewNameValidator()) {
       this.questionService.UpdateQuestion(this.itemId, this.newName).subscribe(() => {
+        this.notifyService.notifyItemUpdated()
         this.closeModal()
         this.itemUpdated.emit()
         this.newName = '';

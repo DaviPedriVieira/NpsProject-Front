@@ -12,8 +12,16 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
+  GetAllQuestions(): Observable<QuestionModel[]> {
+    return this.http.get<QuestionModel[]>(`${this.apiUrl}`, {withCredentials: true})
+  }
+
   GetQuestions(formId: number): Observable<QuestionModel[]> {
     return this.http.get<QuestionModel[]>(`${this.apiUrl}/Form/${formId}`, {withCredentials: true})
+  }
+
+  GetQuestionById(id: number): Observable<QuestionModel> {
+    return this.http.get<QuestionModel>(`${this.apiUrl}/${id}`, {withCredentials: true})
   }
 
   GetQuestionsIds(formId: number): Observable<number[]> {

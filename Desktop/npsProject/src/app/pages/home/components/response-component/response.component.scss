@@ -1,4 +1,6 @@
 #container {
+    min-height: 200px;
+    min-width: 1400px;
     margin-top: 50px;
     border-radius: 2rem;
     background-color: rgb(233, 233, 233);
@@ -55,4 +57,11 @@
     position: absolute;
     top: 10px;
     left: 10px;
+}
+
+
+#no-groups-message {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    color: gray;
 }

@@ -1,63 +1,42 @@
 <dialog id="checkAnswersModal" #checkAnswersModal>
     <h2>Consultar respostas</h2>
-    <div id="header-div">
+    <div id="header-div" *ngIf="mode == 'questionMode'">
         <div>Pergunta que deseja ver as respostas: </div>
         <div class="main-input-container">
-            <select class="selects" [(ngModel)]="selectedQuestionId">
+            <select class="selects" [(ngModel)]="selectedId" (change)="GetAnswersByQuestionId()">
                 <option value="" disabled selected hidden>Selecione uma pergunta</option>
                 <option *ngFor="let question of questions" [value]="question.id">
                     {{ question.content }}
                 </option>
             </select>
-            <button><span class="material-symbols-outlined">sync</span></button>
-        </div>  
+            <button><span class="material-symbols-outlined" (click)="changeMode()">sync</span></button>
+        </div>
     </div>
-    <div id="header-div">
-        <div>Pergunta que deseja ver as respostas: </div>
+    <div id="header-div" *ngIf="mode == 'userMode'">
+        <div>Usuário que deseja ver as respostas: </div>
         <div class="main-input-container">
-            <select class="selects" [(ngModel)]="selectedQuestionId">
-                <option value="" disabled selected hidden>Selecione uma pergunta</option>
-                <option *ngFor="let question of questions" [value]="question.id">
-                    {{ question.content }}
+            <select class="selects" [(ngModel)]="selectedId" (change)="GetAnswersByUserId()">
+                <option value="" disabled selected hidden>Selecione um usuário</option>
+                <option *ngFor="let user of users" [value]="user.id">
+                    {{ user.name }}
                 </option>
             </select>
-            <button><span class="material-symbols-outlined">sync</span></button>
-        </div>  
+            <button><span class="material-symbols-outlined" (click)="changeMode()">sync</span></button>
+        </div>
     </div>
-    <!-- <div id="forms-container">
-        <div id="answers-title" *ngIf="consultedQuestion.answers.length > 0">
-            Respostas:
-        </div>
-        <div class="form-container" *ngFor="let answer of question.answers; let i = index">
-            <div class="input-box">
-                <div class="forms-header">Formulário:
-                    <div id="form-buttons-div">
-                        <button (click)="CreateQuestion(formIndex)">
-                            <span class="material-symbols-outlined">add</span>
-                        </button>
-                        <button (click)="DeleteForm(formIndex)">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                    </div>
-                </div>
-                <input type="text" placeholder="Nome do formulário" [(ngModel)]="form.name">
+    <div id="answers-container">
+        <div class="answer-container" *ngFor="let answer of answers; let i = index">
+            <div class="answer-header">
+                <p *ngIf="mode == 'questionMode'">{{ answer.username }}</p>
+                <p *ngIf="mode == 'userMode'">{{ answer.questionContent }}</p>
             </div>
-            <div id="questions-title" *ngIf="form.questions.length > 0">
-                Perguntas:
-            </div>
-            <div id="questions-container" *ngFor="let question of form.questions; let questionsIndex = index">
-                <div class="questions-input-box">
-                    <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
-                    <button (click)="DeleteQuestion(formIndex, questionsIndex)">
-                        <span class="material-symbols-outlined">delete</span>
-                    </button>
-                </div>
+            <div class="answer-info">
+                <div>Nota: {{ answer.grade }}</div>
+                <div>Descrição: {{ answer.description }}</div>
             </div>
         </div>
-    </div> -->
+    </div>
     <div id="allign-buttons-div">
-        <div id="button-container">
-            <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-        </div>
+        <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
 </dialog>
