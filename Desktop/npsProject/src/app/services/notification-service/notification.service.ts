@@ -6,22 +6,16 @@ import { Subject } from 'rxjs';
 })
 export class NotificationService {
   private groupCreatedSource = new Subject<void>();
-  private closeModalsSource = new Subject<void>();
-  private updated = new Subject<void>();
+  private answersSubmitedSource = new Subject<void>();
 
   groupCreated$ = this.groupCreatedSource.asObservable();
-  closeModals$ = this.closeModalsSource.asObservable();
-  updated$ = this.updated.asObservable();
+  answersSubmited$ = this.answersSubmitedSource.asObservable();
 
   notifyItemCreated() {
     this.groupCreatedSource.next()
   }
 
   notifyAnswersSubmited() {
-    this.closeModalsSource.next()
-  }
-
-  notifyItemUpdated() {
-    this.updated.next()
+    this.answersSubmitedSource.next()
   }
 }

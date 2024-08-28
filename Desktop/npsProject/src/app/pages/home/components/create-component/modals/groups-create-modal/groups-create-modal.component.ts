@@ -32,7 +32,7 @@ export class GroupsCreateModalComponent {
   }
 
   CreateQuestion(index: number) {
-    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '', answers: [] }
+    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '' }
     this.newGroup.forms[index].questions.push(newQuestion)
   }
 

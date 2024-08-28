@@ -30,7 +30,6 @@ export class UpdateModalComponent {
   update() {
     if (this.itemType == 'group' && this.NewNameValidator()) {
       this.formsGroupService.UpdateFormsGroup(this.itemId, this.newName).subscribe(() => {
-        this.notifyService.notifyItemCreated()
         this.closeModal()
         this.itemUpdated.emit()
         this.newName = '';
@@ -38,7 +37,6 @@ export class UpdateModalComponent {
     }
     else if (this.itemType == 'form' && this.NewNameValidator()) {
       this.formsService.UpdateForm(this.itemId, this.newName).subscribe(() => {
-        this.notifyService.notifyItemCreated()
         this.closeModal()
         this.itemUpdated.emit()
         this.newName = '';
@@ -46,7 +44,6 @@ export class UpdateModalComponent {
     }
     else if (this.itemType == 'question' && this.NewNameValidator()) {
       this.questionService.UpdateQuestion(this.itemId, this.newName).subscribe(() => {
-        this.notifyService.notifyItemUpdated()
         this.closeModal()
         this.itemUpdated.emit()
         this.newName = '';

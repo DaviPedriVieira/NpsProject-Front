@@ -20,6 +20,8 @@ import { QuestionsCreateModalComponent } from './pages/home/components/create-co
 import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
 import { NpsComponent } from './pages/nps-page/nps.component';
 import { CheckAnswersModalComponent } from './pages/home/components/create-component/modals/check-answers-modal/check-answers-modal/check-answers-modal.component';
+import { NpsChartComponent } from './pages/nps-page/components/nps-chart-component/nps-chart/nps-chart.component';
+import { NpsUsersComponent } from './pages/nps-page/components/nps-users-component/nps-users/nps-users.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { CheckAnswersModalComponent } from './pages/home/components/create-compo
     QuestionsCreateModalComponent,
     NpsComponent,
     CheckAnswersModalComponent,
+    NpsChartComponent,
+    NpsUsersComponent,
   ],
   imports: [
     BrowserModule,

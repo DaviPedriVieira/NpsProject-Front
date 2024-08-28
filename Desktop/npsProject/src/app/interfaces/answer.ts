@@ -4,7 +4,6 @@ export interface AnswerModel {
     userId: number,
     grade: number,
     description: string,
-    date: Date,
     username?: string,
     questionContent?: string
 }

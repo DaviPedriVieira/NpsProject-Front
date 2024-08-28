@@ -37,7 +37,7 @@ export class FormsCreateModalComponent {
   }
 
   CreateQuestion() {
-    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '', answers: [] }
+    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '' }
     this.newForm.questions.push(newQuestion)
   }
 

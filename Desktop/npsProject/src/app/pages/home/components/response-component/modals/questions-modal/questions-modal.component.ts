@@ -103,7 +103,6 @@ export class QuestionsModalComponent {
         grade: this.selectedGrades[i],
         description: this.descriptions[i] || '',
         questionId: questionIdsList[i],
-        date: new Date(),
       }
       answers[i] = newAnswer;
       console.log(this.selectedGrades[i])

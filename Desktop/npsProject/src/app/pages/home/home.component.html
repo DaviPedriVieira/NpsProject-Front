@@ -1,7 +1,5 @@
 <app-header [toWhichScreen]="'NPS'"></app-header>
-<div *ngIf="authorized">
-    <app-create></app-create>
-</div>
+<app-create *ngIf="authorized"></app-create>
 <div id="response-container">
     <app-response [authorized]="authorized"></app-response>
 </div>

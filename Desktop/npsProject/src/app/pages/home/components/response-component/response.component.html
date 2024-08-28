@@ -17,6 +17,6 @@
   </div>
   <app-forms-modal [groupId]="groupId" [authorized]="authorized"></app-forms-modal>
   <app-delete-modal [itemId]="groupId" [itemType]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
-  <app-update-modal [itemId]="groupId" [itemType]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
+  <app-update-modal [itemId]="groupId" [itemType]="'group'" (itemUpdated)="itemUpdated()"></app-update-modal>
   <app-sucessful-message-modal></app-sucessful-message-modal>
 </div>

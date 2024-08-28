@@ -1,23 +1,5 @@
 <app-header [toWhichScreen]="'Home'"></app-header>
-<div id="container">
-    <h1>Pontuação NPS: </h1>
-    <div id="graphicBorderDiv" #npsCircle>
-        <div id="graphic-center-div">
-            <div>{{ npsScore }}</div>
-        </div>
-    </div>
-    <div id="captions-container">
-        <div class="caption">
-            <div id="green-caption"></div>
-            <div> - Ótimo</div>
-        </div>
-        <div class="caption">
-            <div id="blue-caption"></div>
-            <div> - Bom</div>
-        </div>
-        <div class="caption">
-            <div id="red-caption"></div>
-            <div> - Ruim</div>
-        </div>
-    </div>
+<div id="main-container">
+    <app-nps-users></app-nps-users>
+    <app-nps-chart></app-nps-chart>
 </div>

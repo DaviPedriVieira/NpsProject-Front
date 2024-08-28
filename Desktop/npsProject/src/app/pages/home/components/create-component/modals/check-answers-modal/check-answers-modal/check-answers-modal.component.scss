@@ -63,9 +63,14 @@
     margin: 10px 0px 30px 0px;
 }
 
+.selects option {
+    white-space: pre-wrap; 
+    overflow-wrap: break-word; 
+}
+
 #answers-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .answer-container {
@@ -93,8 +98,7 @@
     background-color: white;
     text-align: left;
     padding: 10px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    word-break: break-word;
 
     div {
         margin: 5px;
@@ -148,10 +152,10 @@
     background-color: rgb(45, 190, 40);
 }
 
-.error {
-    color: red;
-    font-size: 15px;
+.no-answers-message {
+    color: gray;
+    font-size: 1rem;
     height: 10px;
     width: 300px;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
 }

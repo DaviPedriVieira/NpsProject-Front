@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
-import { UserModel } from 'src/app/interfaces/user';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { UserService } from 'src/app/services/user-service/user.service';
@@ -15,9 +14,10 @@ export class CheckAnswersModalComponent {
   @ViewChild('checkAnswersModal') checkAnswersModal!: ElementRef<HTMLDialogElement>
   selectedId: string = ''
   questions: QuestionModel[] = [];
-  users: UserModel[] = [];
+  users: {id: number, name: string}[] = [];
   answers: AnswerModel[] = []
   mode: string = 'questionMode'
+  answersListEmpty: boolean = false
 
   constructor(private answersService: AnswerService, private questionService: QuestionService, private userService: UserService) { }
 
@@ -28,35 +28,47 @@ export class CheckAnswersModalComponent {
   }
 
   closeModal() {
+    this.ResetVariables()
     this.selectedId = ''
-    this.answers = []
     this.checkAnswersModal.nativeElement.close()
   }
 
   changeMode() {
     this.mode = this.mode == 'questionMode' ? 'userMode' : 'questionMode';
-    this.answers = []
+    this.ResetVariables()
   }
 
   GetAnswersByQuestionId() {
+    this.answersListEmpty = false
     this.answersService.GetAnswersByQuestionId(Number(this.selectedId)).subscribe(data => {
       this.answers = data;
 
-      for (let index = 0; index < this.answers.length; index++) {
-        this.userService.GetUserById(this.answers[index].userId).subscribe(response => {
-          this.answers[index].username = response.name
+      if(this.answers.length == 0){
+        this.answersListEmpty = true
+        return
+      }
+
+      for (let i = 0; i < this.answers.length; i++) {
+        this.userService.GetUserById(this.answers[i].userId).subscribe(response => {
+          this.answers[i].username = response.name
         })
       }
     })
   }
 
   GetAnswersByUserId() {
+    this.answersListEmpty = false
     this.answersService.GetAnswersByUserId(Number(this.selectedId)).subscribe(data => {
       this.answers = data;
 
-      for (let index = 0; index < this.answers.length; index++) {
-        this.questionService.GetQuestionById(this.answers[index].questionId).subscribe(response => {
-          this.answers[index].questionContent = response.content
+      if(this.answers.length == 0){
+        this.answersListEmpty = true
+        return
+      }
+
+      for (let i = 0; i < this.answers.length; i++) {
+        this.questionService.GetQuestionById(this.answers[i].questionId).subscribe(response => {
+          this.answers[i].questionContent = response.content
         })
       }
     })
@@ -72,5 +84,10 @@ export class CheckAnswersModalComponent {
     this.userService.GetUsers().subscribe(data => {
       this.users = data;
     })
+  }
+
+  ResetVariables() {
+    this.answersListEmpty = false
+    this.answers = []
   }
 }

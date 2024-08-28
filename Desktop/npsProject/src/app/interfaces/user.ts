@@ -1,11 +1,11 @@
 export interface UserModel {
-    id: number;
-    name: string;
-    password: string;
+    id: 0;
+    name: string,
+    password: string,
     type: UserType
 }
 
-enum UserType {
+enum UserType{
     Administrador = 0,
     Cliente = 1,
 }

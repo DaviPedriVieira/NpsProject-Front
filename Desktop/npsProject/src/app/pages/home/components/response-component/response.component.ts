@@ -4,7 +4,6 @@ import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { FormsModalComponent } from './modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
-import { LoginService } from 'src/app/services/login-service/login.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
@@ -31,13 +30,8 @@ export class ResponseComponent implements OnInit {
       this.loadFormsGroups();
     })
 
-    this.notificationService.updated$.subscribe(() => {
-      this.sucessfulMessageModalComponent.openModal('Editado com sucesso!')
-    })
-
-    this.notificationService.closeModals$.subscribe(() => {
-      this.formsModalComponent.closeModal()
-      this.sucessfulMessageModalComponent.openModal('Respostas enviadas!')
+    this.notificationService.answersSubmited$.subscribe(() => {
+      this.openSucessfullModal('Respostas enviadas!')
     })
   }
 
@@ -45,6 +39,11 @@ export class ResponseComponent implements OnInit {
     this.formsGroupService.GetFormsGroups().subscribe((data) => {
       this.formsGroups = data;
     });
+  }
+
+  itemUpdated(){
+    this.loadFormsGroups()
+    this.openSucessfullModal('Editado com sucesso!')
   }
 
   GetGroupId(event: MouseEvent) {
@@ -81,9 +80,9 @@ export class ResponseComponent implements OnInit {
     });
   }
 
-  openSucessfullModal(){
+  openSucessfullModal(message: string){
     setTimeout(() => {
-      this.sucessfulMessageModalComponent.openModal('Respostas enviadas!');
+      this.sucessfulMessageModalComponent.openModal(message);
     });
   }
 }
