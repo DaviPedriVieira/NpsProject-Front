@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
+import { UserModel } from 'src/app/interfaces/user';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { UserService } from 'src/app/services/user-service/user.service';
@@ -14,7 +15,7 @@ export class CheckAnswersModalComponent {
   @ViewChild('checkAnswersModal') checkAnswersModal!: ElementRef<HTMLDialogElement>
   selectedId: string = ''
   questions: QuestionModel[] = [];
-  users: {id: number, name: string}[] = [];
+  users: UserModel[] = [];
   answers: AnswerModel[] = []
   mode: string = 'questionMode'
   answersListEmpty: boolean = false

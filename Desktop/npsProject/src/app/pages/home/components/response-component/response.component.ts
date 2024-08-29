@@ -11,7 +11,7 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
   selector: 'app-response',
   templateUrl: './response.component.html',
   styleUrls: ['./response.component.scss']
-})
+})  
 export class ResponseComponent implements OnInit {
   @ViewChild(FormsModalComponent) formsModalComponent!: FormsModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
@@ -31,7 +31,9 @@ export class ResponseComponent implements OnInit {
     })
 
     this.notificationService.answersSubmited$.subscribe(() => {
-      this.openSucessfullModal('Respostas enviadas!')
+      setTimeout(() => {
+        this.sucessfulMessageModalComponent.openModal('Respostas enviadas!');
+      });
     })
   }
 
@@ -41,48 +43,25 @@ export class ResponseComponent implements OnInit {
     });
   }
 
-  itemUpdated(){
-    this.loadFormsGroups()
-    this.openSucessfullModal('Editado com sucesso!')
-  }
-
-  GetGroupId(event: MouseEvent) {
-    const clickedOption = event.target as HTMLElement
-    const groupDiv = clickedOption.closest('.groups-div');
-    if (groupDiv) {
-      const groupIdDiv = groupDiv.querySelector('#groupId-div');
-
-      if (groupIdDiv)
-        this.groupId = Number(groupIdDiv.textContent);
-      else
-        this.groupId = 0;
-    }
-  }
-
-  openFormsModal(event: MouseEvent) {
-    this.GetGroupId(event);
+  openFormsModal(id: number) {
+    this.groupId = id
+    console.log(this.groupId)
     setTimeout(() => {
       this.formsModalComponent.openModal();
     });
   }
-
-  openDeleteModal(event: MouseEvent) {
-    this.GetGroupId(event);
+  
+  openDeleteModal(id: number) {
+    this.groupId = id
     setTimeout(() => {
       this.deleteModalComponent.openModal();
     });
   }
-
-  openUpdateModal(event: MouseEvent) {
-    this.GetGroupId(event);
+  
+  openUpdateModal(id: number) {
+    this.groupId = id
     setTimeout(() => {
       this.updateModalComponent.openModal();
-    });
-  }
-
-  openSucessfullModal(message: string){
-    setTimeout(() => {
-      this.sucessfulMessageModalComponent.openModal(message);
     });
   }
 }

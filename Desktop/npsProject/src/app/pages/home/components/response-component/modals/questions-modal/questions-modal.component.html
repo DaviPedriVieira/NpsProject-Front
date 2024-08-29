@@ -8,10 +8,9 @@
             <div class="question-container">
                 <div class="questions-div">
                     <div id="options" *ngIf="authorized">
-                        <span class="material-symbols-outlined" (click)="openUpdateModal($event)">edit</span>
-                        <span class="material-symbols-outlined" (click)="openDeleteModal($event)">delete</span>
+                        <span class="material-symbols-outlined" (click)="openUpdateModal(question.id)">edit</span>
+                        <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
                     </div>
-                    <div id="questionId-div">{{ question.id }}</div>
                     <div id="question-name-div">{{ question.content }}</div>
                 </div>
                 <select id="grades-select" [(ngModel)]="selectedGrades[i]">

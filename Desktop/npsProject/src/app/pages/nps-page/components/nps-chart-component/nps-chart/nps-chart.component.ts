@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NpsService } from 'src/app/services/nps-service/nps.service';
 
 @Component({
@@ -6,8 +6,9 @@ import { NpsService } from 'src/app/services/nps-service/nps.service';
   templateUrl: './nps-chart.component.html',
   styleUrls: ['./nps-chart.component.scss']
 })
-export class NpsChartComponent {
+export class NpsChartComponent implements OnInit{
   @ViewChild('npsCircle') graphicBorder!: ElementRef<HTMLDivElement>;
+  @ViewChild('pointer') pointer!: ElementRef<HTMLDivElement>;
   npsScore: number = 0;
 
   constructor(private npsService: NpsService) {}
@@ -15,19 +16,12 @@ export class NpsChartComponent {
   ngOnInit(): void {
     this.npsService.GetNpsScore().subscribe(data => {
       this.npsScore = data;
-      this.ChangeColorAccordingNpsScore()
+      this.SetPointerPosition()
     })
   }
-  
-  ChangeColorAccordingNpsScore() {
-    if(this.npsScore >= 50){
-      this.graphicBorder.nativeElement.style.backgroundColor = 'rgb(36, 151, 32)';
-    }
-    else if(this.npsScore >= 0){
-      this.graphicBorder.nativeElement.style.backgroundColor = 'rgb(63, 74, 173)';
-    } 
-    else {
-      this.graphicBorder.nativeElement.style.backgroundColor = 'rgb(209, 35, 35)';
-    }
+
+  SetPointerPosition(){
+    const angle = ((this.npsScore + 100) / 200) * 360
+    this.pointer.nativeElement.style.transform = `rotate(${angle}deg)`
   }
 }

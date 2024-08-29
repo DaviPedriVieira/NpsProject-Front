@@ -2,12 +2,11 @@
     <h1>Grupos</h1>
   <div id="groups-container">
     <div *ngFor="let group of formsGroups">
-      <div class="groups-div" (click)="openFormsModal($event)">
+      <div class="groups-div" (click)="openFormsModal(group.id)">
         <div id="options" *ngIf="authorized">
-          <span class="material-symbols-outlined" (click)="openUpdateModal($event); $event.stopPropagation()">edit</span>
-          <span class="material-symbols-outlined" (click)="openDeleteModal($event); $event.stopPropagation()">delete</span>
+          <span class="material-symbols-outlined" (click)="openUpdateModal(group.id); $event.stopPropagation()">edit</span>
+          <span class="material-symbols-outlined" (click)="openDeleteModal(group.id); $event.stopPropagation()">delete</span>
         </div>
-        <div id="groupId-div">{{ group.id }}</div>
         <div id="group-name-div">{{ group.name }}</div>
       </div>
     </div>
@@ -17,6 +16,6 @@
   </div>
   <app-forms-modal [groupId]="groupId" [authorized]="authorized"></app-forms-modal>
   <app-delete-modal [itemId]="groupId" [itemType]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
-  <app-update-modal [itemId]="groupId" [itemType]="'group'" (itemUpdated)="itemUpdated()"></app-update-modal>
+  <app-update-modal [itemId]="groupId" [itemType]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
   <app-sucessful-message-modal></app-sucessful-message-modal>
 </div>

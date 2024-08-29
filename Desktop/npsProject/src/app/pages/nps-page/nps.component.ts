@@ -8,21 +8,21 @@ import { LoginService } from 'src/app/services/login-service/login.service';
   styleUrls: ['./nps.component.scss']
 })
 export class NpsComponent {
-  
-  constructor(private loginService: LoginService, private router: Router) {}
+
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
     const username = localStorage.getItem('Username');
 
-    if(username == null) {
+    if (username == null) {
       this.router.navigate(['/home']);
       return
     }
 
-    this.loginService.isAuthorized(username).subscribe(response => {
-        if(!response){
-          this.router.navigate(['/home']);
-        }
+    this.loginService.isAuthorized(username).subscribe(isAdm => {
+      if (!isAdm) {
+        this.router.navigate(['/home']);  
+      }
     });
   }
 }

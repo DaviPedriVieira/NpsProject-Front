@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserModel } from 'src/app/interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +12,23 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  GetUsers(): Observable<{id: number, name: string}[]> {
-    return this.http.get<{id: number, name: string}[]>(`${this.apiUrl}`, {withCredentials: true})
+  GetUsers(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.apiUrl}`, {withCredentials: true})
   }
 
-  GetUserById(id: number): Observable<{id: number, name: string}> {
-    return this.http.get<{id: number, name: string}>(`${this.apiUrl}/${id}`, {withCredentials: true})
+  GetUserById(id: number): Observable<UserModel> {
+    return this.http.get<UserModel>(`${this.apiUrl}/${id}`, {withCredentials: true})
   }
 
-  GetPromoters(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/Promoters`, {withCredentials: true})
+  GetPromoters(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.apiUrl}/Promoters`, {withCredentials: true})
   }
 
-  GetPassives(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/Passives`, {withCredentials: true})
+  GetPassives(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.apiUrl}/Passives`, {withCredentials: true})
   }
 
-  GetDetractors(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/Detractors`, {withCredentials: true})
+  GetDetractors(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.apiUrl}/Detractors`, {withCredentials: true})
   }
 }

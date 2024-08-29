@@ -42,26 +42,15 @@ export class QuestionsModalComponent {
     })
   }
 
-  GetQuestionId(event: MouseEvent) {
-    const clickedOption = event.target as HTMLElement
-    const questionDiv = clickedOption.closest('.questions-div');
-    if (questionDiv) {
-      const formIdDiv = questionDiv.querySelector('#questionId-div');
-
-      if (formIdDiv)
-        this.questionId = Number(formIdDiv.textContent);
-    }
-  }
-
-  openUpdateModal(event: MouseEvent) {
-    this.GetQuestionId(event);
+  openUpdateModal(id: number) {
+    this.questionId = id
     setTimeout(() => {
       this.updateModalComponent.openModal();
     });
   }
 
-  openDeleteModal(event: MouseEvent) {
-    this.GetQuestionId(event);
+  openDeleteModal(id: number) {
+    this.questionId = id
     setTimeout(() => {
       this.deleteModalComponent.openModal();
     });

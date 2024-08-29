@@ -37,33 +37,22 @@ export class FormsModalComponent {
     })
   }
 
-  GetFormId(event: MouseEvent) {
-    const clickedOption = event.target as HTMLElement
-    const formDiv = clickedOption.closest('.forms-div');
-    if(formDiv){
-      const groupIdDiv = formDiv.querySelector('#formId-div');
-
-      if(groupIdDiv) 
-        this.formId = Number(groupIdDiv.textContent);
-    }
-  }
-
-  openQuestionsModal(event: MouseEvent) {
-    this.GetFormId(event);
+  openQuestionsModal(id: number) {
+    this.formId = id;
     setTimeout(() => {
       this.questionsModalComponent.openModal();
     });
   }
-
-  openDeleteModal(event: MouseEvent) {
-    this.GetFormId(event);
+  
+  openDeleteModal(id: number) {
+    this.formId = id;
     setTimeout(() => {
       this.deleteModalComponent.openModal();
     });
   }
-
-  openUpdateModal(event: MouseEvent) {
-    this.GetFormId(event);
+  
+  openUpdateModal(id: number) {
+    this.formId = id;
     setTimeout(() => {
       this.updateModalComponent.openModal();
     });

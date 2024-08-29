@@ -8,7 +8,7 @@ import { LoginService } from 'src/app/services/login-service/login.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() toWhichScreen!: string;
+  @Input() currentScreen!: string;
   authorized: boolean = false;
   nome: string = ''
 

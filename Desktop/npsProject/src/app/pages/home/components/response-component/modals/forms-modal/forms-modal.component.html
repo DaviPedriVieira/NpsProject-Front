@@ -5,12 +5,11 @@
     </div>
     <div id="forms-container">
         <div *ngFor="let form of forms">
-            <div class="forms-div" (click)="openQuestionsModal($event)">
+            <div class="forms-div" (click)="openQuestionsModal(form.id)">
             <div id="options" *ngIf="authorized">
-                <span class="material-symbols-outlined" (click)="openUpdateModal($event); $event.stopPropagation()">edit</span>
-                <span class="material-symbols-outlined" (click)="openDeleteModal($event); $event.stopPropagation()">delete</span>
+                <span class="material-symbols-outlined" (click)="openUpdateModal(form.id); $event.stopPropagation()">edit</span>
+                <span class="material-symbols-outlined" (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
             </div>
-            <div id="formId-div">{{ form.id }}</div>
             <div id="form-name-div">{{ form.name }}</div>
             </div>
         </div>

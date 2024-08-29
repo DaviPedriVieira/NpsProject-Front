@@ -3,25 +3,28 @@
         <div class="info-container">
             <select id="dropdown">
                 <option value="" disabled selected hidden>Usuários promotores</option>
-                <option value="1" disabled>User 1</option>
-                <option value="2" disabled>User 2</option>
-                <option value="3" disabled>User 3</option>
+                <option *ngIf="promoters.length == 0" value="" disabled>Não há promotores</option>
+                <option *ngFor="let user of promoters" disabled>
+                    {{ user.name }}
+                </option>
             </select>
         </div>
         <div class="info-container">
             <select id="dropdown">
                 <option value="" disabled selected hidden>Usuários passivos</option>
-                <option value="1" disabled>User 1</option>
-                <option value="2" disabled>User 2</option>
-                <option value="3" disabled>User 3</option>
+                <option *ngIf="passives.length == 0" value="" disabled>Não há passivos</option>
+                <option *ngFor="let user of passives" disabled>
+                    {{ user.name }}
+                </option>
             </select>
         </div>
         <div class="info-container">
             <select id="dropdown">
                 <option value="" disabled selected hidden>Usuários detratores</option>
-                <option value="1" disabled>User 1</option>
-                <option value="2" disabled>User 2</option>
-                <option value="3" disabled>User 3</option>
+                <option *ngIf="detractors.length == 0" value="" disabled>Não há detratores</option>
+                <option *ngFor="let user of detractors" disabled>
+                    {{ user.name }}
+                </option>
             </select>
         </div>
     </div>

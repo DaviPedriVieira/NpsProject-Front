@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserModel } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
@@ -8,9 +9,33 @@ import { UserService } from 'src/app/services/user-service/user.service';
 })
 export class NpsUsersComponent implements OnInit {
 
+  promoters: UserModel[] = []
+  passives: UserModel[] = []
+  detractors: UserModel[] = []
+
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    
+    this.GetPromoters()
+    this.GetPassives()
+    this.GetDetractors()
+  }
+
+  GetPromoters() {
+    this.userService.GetPromoters().subscribe(data => {
+      this.promoters = data
+    })
+  }
+  
+  GetPassives() {
+    this.userService.GetPassives().subscribe(data => {
+      this.passives = data
+    })
+  }
+  
+  GetDetractors() {
+    this.userService.GetDetractors().subscribe(data => {
+      this.detractors = data
+    })
   }
 }

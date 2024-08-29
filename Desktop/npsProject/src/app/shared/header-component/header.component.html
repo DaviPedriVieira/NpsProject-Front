@@ -4,9 +4,9 @@
     </div>
     <div id="user">
         <div id="change-screen-div" *ngIf="authorized">
-            <span class="material-symbols-outlined" *ngIf="toWhichScreen == 'NPS'" (click)="goToNpsScreen()">speed</span>
-            <span class="material-symbols-outlined"*ngIf="toWhichScreen == 'Home'" (click)="goToHomeScreen()">home</span>
-            {{ toWhichScreen }}
+            <span class="material-symbols-outlined" *ngIf="currentScreen == 'Home'" (click)="goToNpsScreen()">speed</span>
+            <span class="material-symbols-outlined"*ngIf="currentScreen == 'NPS'" (click)="goToHomeScreen()">home</span>
+            {{ currentScreen == 'Home' ? 'NPS' : 'Home' }}
         </div>
         <div id="userData">
             <img src="assets/fotoDeUsuario.png" alt="">
