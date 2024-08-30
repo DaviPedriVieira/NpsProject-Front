@@ -28,26 +28,18 @@ export class CreateComponent implements OnInit{
   }
 
   openGroupsCreateModal() {
-    setTimeout(() => {
-      this.groupsCreateModal.openModal();
-    });
+    this.groupsCreateModal.openModal();
   }
 
   openFormsCreateModal() {
-    setTimeout(() => {
-      this.formsCreateModal.openModal();
-    });
+    this.formsCreateModal.openModal();
   }
 
   openQuestionsCreateModal() {
-    setTimeout(() => {
-      this.questionsCreateModal.openModal();
-    });
+    this.questionsCreateModal.openModal();
   }
 
   openCheckAnswersCreateModal() {
-    setTimeout(() => {
-      this.checkAnswersModalComponent.openModal();
-    });
+    this.checkAnswersModalComponent.openModal();
   }
 }

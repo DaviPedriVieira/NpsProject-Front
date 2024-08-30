@@ -4,10 +4,10 @@
             <img src="assets/logo.png" alt="">
             <h1>Login</h1>
             <div class="inputs">
-                <input type="text" placeholder="Nome" [(ngModel)]="username">
+                <input type="text" placeholder="Nome" (keyup.enter)="Login()" [(ngModel)]="username">
             </div>
             <div class="inputs">
-                <input type="password" placeholder="Senha" [(ngModel)]="password">
+                <input type="password" placeholder="Senha" (keyup.enter)="Login()" [(ngModel)]="password">
             </div>
             <div class="entrar">
                 <input type="submit" value="Entrar" (click)="Login()">

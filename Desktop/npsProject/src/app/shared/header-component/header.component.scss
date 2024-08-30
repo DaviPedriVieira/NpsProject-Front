@@ -14,25 +14,6 @@
     justify-content: space-between;
 }
 
-#userData{
-    height: 120px;
-    width: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    img{
-        height: 70px;
-        filter: invert(1);
-    }
-
-    #username-div{
-        text-align: center;
-        font-size: 20px;
-        color: white;
-    }
-}
 
 #logo img {
     margin-left: 20px;
@@ -52,9 +33,14 @@
 
 .material-symbols-outlined {
     margin-right: 30px;
-    font-size: 50px;
+    font-size: 60px;
     color: white;
     cursor: pointer;
+}
+
+.material-symbols-outlined:hover {
+    transition: 0.3s;
+    transform: scale(1.05);
 }
 
 #change-screen-div {
@@ -64,9 +50,36 @@
     align-items: center;
     color: white;
     font-size: 20px;
-
+    
     span {
         margin: 0;
-        font-size: 70px;
+        font-size: 75px;
+    }
+}
+
+#change-screen-div span:hover {
+    transition: 0.3s;
+    transform: scale(1.05);
+}
+
+#userData{
+    height: 120px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 5px;
+
+    img{
+        height: 60px;
+        filter: invert(1);
+    }
+
+    div {
+        margin-top: 5px;
     }
 }

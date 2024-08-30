@@ -14,8 +14,4 @@ export class NotificationService {
   notifyItemCreated() {
     this.groupCreatedSource.next()
   }
-
-  notifyAnswersSubmited() {
-    this.answersSubmitedSource.next()
-  }
 }

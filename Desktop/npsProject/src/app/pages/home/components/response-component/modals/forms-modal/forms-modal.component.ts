@@ -39,22 +39,16 @@ export class FormsModalComponent {
 
   openQuestionsModal(id: number) {
     this.formId = id;
-    setTimeout(() => {
-      this.questionsModalComponent.openModal();
-    });
+    this.questionsModalComponent.openModal();
   }
   
   openDeleteModal(id: number) {
     this.formId = id;
-    setTimeout(() => {
-      this.deleteModalComponent.openModal();
-    });
+    this.deleteModalComponent.openModal();
   }
   
   openUpdateModal(id: number) {
     this.formId = id;
-    setTimeout(() => {
-      this.updateModalComponent.openModal();
-    });
+    this.updateModalComponent.openModal();
   }
 }

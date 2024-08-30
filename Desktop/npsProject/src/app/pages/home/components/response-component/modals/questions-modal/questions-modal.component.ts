@@ -5,6 +5,7 @@ import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 
 @Component({
@@ -16,6 +17,7 @@ export class QuestionsModalComponent {
   @ViewChild('questionsmodal') formsmodal!: ElementRef<HTMLDialogElement>
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent;
   @Input() formId!: number;
   @Input() authorized!: boolean;
   questions: QuestionModel[] = []; 
@@ -44,16 +46,12 @@ export class QuestionsModalComponent {
 
   openUpdateModal(id: number) {
     this.questionId = id
-    setTimeout(() => {
-      this.updateModalComponent.openModal();
-    });
+    this.updateModalComponent.openModal();
   }
 
   openDeleteModal(id: number) {
     this.questionId = id
-    setTimeout(() => {
-      this.deleteModalComponent.openModal();
-    });
+    this.deleteModalComponent.openModal();
   }
 
   GetAllQuestionsIds() {
@@ -94,16 +92,13 @@ export class QuestionsModalComponent {
         questionId: questionIdsList[i],
       }
       answers[i] = newAnswer;
-      console.log(this.selectedGrades[i])
     }
     this.SubmitAnswers(answers)
   }
 
   SubmitAnswers(answers: AnswerModel[]) {
-    this.answersService.SubmitAnswers(answers).subscribe(() => {
-      this.closeModal()
-      this.notificationService.notifyAnswersSubmited();
-    })
+    this.answersService.SubmitAnswers(answers).subscribe(() => {this.closeModal()})
+    this.sucessfulMessageModalComponent.openModal('Respostas enviadas!');
   }
 
   ResetVariables() {

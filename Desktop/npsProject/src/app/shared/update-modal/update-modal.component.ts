@@ -27,7 +27,7 @@ export class UpdateModalComponent {
     this.updatemodal.nativeElement.close();
   }
 
-  update() {
+  UpdateItem() {
     if (this.itemType == 'group' && this.NewNameValidator()) {
       this.formsGroupService.UpdateFormsGroup(this.itemId, this.newName).subscribe(() => {
         this.closeModal()

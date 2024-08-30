@@ -1,22 +1,11 @@
 <div id="container">
-    <div id="graphicBorderDiv" #npsCircle>
-        <div id="graphic-center-div">
-            <div id="pointer" #pointer></div>
-            <div id="score">{{ npsScore }}</div>
+    <div id="halfGraphicContainer">
+        <div id="graphicBorderDiv">
+            <div id="graphic-center-div">
+                <div id="score">{{ npsScore }}</div>
+                <img id="pointer" #pointer src="assets/nps-pointer.png"/>
+            </div>
         </div>
     </div>
-    <div id="captions-container">
-        <div class="caption">
-            <div id="green-caption"></div>
-            <div> - Ótimo</div>
-        </div>
-        <div class="caption">
-            <div id="blue-caption"></div>
-            <div> - Bom</div>
-        </div>
-        <div class="caption">
-            <div id="red-caption"></div>
-            <div> - Ruim</div>
-        </div>
-    </div>    
+    <h2>NPS</h2>
 </div>

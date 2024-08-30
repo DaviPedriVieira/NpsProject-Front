@@ -7,8 +7,7 @@ import { NpsService } from 'src/app/services/nps-service/nps.service';
   styleUrls: ['./nps-chart.component.scss']
 })
 export class NpsChartComponent implements OnInit{
-  @ViewChild('npsCircle') graphicBorder!: ElementRef<HTMLDivElement>;
-  @ViewChild('pointer') pointer!: ElementRef<HTMLDivElement>;
+  @ViewChild('pointer') pointer!: ElementRef<HTMLImageElement>;
   npsScore: number = 0;
 
   constructor(private npsService: NpsService) {}
@@ -21,7 +20,7 @@ export class NpsChartComponent implements OnInit{
   }
 
   SetPointerPosition(){
-    const angle = ((this.npsScore + 100) / 200) * 360
-    this.pointer.nativeElement.style.transform = `rotate(${angle}deg)`
+    let angle = (this.npsScore + 100) * 0.9 
+    this.pointer.nativeElement.style.transform = `rotate(${angle + 135}deg)`
   }
 }
