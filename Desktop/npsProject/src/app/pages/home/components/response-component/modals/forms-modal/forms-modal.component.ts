@@ -39,7 +39,9 @@ export class FormsModalComponent {
 
   openQuestionsModal(id: number) {
     this.formId = id;
-    this.questionsModalComponent.openModal();
+    setTimeout(() => {
+      this.questionsModalComponent.openModal();
+    });
   }
   
   openDeleteModal(id: number) {

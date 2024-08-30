@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/services/notification-service/notif
   selector: 'app-response',
   templateUrl: './response.component.html',
   styleUrls: ['./response.component.scss']
-})  
+})
 export class ResponseComponent implements OnInit {
   @ViewChild(FormsModalComponent) formsModalComponent!: FormsModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
@@ -37,14 +37,16 @@ export class ResponseComponent implements OnInit {
 
   openFormsModal(id: number) {
     this.groupId = id
-    this.formsModalComponent.openModal();
+    setTimeout(() => {
+      this.formsModalComponent.openModal();
+    })
   }
-  
+
   openDeleteModal(id: number) {
     this.groupId = id
     this.deleteModalComponent.openModal();
   }
-  
+
   openUpdateModal(id: number) {
     this.groupId = id
     this.updateModalComponent.openModal();
