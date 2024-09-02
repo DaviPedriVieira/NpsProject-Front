@@ -50,8 +50,8 @@ export class CheckAnswersModalComponent {
       }
 
       for (let i = 0; i < this.answers.length; i++) {
-        this.userService.GetUserById(this.answers[i].userId).subscribe(response => {
-          this.answers[i].username = response.name
+        this.userService.GetUserById(this.answers[i].userId).subscribe(data => {
+          this.answers[i].username = data.name
         })
       }
     })
@@ -68,15 +68,15 @@ export class CheckAnswersModalComponent {
       }
 
       for (let i = 0; i < this.answers.length; i++) {
-        this.questionService.GetQuestionById(this.answers[i].questionId).subscribe(response => {
-          this.answers[i].questionContent = response.content
+        this.questionService.GetQuestionById(this.answers[i].questionId).subscribe(data => {
+          this.answers[i].question = data.content
         })
       }
     })
   }
 
   GetQuestions() {
-    this.questionService.GetAllQuestions().subscribe(data => {
+    this.questionService.GetQuestions().subscribe(data => {
       this.questions = data;
     })
   }

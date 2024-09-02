@@ -7,11 +7,11 @@ import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.c
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 
 @Component({
-  selector: 'app-response',
-  templateUrl: './response.component.html',
-  styleUrls: ['./response.component.scss']
+  selector: 'app-groups',
+  templateUrl: './groups.component.html',
+  styleUrls: ['./groups.component.scss']
 })
-export class ResponseComponent implements OnInit {
+export class GroupsComponent implements OnInit {
   @ViewChild(FormsModalComponent) formsModalComponent!: FormsModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;

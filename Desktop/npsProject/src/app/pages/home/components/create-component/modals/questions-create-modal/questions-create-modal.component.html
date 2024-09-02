@@ -10,7 +10,7 @@
         </select>
     </div>
     <div id="questions-container">
-        <div class="question-container" *ngFor="let question of questions; let questionIndex = index">
+        <div class="question-container" *ngFor="let question of newQuestions; let questionIndex = index">
             <div class="input-box">
                 <div class="questions-header">
                     <p>{{ questionIndex + 1 }}° Pergunta: </p>
@@ -37,3 +37,4 @@
         </div>
     </div>
 </dialog>
+<app-sucessful-message-modal [message]="'Perguntas criadas!'"></app-sucessful-message-modal>

@@ -10,8 +10,8 @@ import { QuestionService } from 'src/app/services/question-service/question.serv
 })
 export class DeleteModalComponent {
   @ViewChild('deletemodal') deletemodal!: ElementRef<HTMLDialogElement>
-  @Input() itemId!: number;
-  @Input() itemType!: string;
+  @Input() id!: number;
+  @Input() item!: string;
   @Output() itemDeleted = new EventEmitter<void>()
 
   constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService) { }
@@ -25,20 +25,20 @@ export class DeleteModalComponent {
   }
 
   delete() {
-    if (this.itemType == 'group') {
-      this.formsGroupService.DeleteFormsGroup(this.itemId).subscribe(() => {
+    if (this.item == 'group') {
+      this.formsGroupService.DeleteFormsGroup(this.id).subscribe(() => {
         this.closeModal()
         this.itemDeleted.emit()
       })
     }
-    else if (this.itemType == 'form') {
-      this.formsService.DeleteForm(this.itemId).subscribe(() => {
+    else if (this.item == 'form') {
+      this.formsService.DeleteForm(this.id).subscribe(() => {
         this.closeModal()
         this.itemDeleted.emit()
       })
     }
-    else if (this.itemType == 'question') {
-      this.questionService.DeleteQuestion(this.itemId).subscribe(() => {
+    else if (this.item == 'question') {
+      this.questionService.DeleteQuestion(this.id).subscribe(() => {
         this.closeModal()
         this.itemDeleted.emit()
       })

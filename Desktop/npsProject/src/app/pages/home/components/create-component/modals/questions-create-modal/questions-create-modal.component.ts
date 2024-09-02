@@ -2,8 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service'; 
 import { QuestionService } from 'src/app/services/question-service/question.service';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-questions-create-modal',
@@ -12,12 +12,13 @@ import { QuestionService } from 'src/app/services/question-service/question.serv
 })
 export class QuestionsCreateModalComponent {
   @ViewChild('createQuestionsModal') createQuestionsModal!: ElementRef<HTMLDialogElement>
-  questions: QuestionModel[] = [];
-  invalidInputs: boolean = false;
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   forms: FormModel[] = []
+  newQuestions: QuestionModel[] = [];
+  invalidInputs: boolean = false;
   selectedFormId: string = '';
 
-  constructor(private formsService: FormService, private questionsService: QuestionService, private notificationService: NotificationService) {}
+  constructor(private formsService: FormService, private questionsService: QuestionService) {}
 
   openModal() {
     this.createQuestionsModal.nativeElement.showModal()
@@ -26,7 +27,7 @@ export class QuestionsCreateModalComponent {
   }
 
   closeModal() {
-    this.questions = [];
+    this.newQuestions = [];
     this.createQuestionsModal.nativeElement.close()
   }
 
@@ -38,21 +39,21 @@ export class QuestionsCreateModalComponent {
 
   CreateQuestion() {
     const newQuestion: QuestionModel = { id: 0, formId: 0, content: '' }
-    this.questions.push(newQuestion)
+    this.newQuestions.push(newQuestion)
   }
 
   DeleteQuestion(index: number) {
-    this.questions.splice(index, 1)
+    this.newQuestions.splice(index, 1)
   }
 
   AreAnyEmptyInputs() {
     if(!this.selectedFormId.trim())
       return true
 
-    if(this.questions.length == 0)
+    if(this.newQuestions.length == 0)
       return true
 
-    for (let question of this.questions) {
+    for (let question of this.newQuestions) {
       if (!question.content.trim())
         return true
     };
@@ -66,13 +67,13 @@ export class QuestionsCreateModalComponent {
       return
     }
 
-    for (let question of this.questions){
+    for (let question of this.newQuestions){
       question.formId = Number(this.selectedFormId);
     }
 
-    this.questionsService.CreateQuestion(this.questions).subscribe(() => {
+    this.questionsService.CreateQuestion(this.newQuestions).subscribe(() => {
       this.closeModal()
-      this.notificationService.notifyItemCreated()
+      this.sucessfulMessageModal.openModal()
     })
   }
 }

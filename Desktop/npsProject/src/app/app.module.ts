@@ -9,7 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HeaderComponent } from './shared/header-component/header.component';
 import { CreateComponent } from './pages/home/components/create-component/create.component';
-import { ResponseComponent } from './pages/home/components/response-component/response.component';
+import { GroupsComponent } from './pages/home/components/response-component/groups.component';
 import { FormsModalComponent } from './pages/home/components/response-component/modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from './shared/update-modal/update-modal.component';
@@ -31,7 +31,7 @@ import { NpsUsersComponent } from './pages/nps-page/components/nps-users-compone
     HomeComponent,
     HeaderComponent,
     CreateComponent,
-    ResponseComponent,
+    GroupsComponent,
     FormsModalComponent,
     DeleteModalComponent,
     UpdateModalComponent,

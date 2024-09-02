@@ -4,6 +4,7 @@ import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-groups-create-modal',
@@ -12,6 +13,7 @@ import { FormsGroupService } from 'src/app/services/group-service/formsgroup.ser
 })
 export class GroupsCreateModalComponent {
   @ViewChild('createGroupsModal') formsmodal!: ElementRef<HTMLDialogElement>
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   newGroup: FormsGroupModel = { id: 0, name: '', forms: [] };
   invalidInputs: boolean = false;
 
@@ -69,7 +71,8 @@ export class GroupsCreateModalComponent {
 
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe(() => {
       this.closeModal()
-      this.notificationService.notifyItemCreated();
+      this.notificationService.notifyGroupCreated();
+      this.sucessfulMessageModal.openModal()
     })
   }
 

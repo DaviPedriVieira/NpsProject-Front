@@ -1,6 +1,5 @@
 #questionsmodal {
     width: 1200px;
-    z-index: 1000;
     text-align: center;
     background-color: white;
     border: none;
@@ -20,7 +19,8 @@
 
 #questions-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
 }
 
 .question-container {

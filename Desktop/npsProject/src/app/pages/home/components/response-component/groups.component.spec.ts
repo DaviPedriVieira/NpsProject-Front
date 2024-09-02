@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResponseComponent } from './response.component';
+import { ResponseComponent } from './groups.component';
 
 describe('ResponseComponent', () => {
   let component: ResponseComponent;

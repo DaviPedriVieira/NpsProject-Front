@@ -1,47 +1,46 @@
 <dialog id="createGroupsModal" #createGroupsModal>
-    <h2>Criar grupo</h2>
-    <div id="header-div">
-      <div class="groups-input-box">
-        <div>Grupo: </div>
-        <input type="text" placeholder="Nome do grupo" [(ngModel)]="newGroup.name">
-        <button class="add-form-button" (click)="CreateForm()">
-          <span class="material-symbols-outlined">add</span>
-        </button>
-      </div>
+  <h2>Criar grupo</h2>
+  <div id="header-div">
+    <div class="groups-input-box">
+      <div>Grupo: </div>
+      <input type="text" placeholder="Nome do grupo" [(ngModel)]="newGroup.name">
+      <button class="add-form-button" (click)="CreateForm()">
+        <span class="material-symbols-outlined">add</span>
+      </button>
     </div>
-    <div id="forms-container">
-      <div class="form-container" *ngFor="let form of newGroup.forms; let formIndex = index">
-        <div class="input-box">
-          <div class="forms-header">Formulário:
-            <div id="form-buttons-div">
-              <button (click)="CreateQuestion(formIndex)">
-                <span class="material-symbols-outlined">add</span>
-              </button>
-              <button (click)="DeleteForm(formIndex)">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
-            </div>
-          </div>
-          <input type="text" placeholder="Nome do formulário" [(ngModel)]="form.name">
-        </div>
-        <div id="questions-title" *ngIf="form.questions.length > 0">
-          Perguntas:
-        </div>
-        <div id="questions-container" *ngFor="let question of form.questions; let questionsIndex = index">
-          <div class="questions-input-box">
-            <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
-            <button (click)="DeleteQuestion(formIndex, questionsIndex)">
+  </div>
+  <div id="forms-container">
+    <div class="form-container" *ngFor="let form of newGroup.forms; let formIndex = index">
+      <div class="input-box">
+        <div class="forms-header">Formulário:
+          <div id="form-buttons-div">
+            <button (click)="CreateQuestion(formIndex)">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+            <button (click)="DeleteForm(formIndex)">
               <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
         </div>
+        <input type="text" placeholder="Nome do formulário" [(ngModel)]="form.name">
+      </div>
+      <div id="questions-title" *ngIf="form.questions.length > 0">Perguntas:</div>
+      <div id="questions-container" *ngFor="let question of form.questions; let questionsIndex = index">
+        <div class="questions-input-box">
+          <input type="text" placeholder="Pergunta" [(ngModel)]="question.content">
+          <button (click)="DeleteQuestion(formIndex, questionsIndex)">
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+        </div>
       </div>
     </div>
-    <div id="allign-buttons-div">
-      <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
-      <div id="button-container">
-        <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-        <button class="submit-btn" (click)="CreateGroup()">Enviar</button>
-      </div>
+  </div>
+  <div id="allign-buttons-div">
+    <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
+    <div id="button-container">
+      <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+      <button class="submit-btn" (click)="CreateGroup()">Enviar</button>
     </div>
+  </div>
 </dialog>
+<app-sucessful-message-modal [message]="'Grupo criado!'"></app-sucessful-message-modal>

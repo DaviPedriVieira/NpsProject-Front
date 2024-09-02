@@ -34,12 +34,12 @@
     </div>
     <div id="allign-buttons-div">
         <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
-        <div [ngClass]="{'buttons-div': true, 'buttons-div-center': !questions.length}">
+        <div [ngClass]="{'buttons-div': questions.length > 0, 'buttons-div-center': questions.length == 0}">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-            <button class="send-answers-btn" (click)="GetAllQuestionsIds()" *ngIf="questions.length > 0">Enviar</button>
+            <button class="send-answers-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
         </div>
     </div>
-    <app-delete-modal [itemId]="questionId" [itemType]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-    <app-update-modal [itemId]="questionId" [itemType]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
 </dialog>
-<app-sucessful-message-modal></app-sucessful-message-modal>
+<app-delete-modal [id]="questionId" [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
+<app-update-modal [id]="questionId" [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
+<app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>

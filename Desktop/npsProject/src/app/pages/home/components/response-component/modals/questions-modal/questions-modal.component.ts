@@ -1,8 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
@@ -21,12 +20,12 @@ export class QuestionsModalComponent {
   @Input() formId!: number;
   @Input() authorized!: boolean;
   questions: QuestionModel[] = []; 
-  questionId: number = 0
-  invalidInputs: boolean = false
   selectedGrades: number[] = [];
   descriptions: string[] = [];
+  questionId: number = 0
+  invalidInputs: boolean = false
 
-  constructor(private questionService: QuestionService, private answersService: AnswerService, private notificationService: NotificationService) { }
+  constructor(private questionService: QuestionService, private answersService: AnswerService) { }
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
@@ -34,12 +33,12 @@ export class QuestionsModalComponent {
   }
 
   closeModal() {
-    this.ResetVariables()
     this.formsmodal.nativeElement.close();
+    this.ResetVariables()
   }
 
   loadQuestions() {
-    this.questionService.GetQuestions(this.formId).subscribe(data => {
+    this.questionService.GetQuestionsByFormId(this.formId).subscribe(data => {
       this.questions = data;
     })
   }
@@ -54,19 +53,7 @@ export class QuestionsModalComponent {
     this.deleteModalComponent.openModal();
   }
 
-  GetAllQuestionsIds() {
-    if(!this.ValidateSelects()){
-      this.invalidInputs = true;
-      return
-    }
-
-    this.questionService.GetQuestionsIds(this.formId).subscribe((data) => {
-      const questionIdsList = data;
-      this.PopulateAnswers(questionIdsList);
-    })
-  }
-
-  ValidateSelects(): boolean {
+  ValidSelects(): boolean {
     if(this.selectedGrades.length == 0){
       return false;
     }
@@ -80,7 +67,12 @@ export class QuestionsModalComponent {
     return true
   }
 
-  PopulateAnswers(questionIdsList: number[]) {
+  PopulateAnswers() {
+    if(!this.ValidSelects()){
+      this.invalidInputs = true;
+      return
+    }
+
     const answers: AnswerModel[] = []
 
     for (let i = 0; i < this.selectedGrades.length; i++) {
@@ -88,8 +80,8 @@ export class QuestionsModalComponent {
         id: 0,
         userId: 0,
         grade: this.selectedGrades[i],
-        description: this.descriptions[i] || '',
-        questionId: questionIdsList[i],
+        description: this.descriptions[i],
+        questionId: this.questions[i].id,
       }
       answers[i] = newAnswer;
     }
@@ -97,8 +89,10 @@ export class QuestionsModalComponent {
   }
 
   SubmitAnswers(answers: AnswerModel[]) {
-    this.answersService.SubmitAnswers(answers).subscribe(() => {this.closeModal()})
-    this.sucessfulMessageModalComponent.openModal('Respostas enviadas!');
+    this.answersService.SubmitAnswers(answers).subscribe(() => {
+      this.closeModal()
+      this.sucessfulMessageModalComponent.openModal();
+    })
   }
 
   ResetVariables() {

@@ -1,5 +1,4 @@
 <app-header [currentScreen]="'Home'"></app-header>
 <app-create *ngIf="authorized"></app-create>
-<div id="response-container">
-    <app-response [authorized]="authorized"></app-response>
-</div>
+<app-groups [authorized]="authorized"></app-groups>
+

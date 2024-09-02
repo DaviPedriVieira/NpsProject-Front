@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-sucessful-message-modal',
@@ -7,10 +7,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class SucessfulMessageModalComponent {
   @ViewChild('sucessfullMessageModal') sucessfulMessageModal!: ElementRef<HTMLDialogElement>
-  message!: string;
+  @Input() message!: string;
 
-  openModal(message: string) {
-    this.message = message;
+  openModal() {
     this.sucessfulMessageModal.nativeElement.showModal();
   }
 

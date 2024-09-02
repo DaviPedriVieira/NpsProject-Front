@@ -1,23 +1,25 @@
 <dialog id="formsmodal" #formsmodal>
-        <h2>Formulários</h2>
+    <h2>Formulários</h2>
     <div *ngIf="forms.length == 0" class="no-forms-message">
         Não há formulários nesse grupo.
     </div>
     <div id="forms-container">
         <div *ngFor="let form of forms">
             <div class="forms-div" (click)="openQuestionsModal(form.id)">
-            <div id="options" *ngIf="authorized">
-                <span class="material-symbols-outlined" (click)="openUpdateModal(form.id); $event.stopPropagation()">edit</span>
-                <span class="material-symbols-outlined" (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
-            </div>
-            <div id="form-name-div">{{ form.name }}</div>
+                <div id="options" *ngIf="authorized">
+                    <span class="material-symbols-outlined"
+                        (click)="openUpdateModal(form.id); $event.stopPropagation()">edit</span>
+                    <span class="material-symbols-outlined"
+                        (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
+                </div>
+                <div id="form-name-div">{{ form.name }}</div>
             </div>
         </div>
     </div>
     <div id="footer">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
-    <app-delete-modal [itemId]="formId" [itemType]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
-    <app-update-modal [itemId]="formId" [itemType]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
+    <app-delete-modal [id]="formId" [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
+    <app-update-modal [id]="formId" [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
     <app-questions-modal [formId]="formId" [authorized]="authorized"></app-questions-modal>
 </dialog>
