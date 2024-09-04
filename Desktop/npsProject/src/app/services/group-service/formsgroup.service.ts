@@ -2,29 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormsGroupModel } from '../../interfaces/forms-group';
 import { Observable } from 'rxjs';
+import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormsGroupService {
+export class FormsGroupService extends BaseService<FormsGroupModel>{
 
-  private apiUrl = 'http://localhost:5014/api/FormsGroups';
+  basePath: string = '/FormsGroups'
 
-  constructor(private http: HttpClient) {}
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   GetFormsGroups(): Observable<FormsGroupModel[]> {
-    return this.http.get<FormsGroupModel[]>(`${this.apiUrl}`, {withCredentials: true})
+    return this.Get(this.basePath)
   }
 
   CreateFormsGroup(group: FormsGroupModel): Observable<FormsGroupModel> {
-    return this.http.post<FormsGroupModel>(`${this.apiUrl}`, group, {withCredentials: true})
+    return this.Create(this.basePath, group)
   }
 
   DeleteFormsGroup(id: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
+    return this.Delete(this.basePath, id)
   }
 
   UpdateFormsGroup(id: number, newName: string): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/${id}?newName=${newName}`, null, {withCredentials: true})
+    return this.Update(this.basePath, id, newName)
   }
 }

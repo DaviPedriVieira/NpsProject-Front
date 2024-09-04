@@ -23,15 +23,18 @@ export class HeaderComponent {
   }
 
   Logout() {
-    this.loginService.Logout().subscribe()
-    this.router.navigate(['/login'])
+    this.loginService.Logout().subscribe(() => {
+      this.router.navigate(['/login'])
+    }) 
   }
 
   goToHomeScreen() {
+    localStorage.setItem('LastRoute', '/home')
     this.router.navigate(['/home'])
   }
-
+  
   goToNpsScreen() {
+    localStorage.setItem('LastRoute', '/nps')
     this.router.navigate(['/nps'])
   }
 }

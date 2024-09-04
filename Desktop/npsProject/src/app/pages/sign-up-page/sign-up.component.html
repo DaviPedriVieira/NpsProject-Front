@@ -1,0 +1,25 @@
+<div id="align-container">
+    <div id="container">
+        <div id="login-div">
+            <img src="assets/logo.png" alt="">
+            <h1>Cadastro</h1>
+            <div class="inputs">
+                <input type="text" placeholder="Nome" (keyup.enter)="CreateUser()" [(ngModel)]="username">
+            </div>
+            <div class="inputs">
+                <input type="password" placeholder="Senha" (keyup.enter)="CreateUser()" [(ngModel)]="password">
+            </div>
+            <div *ngIf="invalidInputs" class="error"> {{ errorMessage }} </div>
+            <div class="entrar">
+                <input type="submit" value="Criar usuário" (click)="CreateUser()">
+            </div>
+            <div id="sign-up-div">Já tem uma conta? 
+                <a routerLink="/login">voltar a tela de login</a>
+            </div>
+        </div>
+    </div>
+    <dialog id="sucess-message-dialog" #sucessMessageDialog>
+        <h1>Usuário cadastrado!</h1>
+        <button (click)="goToLoginPage()">Fechar</button>
+    </dialog>
+</div>

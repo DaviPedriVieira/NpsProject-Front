@@ -2,25 +2,28 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AnswerModel } from 'src/app/interfaces/answer';
+import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AnswerService {
+export class AnswerService extends BaseService<AnswerModel> {
 
-  private apiUrl = 'http://localhost:5014/api/Answers';
+  basePath: string = '/Answers'
 
-  constructor(private http: HttpClient) {}
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   SubmitAnswers(answers: AnswerModel[]): Observable<AnswerModel[]> {
-    return this.http.post<AnswerModel[]>(`${this.apiUrl}`, answers, {withCredentials: true})
+    return this.BulkCreate(this.basePath, answers);
   }
 
   GetAnswersByUserId(userId: number): Observable<AnswerModel[]> {
-    return this.http.get<AnswerModel[]>(`${this.apiUrl}/User/${userId}`, {withCredentials: true})
+    return this.GetByFatherId(`${this.basePath}/User/`, userId);
   }
 
   GetAnswersByQuestionId(questionId: number): Observable<AnswerModel[]> {
-    return this.http.get<AnswerModel[]>(`${this.apiUrl}/Question/${questionId}`, {withCredentials: true})
+    return this.GetByFatherId(`${this.basePath}/Question/`, questionId);
   }
 }

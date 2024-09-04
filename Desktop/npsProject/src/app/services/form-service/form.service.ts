@@ -2,33 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormModel } from 'src/app/interfaces/form';
+import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormService {
+export class FormService extends BaseService<FormModel>{
 
-  private apiUrl = 'http://localhost:5014/api/Forms';
+  basePath: string = '/Forms'
 
-  constructor(private http: HttpClient) {}
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   GetForms(): Observable<FormModel[]> {
-    return this.http.get<FormModel[]>(`${this.apiUrl}`, {withCredentials: true})
+    return this.Get(this.basePath)
   }
 
   GetFormsByGroupId(groupId: number): Observable<FormModel[]> {
-    return this.http.get<FormModel[]>(`${this.apiUrl}/Group/${groupId}`, {withCredentials: true})
+    return this.GetByFatherId(`${this.basePath}/Group`, groupId)
   }
 
   CreateForm(form: FormModel): Observable<FormModel> {
-    return this.http.post<FormModel>(`${this.apiUrl}`, form, {withCredentials: true})
+    return this.Create(this.basePath, form)
   }
 
   DeleteForm(id: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
+    return this.Delete(this.basePath, id)
   }
 
   UpdateForm(id: number, newName: string): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/${id}?newName=${newName}`, null, {withCredentials: true})
+    return this.Update(this.basePath, id, newName)
   }
 }

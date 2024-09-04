@@ -5,30 +5,28 @@
     </div>
     <div id="questions-container" (answersSubmited)="loadQuestions()">
         <div *ngFor="let question of questions; let i = index">
-            <div class="question-container">
-                <div class="questions-div">
-                    <div id="options" *ngIf="authorized">
-                        <span class="material-symbols-outlined" (click)="openUpdateModal(question.id)">edit</span>
-                        <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
-                    </div>
-                    <div id="question-name-div">{{ question.content }}</div>
+            <div class="questions-div">
+                <div id="options" *ngIf="authorized">
+                    <span class="material-symbols-outlined" (click)="openUpdateModal(question.id)">edit</span>
+                    <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
                 </div>
-                <select id="grades-select" [(ngModel)]="selectedGrades[i]">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <div class="description-input">
-                    <input type="text" placeholder="Descrição (opcional)" [(ngModel)]="descriptions[i]">
-                </div>
+                <div class="item-name-div">{{ question.content }}</div>
+            </div>
+            <select id="grades-select" [(ngModel)]="selectedGrades[i]">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <div class="description-input">
+                <input type="text" placeholder="Descrição (opcional)" [(ngModel)]="descriptions[i]">
             </div>
         </div>
     </div>

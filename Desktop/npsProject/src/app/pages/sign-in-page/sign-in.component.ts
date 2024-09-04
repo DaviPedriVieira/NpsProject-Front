@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class SignInComponent implements OnInit {
   username: string = '';
   password: string = '';
   invalidInputs: boolean = false;
@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.loginService.isAuthenticated()) {
-      this.router.navigate(['/home'])
+      const LastRoute = localStorage.getItem('LastRoute') || '/home'
+      this.router.navigate([LastRoute])
     }
   }
 
@@ -36,11 +37,12 @@ export class LoginComponent implements OnInit {
       (response) => {
         if (response) {
           localStorage.setItem('Username', `${this.username}`);
-          this.router.navigate(['/home']);
+          const LastRoute = localStorage.getItem('LastRoute') || '/home'
+          this.router.navigate([LastRoute]);
         }
       },
       (error) => {
-        this.errorMessage = 'Usuário ou senha incorretos!';
+        this.errorMessage = `${error.error}`;
         this.invalidInputs = true;
       }
     );

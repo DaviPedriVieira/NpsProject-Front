@@ -2,37 +2,40 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QuestionModel } from 'src/app/interfaces/question';
+import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionService {
+export class QuestionService extends BaseService<QuestionModel>{
 
-  private apiUrl = 'http://localhost:5014/api/Questions';
+  basePath: string = '/Questions'
 
-  constructor(private http: HttpClient) {}
+  constructor(http: HttpClient) {
+    super(http)
+  }
 
   GetQuestions(): Observable<QuestionModel[]> {
-    return this.http.get<QuestionModel[]>(`${this.apiUrl}`, {withCredentials: true})
+    return this.Get(this.basePath)
   }
 
   GetQuestionsByFormId(formId: number): Observable<QuestionModel[]> {
-    return this.http.get<QuestionModel[]>(`${this.apiUrl}/Form/${formId}`, {withCredentials: true})
+    return this.GetByFatherId(this.basePath, formId)
   }
 
   GetQuestionById(id: number): Observable<QuestionModel> {
-    return this.http.get<QuestionModel>(`${this.apiUrl}/${id}`, {withCredentials: true})
+    return this.GetById(this.basePath, id)
   }
 
   CreateQuestion(questions: QuestionModel[]): Observable<QuestionModel[]> {
-    return this.http.post<QuestionModel[]>(`${this.apiUrl}`, questions, {withCredentials: true})
+    return this.BulkCreate(this.basePath, questions)
   }
 
   DeleteQuestion(id: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`, {withCredentials: true})
+    return this.Delete(this.basePath, id)
   }
 
   UpdateQuestion(id: number, newName: string): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/${id}?newName=${newName}`, null, {withCredentials: true})
+    return this.Update(this.basePath, id, newName)
   }
 }

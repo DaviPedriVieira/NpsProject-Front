@@ -37,9 +37,9 @@ export class GroupsComponent implements OnInit {
 
   openFormsModal(id: number) {
     this.groupId = id
-    setTimeout(() => {
+    
       this.formsModalComponent.openModal();
-    })
+
   }
 
   openDeleteModal(id: number) {

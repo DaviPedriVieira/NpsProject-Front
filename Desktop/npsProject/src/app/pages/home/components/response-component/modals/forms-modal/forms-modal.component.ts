@@ -24,7 +24,9 @@ export class FormsModalComponent {
 
   openModal() {
     this.formsmodal.nativeElement.showModal();
-    this.loadForms()
+    setTimeout(() => {
+      this.loadForms()
+    })
   }
 
   closeModal() {
@@ -43,12 +45,12 @@ export class FormsModalComponent {
       this.questionsModalComponent.openModal();
     });
   }
-  
+
   openDeleteModal(id: number) {
     this.formId = id;
     this.deleteModalComponent.openModal();
   }
-  
+
   openUpdateModal(id: number) {
     this.formId = id;
     this.updateModalComponent.openModal();

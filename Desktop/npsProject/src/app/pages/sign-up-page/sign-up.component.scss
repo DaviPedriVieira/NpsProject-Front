@@ -1,0 +1,101 @@
+#align-container{
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(63, 74, 173);
+    position: relative;
+}
+
+#container{
+    padding: 50px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    width: 450px;
+    box-shadow: 5px 5px 20px rgb(0, 0, 0);
+    border-radius: 1rem;
+    background-color: white;
+    position: relative;
+}
+
+.inputs input{
+    margin-top: 20px;
+    border-radius: 1rem;
+    border: none;
+    width: 300px;
+    height: 50px;
+    padding-left: 15px;
+    background-color: lightgray;
+}
+
+.entrar input{
+    cursor: pointer;
+    margin-top: 30px;
+    width: 200px;
+    height: 60px;
+    border-radius: 1rem;
+    border: none;
+    background-color: rgb(63, 74, 173);
+    color: white;
+    font-size: 1rem;
+}
+
+#login-div img{
+    width: 200px;
+    height: 200px;
+    margin-bottom: 40px;
+}
+
+h1{
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+    font-size: 15px;
+    height: 10px;
+    width: 300px;
+    margin-top: 20px;;
+}
+
+#sign-up-div {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#sucess-message-dialog {
+    height: 200px;
+    width: 400px;
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    padding: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    box-shadow: 0px 5px 15px rgb(73, 73, 73);
+    text-align: center;
+
+    h1{
+        margin-top: 5%;
+    }
+
+    button {
+        height: 50px;
+        width: 120px;
+        background-color: rgb(167, 45, 45);
+        border: none;
+        outline: none;
+        border-radius: 1rem;
+        color: white;
+        cursor: pointer;
+        margin-top: 15%;
+    }
+}
+

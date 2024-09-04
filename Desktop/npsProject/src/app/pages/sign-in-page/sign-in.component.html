@@ -9,9 +9,12 @@
             <div class="inputs">
                 <input type="password" placeholder="Senha" (keyup.enter)="Login()" [(ngModel)]="password">
             </div>
+            <div *ngIf="invalidInputs" class="error"> {{ errorMessage }} </div>
             <div class="entrar">
                 <input type="submit" value="Entrar" (click)="Login()">
-                <div *ngIf="invalidInputs" class="error"> {{ errorMessage }} </div>
+            </div>
+            <div id="sign-up-div">Ainda não tem uma conta? 
+                <a routerLink="/signUp">cadastrar-se</a>
             </div>
         </div>
     </div>

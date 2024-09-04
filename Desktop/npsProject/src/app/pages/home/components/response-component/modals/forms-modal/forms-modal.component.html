@@ -19,7 +19,7 @@
     <div id="footer">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
-    <app-delete-modal [id]="formId" [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
-    <app-update-modal [id]="formId" [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
-    <app-questions-modal [formId]="formId" [authorized]="authorized"></app-questions-modal>
 </dialog>
+<app-delete-modal [id]="formId" [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
+<app-update-modal [id]="formId" [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
+<app-questions-modal [formId]="formId" [authorized]="authorized"></app-questions-modal>

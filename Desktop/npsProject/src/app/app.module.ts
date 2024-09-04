@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login-page/login.component';
+import { SignInComponent } from './pages/sign-in-page/sign-in.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HeaderComponent } from './shared/header-component/header.component';
@@ -22,12 +22,13 @@ import { NpsComponent } from './pages/nps-page/nps.component';
 import { CheckAnswersModalComponent } from './pages/home/components/create-component/modals/check-answers-modal/check-answers-modal/check-answers-modal.component';
 import { NpsChartComponent } from './pages/nps-page/components/nps-chart-component/nps-chart/nps-chart.component';
 import { NpsUsersComponent } from './pages/nps-page/components/nps-users-component/nps-users/nps-users.component';
+import { SignUpComponent } from './pages/sign-up-page/sign-up.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    SignInComponent,
     HomeComponent,
     HeaderComponent,
     CreateComponent,
@@ -44,6 +45,7 @@ import { NpsUsersComponent } from './pages/nps-page/components/nps-users-compone
     CheckAnswersModalComponent,
     NpsChartComponent,
     NpsUsersComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

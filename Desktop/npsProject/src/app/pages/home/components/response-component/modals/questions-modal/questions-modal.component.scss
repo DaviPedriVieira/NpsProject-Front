@@ -21,13 +21,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-}
-
-.question-container {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-items: center;
+    padding: 20px;
 }
 
 .questions-div{
@@ -41,6 +37,8 @@
     background-color: white;
     border: 1px solid gray;
     position: relative;
+    padding: 10px;
+    box-sizing: border-box;
     margin-bottom: 10px;
 }
 
