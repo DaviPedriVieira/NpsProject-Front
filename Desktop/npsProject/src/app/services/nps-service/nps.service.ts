@@ -6,8 +6,8 @@ import { BaseService } from '../base-service/base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NpsService extends BaseService<number> {
-
+export class NpsService extends BaseService<number>{
+  
   basePath: string = '/Nps'
 
   constructor(http: HttpClient) {

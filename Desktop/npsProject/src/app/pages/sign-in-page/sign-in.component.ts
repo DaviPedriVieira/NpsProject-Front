@@ -1,42 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, AfterViewInit {
+  @ViewChild('sucessMessageDialog') sucessfulMessageDialog!: ElementRef<HTMLDialogElement>; 
   username: string = '';
   password: string = '';
   invalidInputs: boolean = false;
   errorMessage: string = '';
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    if (this.loginService.isAuthenticated()) {
+    if (localStorage.getItem('Username') != null && localStorage.getItem('Role') != null) {
       const LastRoute = localStorage.getItem('LastRoute') || '/home'
       this.router.navigate([LastRoute])
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.notificationService.cookieExpired$.subscribe(() => {
+      this.sucessfulMessageDialog.nativeElement.showModal()
+    })
   }
 
   canSubmit(): boolean {
     return this.username.trim() !== '' && this.password.trim() !== '';
   }
 
-  Login() {
+  Login(): void {
     if (!this.canSubmit()) {
       this.errorMessage = 'Nenhum dos campos pode ser vazio!';
       this.invalidInputs = true;
       return;
     }
 
-    this.loginService.Login(this.username, this.password).subscribe(
+    this.loginService.login(this.username, this.password).subscribe(
       (response) => {
         if (response) {
-          localStorage.setItem('Username', `${this.username}`);
+          localStorage.setItem('Username', `${response.name}`);
+          localStorage.setItem('Role', response.type == 0 ? 'Administrador' : 'Usuário');
           const LastRoute = localStorage.getItem('LastRoute') || '/home'
           this.router.navigate([LastRoute]);
         }
@@ -46,6 +55,10 @@ export class SignInComponent implements OnInit {
         this.invalidInputs = true;
       }
     );
+  }
+
+  closeModal(): void {
+    this.sucessfulMessageDialog.nativeElement.close()
   }
 }
 

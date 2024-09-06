@@ -5,6 +5,7 @@ import { QuestionModel } from 'src/app/interfaces/question';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-groups-create-modal',
@@ -69,11 +70,17 @@ export class GroupsCreateModalComponent {
       return
     }
 
-    this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe(() => {
-      this.closeModal()
-      this.notificationService.notifyGroupCreated();
-      this.sucessfulMessageModal.openModal()
-    })
+    this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe({
+      next: (data) => {
+        this.closeModal()
+        this.notificationService.notifyGroupCreated();
+        this.sucessfulMessageModal.openModal()
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
   }
 
   ResetVariables() {

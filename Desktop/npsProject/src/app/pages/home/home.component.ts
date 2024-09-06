@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/services/login-service/login.service';
 
 @Component({
   selector: 'app-home',
@@ -8,20 +7,11 @@ import { LoginService } from 'src/app/services/login-service/login.service';
 })
 export class HomeComponent implements OnInit{
 
-  authorized: boolean = false;
+  userRole: string | null = '';
   
-  constructor(private loginService: LoginService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    const username = localStorage.getItem('Username');
-
-    if(username == null) {
-      this.authorized == false;
-      return
-    }
-
-    this.loginService.isAuthorized(username).subscribe(response => {
-      this.authorized = response;
-    });
+    this.userRole = localStorage.getItem('Role');
   }
 }

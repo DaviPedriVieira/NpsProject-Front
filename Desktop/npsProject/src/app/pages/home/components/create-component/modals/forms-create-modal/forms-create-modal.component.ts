@@ -1,9 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
@@ -14,12 +16,12 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 export class FormsCreateModalComponent {
   @ViewChild('createFormsModal') createFormsModal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
-  newForm: FormModel = {id: 0, groupId: 0, name: '', questions: []}
+  newForm: FormModel = { id: 0, groupId: 0, name: '', questions: [] }
   invalidInputs: boolean = false;
   selectedGroupId: string = '';
   groups: FormsGroupModel[] = [];
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService) {}
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private notificationService: NotificationService) { }
 
   openModal() {
     this.createFormsModal.nativeElement.showModal();
@@ -32,9 +34,15 @@ export class FormsCreateModalComponent {
   }
 
   GetGroups() {
-    this.formsGroupService.GetFormsGroups().subscribe((data) => {
-      this.groups = data;
-    })
+    this.formsGroupService.GetFormsGroups().subscribe({
+      next: (data) => {
+        this.groups = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
   }
 
   CreateQuestion() {
@@ -47,7 +55,7 @@ export class FormsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if(!this.selectedGroupId.trim()) 
+    if (!this.selectedGroupId.trim())
       return true
 
     if (!this.newForm.name.trim())
@@ -68,14 +76,21 @@ export class FormsCreateModalComponent {
     }
 
     this.newForm.groupId = Number(this.selectedGroupId);
-    this.formsService.CreateForm(this.newForm).subscribe(() => {
-      this.closeModal()
-      this.sucessfulMessageModal.openModal()
-    })
+
+    this.formsService.CreateForm(this.newForm).subscribe({
+      next: () => {
+        this.closeModal()
+        this.sucessfulMessageModal.openModal()
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 500)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
   }
 
   ResetVariables() {
-    this.newForm = {id: 0, groupId: 0, name: '', questions: []}
+    this.newForm = { id: 0, groupId: 0, name: '', questions: [] }
     this.invalidInputs = false;
   }
 }

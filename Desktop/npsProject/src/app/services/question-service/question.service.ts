@@ -20,7 +20,7 @@ export class QuestionService extends BaseService<QuestionModel>{
   }
 
   GetQuestionsByFormId(formId: number): Observable<QuestionModel[]> {
-    return this.GetByFatherId(this.basePath, formId)
+    return this.GetByFatherId(`${this.basePath}/Form`, formId)
   }
 
   GetQuestionById(id: number): Observable<QuestionModel> {

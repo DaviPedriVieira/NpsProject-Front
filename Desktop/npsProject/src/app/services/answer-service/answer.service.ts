@@ -20,10 +20,10 @@ export class AnswerService extends BaseService<AnswerModel> {
   }
 
   GetAnswersByUserId(userId: number): Observable<AnswerModel[]> {
-    return this.GetByFatherId(`${this.basePath}/User/`, userId);
+    return this.GetByFatherId(`${this.basePath}/User`, userId);
   }
 
   GetAnswersByQuestionId(questionId: number): Observable<AnswerModel[]> {
-    return this.GetByFatherId(`${this.basePath}/Question/`, questionId);
+    return this.GetByFatherId(`${this.basePath}/Question`, questionId);
   }
 }

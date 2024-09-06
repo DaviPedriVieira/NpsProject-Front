@@ -16,14 +16,13 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.nome = localStorage.getItem('Username') || '';
-
-    this.loginService.isAuthorized(this.nome).subscribe((data) => {
-      this.authorized = data;
-    })
+    this.authorized = localStorage.getItem('Role') == 'Administrador' ? true : false;
   }
 
   Logout() {
-    this.loginService.Logout().subscribe(() => {
+    this.loginService.logout().subscribe(() => {
+      localStorage.removeItem('Username')
+      localStorage.removeItem('Role')
       this.router.navigate(['/login'])
     }) 
   }

@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { UserModel } from 'src/app/interfaces/user';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { UserService } from 'src/app/services/user-service/user.service';
 
@@ -20,11 +22,10 @@ export class CheckAnswersModalComponent {
   mode: string = 'questionMode'
   answersListEmpty: boolean = false
 
-  constructor(private answersService: AnswerService, private questionService: QuestionService, private userService: UserService) { }
+  constructor(private answersService: AnswerService, private questionService: QuestionService, private userService: UserService, private notificationService: NotificationService) { }
 
   openModal() {
     this.GetQuestions()
-    this.GetUsers()
     this.checkAnswersModal.nativeElement.showModal()
   }
 
@@ -35,56 +36,88 @@ export class CheckAnswersModalComponent {
   }
 
   changeMode() {
-    this.mode = this.mode == 'questionMode' ? 'userMode' : 'questionMode';
+    if (this.mode == 'questionMode') {
+      this.mode = 'userMode'
+      this.GetUsers()
+    } 
+    else {
+      this.mode = 'questionMode'
+      this.GetQuestions()
+    }
+
     this.ResetVariables()
   }
 
   GetAnswersByQuestionId() {
     this.answersListEmpty = false
-    this.answersService.GetAnswersByQuestionId(Number(this.selectedId)).subscribe(data => {
-      this.answers = data;
+    this.answersService.GetAnswersByQuestionId(Number(this.selectedId)).subscribe({
+      next: (data) => {
+        this.answers = data;
 
-      if(this.answers.length == 0){
-        this.answersListEmpty = true
-        return
-      }
+        if (this.answers.length == 0) {
+          this.answersListEmpty = true
+          return
+        }
 
-      for (let i = 0; i < this.answers.length; i++) {
-        this.userService.GetUserById(this.answers[i].userId).subscribe(data => {
-          this.answers[i].username = data.name
-        })
+        for (let i = 0; i < this.answers.length; i++) {
+          this.userService.GetUserById(this.answers[i].userId).subscribe(data => {
+            this.answers[i].username = data.name
+          })
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
       }
-    })
+    });
   }
 
   GetAnswersByUserId() {
     this.answersListEmpty = false
-    this.answersService.GetAnswersByUserId(Number(this.selectedId)).subscribe(data => {
-      this.answers = data;
+    this.answersService.GetAnswersByUserId(Number(this.selectedId)).subscribe({
+      next: (data) => {
+        this.answers = data
 
-      if(this.answers.length == 0){
-        this.answersListEmpty = true
-        return
-      }
+        if (this.answers.length == 0) {
+          this.answersListEmpty = true
+          return
+        }
 
-      for (let i = 0; i < this.answers.length; i++) {
-        this.questionService.GetQuestionById(this.answers[i].questionId).subscribe(data => {
-          this.answers[i].question = data.content
-        })
+        for (let i = 0; i < this.answers.length; i++) {
+          this.questionService.GetQuestionById(this.answers[i].questionId).subscribe(data => {
+            this.answers[i].question = data.content
+          })
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
       }
-    })
+    });
   }
 
   GetQuestions() {
-    this.questionService.GetQuestions().subscribe(data => {
-      this.questions = data;
-    })
+    this.questionService.GetQuestions().subscribe({
+      next: (data) => {
+        this.questions = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
   }
 
   GetUsers() {
-    this.userService.GetUsers().subscribe(data => {
-      this.users = data;
-    })
+    this.userService.GetUsers().subscribe({
+      next: (data) => {
+        this.users = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
   }
 
   ResetVariables() {

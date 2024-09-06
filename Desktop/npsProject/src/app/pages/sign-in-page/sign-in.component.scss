@@ -65,3 +65,34 @@ h1{
     display: flex;
     flex-direction: column;
 }
+
+#sucess-message-dialog {
+    height: 200px;
+    width: 400px;
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    padding: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    box-shadow: 0px 5px 15px rgb(73, 73, 73);
+    text-align: center;
+
+    h1{
+        margin-top: 5%;
+    }
+
+    button {
+        height: 50px;
+        width: 120px;
+        background-color: rgb(167, 45, 45);
+        border: none;
+        outline: none;
+        border-radius: 1rem;
+        color: white;
+        cursor: pointer;
+        margin-top: 15%;
+    }
+}

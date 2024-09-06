@@ -1,31 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
+import { UserModel } from 'src/app/interfaces/user';
+import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LoginService extends BaseService<UserModel>{
 
-  private apiUrl = 'http://localhost:5014/api/Users';
+  basePath: string = '/Users'
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
-
-  Login(username: string, password: string): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/Login?name=${username}&password=${password}`, null, {withCredentials: true})
+  constructor(http: HttpClient) {
+    super(http)
   }
 
-  Logout(): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/Logout`, null, {withCredentials: true});
+  login(username: string, password: string): Observable<UserModel> {
+    return this.Login(`${this.basePath}/Login`, username, password)
   }
 
-  isAuthenticated(): boolean {
-    const cookie = this.cookieService.get('NpsProject.AuthCookie');
-    return cookie != '';
-  }
-
-  isAuthorized(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/Type?username=${username}`, {withCredentials: true});
+  logout(): Observable<boolean> {
+    return this.Logout(`${this.basePath}/Logout`)
   }
 }

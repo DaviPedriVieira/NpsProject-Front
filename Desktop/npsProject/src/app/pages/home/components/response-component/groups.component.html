@@ -19,7 +19,7 @@
     </div>
   </div>
 </div>
-<app-forms-modal [groupId]="groupId" [authorized]="authorized"></app-forms-modal>
+<app-forms-modal [groupId]="groupId"></app-forms-modal>
 <app-delete-modal [id]="groupId" [item]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
 <app-update-modal [id]="groupId" [item]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
 <app-sucessful-message-modal></app-sucessful-message-modal>
