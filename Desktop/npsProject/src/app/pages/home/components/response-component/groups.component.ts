@@ -32,7 +32,7 @@ export class GroupsComponent implements OnInit {
     })
   }
   
-  loadFormsGroups() {
+  loadFormsGroups(): void {
     this.formsGroupService.GetFormsGroups().subscribe({
       next: (data) => {
         this.formsGroups = data;
@@ -44,17 +44,19 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  openFormsModal(id: number) {
+  openFormsModal(id: number): void {
     this.groupId = id
-    this.formsModalComponent.openModal();
+    setTimeout(() => {
+      this.formsModalComponent.openModal();
+    })
   }
 
-  openDeleteModal(id: number) {
+  openDeleteModal(id: number): void {
     this.groupId = id
     this.deleteModalComponent.openModal();
   }
 
-  openUpdateModal(id: number) {
+  openUpdateModal(id: number): void {
     this.groupId = id
     this.updateModalComponent.openModal();
   }

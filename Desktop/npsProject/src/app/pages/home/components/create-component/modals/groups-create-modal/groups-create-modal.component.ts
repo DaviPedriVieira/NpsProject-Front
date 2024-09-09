@@ -21,7 +21,7 @@ export class GroupsCreateModalComponent {
   constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService) { }
 
   openModal() {
-    this.formsmodal.nativeElement.showModal();
+    this.formsmodal.nativeElement.show();
   }
 
   closeModal() {

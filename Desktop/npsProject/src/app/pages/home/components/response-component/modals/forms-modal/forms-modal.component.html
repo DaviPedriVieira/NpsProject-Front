@@ -1,18 +1,18 @@
 <dialog id="formsmodal" #formsmodal>
     <h2>Formulários</h2>
-    <div *ngIf="forms.length == 0" class="no-forms-message">
+    <div *ngIf="forms.length == 0" class="no-items-message">
         Não há formulários nesse grupo.
     </div>
     <div id="forms-container">
         <div *ngFor="let form of forms">
             <div class="forms-div" (click)="openQuestionsModal(form.id)">
-                <div id="options" *ngIf="authorized">
+                <div class="options" *ngIf="authorized">
                     <span class="material-symbols-outlined"
                         (click)="openUpdateModal(form.id); $event.stopPropagation()">edit</span>
                     <span class="material-symbols-outlined"
                         (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
                 </div>
-                <div id="form-name-div">{{ form.name }}</div>
+                <div class="item-name-div">{{ form.name }}</div>
             </div>
         </div>
     </div>

@@ -27,7 +27,7 @@ export class NpsChartComponent implements OnInit {
     });
   }
 
-  SetPointerPosition() {
+  SetPointerPosition(): void {
     let angle = (this.npsScore + 100) * 0.9
     this.pointer.nativeElement.style.transform = `rotate(${angle + 135}deg)`
   }

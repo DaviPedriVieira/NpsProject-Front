@@ -18,51 +18,64 @@ export class DeleteModalComponent {
 
   constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notificationService: NotificationService) { }
 
-  openModal() {
-    this.deletemodal.nativeElement.showModal();
+  openModal(): void {
+    this.deletemodal.nativeElement.show();
   }
 
-  closeModal() {
+  closeModal(): void {
     this.deletemodal.nativeElement.close();
   }
 
-  delete() {
-    if (this.item == 'group') {
-      this.formsGroupService.DeleteFormsGroup(this.id).subscribe({
-        next: (data) => {
-          this.closeModal()
-          this.itemDeleted.emit()
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
-        }
-      });
-    }
-    else if (this.item == 'form') {
-      this.formsService.DeleteForm(this.id).subscribe({
-        next: (data) => {
-          this.closeModal()
-          this.itemDeleted.emit()
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
-        }
-      });
-    }
-    else if (this.item == 'question') {
-      this.questionService.DeleteQuestion(this.id).subscribe({
-        next: (data) => {
-          this.closeModal()
-          this.itemDeleted.emit()
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
-        }
-      });
+  DeleteItem(): void {
+    switch (this.item) {
+      case 'group':
+        this.DeleteGroup()
+        break
+      case 'form':
+        this.DeleteForm()
+        break
+      case 'question':
+        this.DeleteQuestion()
+        break
     }
   }
 
+  DeleteGroup(): void {
+    this.formsGroupService.DeleteFormsGroup(this.id).subscribe({
+      next: () => {
+        this.closeModal()
+        this.itemDeleted.emit()
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
+  }
+
+  DeleteForm(): void {
+    this.formsService.DeleteForm(this.id).subscribe({
+      next: () => {
+        this.closeModal()
+        this.itemDeleted.emit()
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
+  }
+
+  DeleteQuestion(): void {
+    this.questionService.DeleteQuestion(this.id).subscribe({
+      next: () => {
+        this.closeModal()
+        this.itemDeleted.emit()
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
+  }
 }

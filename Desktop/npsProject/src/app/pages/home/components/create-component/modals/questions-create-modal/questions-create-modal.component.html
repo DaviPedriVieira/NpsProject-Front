@@ -2,7 +2,7 @@
     <h2>Criar perguntas</h2>
     <div id="items-div">
         <div>Selecione o formulário que irá inserir: </div>
-        <select id="form-select" [(ngModel)]="selectedFormId">
+        <select class="select" [(ngModel)]="selectedFormId">
             <option value="" disabled selected hidden>Selecione um formulário</option>
             <option *ngFor="let form of forms" [value]="form.id">
                 {{ form.name }}
@@ -33,7 +33,7 @@
         <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
         <div id="button-container">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-            <button class="submit-btn" (click)="SubmitQuestions()">Enviar</button>
+            <button class="confirm-btn" (click)="SubmitQuestions()">Enviar</button>
         </div>
     </div>
 </dialog>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,24 +10,24 @@ import { NotificationService } from 'src/app/services/notification-service/notif
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit, AfterViewInit {
-  @ViewChild('sucessMessageDialog') sucessfulMessageDialog!: ElementRef<HTMLDialogElement>; 
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageDialog!: SucessfulMessageModalComponent; 
   username: string = '';
   password: string = '';
   invalidInputs: boolean = false;
   errorMessage: string = '';
 
   constructor(private loginService: LoginService, private router: Router, private notificationService: NotificationService) { }
-
+  
   ngOnInit(): void {
     if (localStorage.getItem('Username') != null && localStorage.getItem('Role') != null) {
       const LastRoute = localStorage.getItem('LastRoute') || '/home'
       this.router.navigate([LastRoute])
     }
   }
-
+  
   ngAfterViewInit(): void {
     this.notificationService.cookieExpired$.subscribe(() => {
-      this.sucessfulMessageDialog.nativeElement.showModal()
+      this.sucessfulMessageDialog.openModal()
     })
   }
 
@@ -58,7 +59,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
   }
 
   closeModal(): void {
-    this.sucessfulMessageDialog.nativeElement.close()
+    this.sucessfulMessageDialog.closeModal()
   }
 }
 

@@ -3,23 +3,15 @@
         <div id="login-div">
             <img src="assets/logo.png" alt="">
             <h1>Login</h1>
-            <div class="inputs">
-                <input type="text" placeholder="Nome" (keyup.enter)="Login()" [(ngModel)]="username">
-            </div>
-            <div class="inputs">
-                <input type="password" placeholder="Senha" (keyup.enter)="Login()" [(ngModel)]="password">
-            </div>
+            <input class="input" type="text" placeholder="Nome" (keyup.enter)="Login()" [(ngModel)]="username">
+            <input class="input" type="password" placeholder="Senha" (keyup.enter)="Login()" [(ngModel)]="password">
             <div *ngIf="invalidInputs" class="error"> {{ errorMessage }} </div>
-            <div class="entrar">
-                <input type="submit" value="Entrar" (click)="Login()">
-            </div>
-            <div id="sign-up-div">Ainda não tem uma conta? 
-                <a routerLink="/signUp">cadastrar-se</a>
+                <button class="login-button" (click)="Login()">Entrar</button>
+            <div id="sign-up-div">
+                Ainda não tem uma conta? <a routerLink="/signUp">cadastrar-se</a>
             </div>
         </div>
     </div>
 </div>
-<dialog id="sucess-message-dialog" #sucessMessageDialog>
-    <h1>Seu login expirou!</h1>
-    <button (click)="closeModal()">Fechar</button>
-</dialog>
+<app-sucessful-message-modal [message]="'Seu login expirou!'"></app-sucessful-message-modal>
+

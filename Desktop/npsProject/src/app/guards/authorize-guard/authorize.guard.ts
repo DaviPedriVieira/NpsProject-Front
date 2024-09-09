@@ -13,6 +13,7 @@ export class AuthorizeGuard implements CanActivate {
 
     if (authorized != 'Administrador') {
       this.router.navigate(['/home']);
+      return false
     }
     
     return true 

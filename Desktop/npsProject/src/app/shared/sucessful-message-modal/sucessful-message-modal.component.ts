@@ -10,7 +10,7 @@ export class SucessfulMessageModalComponent {
   @Input() message!: string;
 
   openModal() {
-    this.sucessfulMessageModal.nativeElement.showModal();
+    this.sucessfulMessageModal.nativeElement.show();
   }
 
   closeModal() {

@@ -4,8 +4,8 @@
     </div>
     <div id="user">
         <div id="change-screen-div" *ngIf="authorized">
-            <span class="material-symbols-outlined" *ngIf="currentScreen == 'Home'" (click)="goToNpsScreen()">speed</span>
-            <span class="material-symbols-outlined"*ngIf="currentScreen == 'NPS'" (click)="goToHomeScreen()">home</span>
+            <span class="material-symbols-outlined" *ngIf="currentScreen == 'Home'" (click)="ChangeScreen('/nps')">speed</span>
+            <span class="material-symbols-outlined"*ngIf="currentScreen == 'NPS'" (click)="ChangeScreen('/home')">home</span>
             {{ currentScreen == 'Home' ? 'NPS' : 'Home' }}
         </div>
         <div id="userData">

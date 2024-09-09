@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user-service/user.service';
@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user-service/user.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit{
   @ViewChild('sucessMessageDialog') sucessfulMessageDialog!: ElementRef<HTMLDialogElement>; 
   username: string = '';
   password: string = '';
@@ -16,11 +16,19 @@ export class SignUpComponent {
   errorMessage: string = '';
 
   constructor(private UserService: UserService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (localStorage.getItem('Username') != null && localStorage.getItem('Role') != null) {
+      const LastRoute = localStorage.getItem('LastRoute') || '/home'
+      this.router.navigate([LastRoute])
+    }
+  }
+  
   canSubmit(): boolean {
     return this.username.trim() !== '' && this.password.trim() !== '';
   }
 
-  CreateUser(){
+  CreateUser(): void { 
     if (!this.canSubmit()) {
       this.errorMessage = 'Nenhum dos campos pode ser vazio!';
       this.invalidInputs = true;
@@ -39,7 +47,7 @@ export class SignUpComponent {
     })
   }
 
-  goToLoginPage(){
+  goToLoginPage(): void {
     this.username = '';
     this.password = '';
     this.invalidInputs = false

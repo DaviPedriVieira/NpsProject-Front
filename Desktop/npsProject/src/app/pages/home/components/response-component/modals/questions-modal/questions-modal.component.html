@@ -1,12 +1,12 @@
 <dialog id="questionsmodal" #questionsmodal>
     <h2>Perguntas</h2>
-    <div *ngIf="questions.length == 0" class="no-forms-message">
+    <div *ngIf="questions.length == 0" class="no-items-message">
         Não há perguntas nesse formulário.
     </div>
     <div id="questions-container" (answersSubmited)="loadQuestions()">
         <div *ngFor="let question of questions; let i = index">
             <div class="questions-div">
-                <div id="options" *ngIf="authorized">
+                <div class="options" *ngIf="authorized">
                     <span class="material-symbols-outlined" (click)="openUpdateModal(question.id)">edit</span>
                     <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
                 </div>
@@ -34,7 +34,7 @@
         <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
         <div [ngClass]="{'buttons-div': questions.length > 0, 'buttons-div-center': questions.length == 0}">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-            <button class="send-answers-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
+            <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
         </div>
     </div>
 </dialog>

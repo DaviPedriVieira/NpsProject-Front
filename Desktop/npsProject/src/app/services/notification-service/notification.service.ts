@@ -21,11 +21,7 @@ export class NotificationService {
 
   notifyCookieExpired() {
     this.loginService.logout()
-    localStorage.removeItem('Username')
-    localStorage.removeItem('Role')
     this.router.navigate(['/login'])
-    setTimeout(() => {
-      this.cookieExpired.next()
-    })
+    this.cookieExpired.next()
   }
 }

@@ -4,13 +4,13 @@
     <div id="groups-container">
       <div *ngFor="let group of formsGroups">
         <div class="groups-div" (click)="openFormsModal(group.id)">
-          <div id="options" *ngIf="authorized">
+          <div class="options" *ngIf="authorized">
             <span class="material-symbols-outlined"
               (click)="openUpdateModal(group.id); $event.stopPropagation()">edit</span>
             <span class="material-symbols-outlined"
               (click)="openDeleteModal(group.id); $event.stopPropagation()">delete</span>
           </div>
-          <div id="group-name-div">{{ group.name }}</div>
+          <div class="item-name-div">{{ group.name }}</div>
         </div>
       </div>
     </div>

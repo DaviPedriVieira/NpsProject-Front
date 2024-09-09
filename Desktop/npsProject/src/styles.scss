@@ -4,3 +4,102 @@
     font-family: "Roboto", sans-serif;
 }
 
+.close-modal-btn{
+    height: 50px;
+    width: 120px;
+    background-color: rgb(167, 45, 45);
+    border: none;
+    outline: none;
+    border-radius: 1.2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover{
+    transition: 0.3s;
+    background-color: rgb(224, 61, 61);
+}
+
+.confirm-btn{
+    height: 50px;
+    width: 120px;
+    background-color: rgb(36, 151, 32);
+    border: none;
+    outline: none;
+    border-radius: 1.2rem;
+    color: white;
+    cursor: pointer;
+
+}
+
+.confirm-btn:hover{
+    transition: 0.3s;
+    background-color: rgb(45, 190, 40);
+}
+
+.error {
+    color: red;
+    font-size: 15px;
+    height: 10px;
+    width: 300px;
+    margin-top: 20px;;
+}
+
+.input {
+    border-radius: 1rem;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    width: 300px;
+    height: 50px;
+    padding-left: 15px;
+    background-color: lightgray;
+}
+
+.login-button {
+    margin-top: 30px;
+    width: 200px;
+    height: 60px;
+    border-radius: 1rem;
+    border: none;
+    background-color: rgb(63, 74, 173);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
+    background-color: rgb(95, 110, 240);
+}
+
+.select {
+    width: 300px;
+    height: 40px;
+    border-radius: 1rem;
+    outline: none;
+    border: none;
+    background-color: rgb(233, 233, 233);
+    text-align: center;
+    margin: 10px 0px 10px 0px;
+}
+
+.options {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.item-name-div {
+    margin-bottom: 10px;
+    padding: 5px;
+    word-break: break-word;
+}
+
+.no-items-message {
+    margin: 60px 0px 40px 0px;
+    text-align: center;
+    font-size: 20px;
+}

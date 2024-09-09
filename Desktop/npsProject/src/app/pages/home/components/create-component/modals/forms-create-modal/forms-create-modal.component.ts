@@ -24,7 +24,7 @@ export class FormsCreateModalComponent {
   constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private notificationService: NotificationService) { }
 
   openModal() {
-    this.createFormsModal.nativeElement.showModal();
+    this.createFormsModal.nativeElement.show();
     this.GetGroups()
   }
 

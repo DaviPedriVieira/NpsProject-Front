@@ -29,18 +29,18 @@ export class QuestionsModalComponent {
 
   constructor(private questionService: QuestionService, private answersService: AnswerService, private notificationService: NotificationService) { }
 
-  openModal() {
+  openModal(): void {
     this.authorized = localStorage.getItem('Role') == 'Administrador' ? true : false;
-    this.formsmodal.nativeElement.showModal();
+    this.formsmodal.nativeElement.show();
     this.loadQuestions()
   }
 
-  closeModal() {
+  closeModal(): void {
     this.formsmodal.nativeElement.close();
     this.ResetVariables()
   }
 
-  loadQuestions() {
+  loadQuestions(): void {
     this.questionService.GetQuestionsByFormId(this.formId).subscribe({
       next: (data) => {
         this.questions = data;
@@ -52,12 +52,12 @@ export class QuestionsModalComponent {
     });
   }
 
-  openUpdateModal(id: number) {
+  openUpdateModal(id: number): void {
     this.questionId = id
     this.updateModalComponent.openModal();
   }
 
-  openDeleteModal(id: number) {
+  openDeleteModal(id: number): void {
     this.questionId = id
     this.deleteModalComponent.openModal();
   }
@@ -76,7 +76,7 @@ export class QuestionsModalComponent {
     return true
   }
 
-  PopulateAnswers() {
+  PopulateAnswers(): void {
     if(!this.ValidSelects()){
       this.invalidInputs = true;
       return
@@ -97,9 +97,9 @@ export class QuestionsModalComponent {
     this.SubmitAnswers(answers)
   }
 
-  SubmitAnswers(answers: AnswerModel[]) {
+  SubmitAnswers(answers: AnswerModel[]): void {
     this.answersService.SubmitAnswers(answers).subscribe({
-        next: (data) => {
+        next: () => {
           this.closeModal()
           this.sucessfulMessageModalComponent.openModal();
         },
@@ -111,7 +111,7 @@ export class QuestionsModalComponent {
       });
   }
 
-  ResetVariables() {
+  ResetVariables(): void {
     this.selectedGrades = [];
     this.descriptions = [];
     this.invalidInputs = false;

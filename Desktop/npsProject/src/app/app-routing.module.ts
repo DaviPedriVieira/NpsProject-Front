@@ -8,11 +8,11 @@ import { AuthorizeGuard } from './guards/authorize-guard/authorize.guard';
 import { SignUpComponent } from './pages/sign-up-page/sign-up.component';
 
 const routes: Routes = [
-  {path: 'login', component: SignInComponent},
+  {path: 'signIn', component: SignInComponent},
   {path: 'signUp', component: SignUpComponent},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuardGuard]},
   {path: 'nps', component: NpsComponent, canActivate: [AuthorizeGuard]},
-  {path: '**', redirectTo: 'login'},
+  {path: '**', redirectTo: 'signIn'},
 ];
 
 @NgModule({

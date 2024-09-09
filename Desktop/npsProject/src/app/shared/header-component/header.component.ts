@@ -19,21 +19,14 @@ export class HeaderComponent {
     this.authorized = localStorage.getItem('Role') == 'Administrador' ? true : false;
   }
 
-  Logout() {
+  Logout(): void {
     this.loginService.logout().subscribe(() => {
-      localStorage.removeItem('Username')
-      localStorage.removeItem('Role')
       this.router.navigate(['/login'])
     }) 
   }
 
-  goToHomeScreen() {
-    localStorage.setItem('LastRoute', '/home')
-    this.router.navigate(['/home'])
-  }
-  
-  goToNpsScreen() {
-    localStorage.setItem('LastRoute', '/nps')
-    this.router.navigate(['/nps'])
+  ChangeScreen(route: string): void {
+    localStorage.setItem('LastRoute', route)
+    this.router.navigate([route])
   }
 }

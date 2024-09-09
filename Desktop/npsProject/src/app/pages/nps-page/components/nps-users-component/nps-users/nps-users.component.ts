@@ -23,7 +23,7 @@ export class NpsUsersComponent implements OnInit {
     this.GetDetractors()
   }
 
-  GetPromoters() {
+  GetPromoters(): void {
     this.userService.GetPromoters().subscribe({
       next: (data) => {
         this.promoters = data
@@ -35,7 +35,7 @@ export class NpsUsersComponent implements OnInit {
     });
   }
 
-  GetPassives() {
+  GetPassives(): void {
     this.userService.GetPassives().subscribe({
       next: (data) => {
         this.passives = data
@@ -47,7 +47,7 @@ export class NpsUsersComponent implements OnInit {
     });
   }
 
-  GetDetractors() {
+  GetDetractors(): void {
     this.userService.GetDetractors().subscribe({
       next: (data) => {
         this.detractors = data

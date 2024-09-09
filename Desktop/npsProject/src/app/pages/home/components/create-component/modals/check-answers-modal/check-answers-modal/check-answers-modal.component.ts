@@ -26,7 +26,7 @@ export class CheckAnswersModalComponent {
 
   openModal() {
     this.GetQuestions()
-    this.checkAnswersModal.nativeElement.showModal()
+    this.checkAnswersModal.nativeElement.show()
   }
 
   closeModal() {

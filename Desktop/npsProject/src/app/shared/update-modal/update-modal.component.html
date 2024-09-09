@@ -1,13 +1,13 @@
 <dialog id="updatemodal" #updatemodal>
     <div id="update-container">
-        <div id="update-title">Editar</div>
-        <div id="input-container">
-            <input type="text" placeholder="Digite o novo nome" (keyup.enter)="UpdateItem()" [(ngModel)]="newName">
-        </div>
+        <p>Editar</p>
+   
+            <input class="input" type="text" placeholder="Digite o novo nome" (keyup.enter)="UpdateItem()" [(ngModel)]="newName">
+
         <div *ngIf="invalidInput" class="error">Nome Inválido!</div>
         <div id="button-container">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
-            <button class="update-btn" (click)="UpdateItem()">Confirmar</button>
+            <button class="confirm-btn" (click)="UpdateItem()">Confirmar</button>
         </div>
     </div>
 </dialog>

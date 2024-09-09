@@ -21,7 +21,7 @@ export class UpdateModalComponent {
   constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notificationService: NotificationService) { }
 
   openModal() {
-    this.updatemodal.nativeElement.showModal();
+    this.updatemodal.nativeElement.show();
   }
 
   closeModal() {
@@ -29,53 +29,70 @@ export class UpdateModalComponent {
   }
 
   UpdateItem() {
-    if (this.item == 'group' && this.NameValidator()) {
-      this.formsGroupService.UpdateFormsGroup(this.id, this.newName).subscribe({
-        next: (data) => {
-          this.closeModal()
-          this.itemUpdated.emit()
-          this.newName = '';
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
-        }
-      });
+    if (!this.NameValidator()){
+      this.invalidInput = true
     }
-    else if (this.item == 'form' && this.NameValidator()) {
-      this.formsService.UpdateForm(this.id, this.newName).subscribe({
-        next: (data) => {
-          this.closeModal()
-          this.itemUpdated.emit()
-          this.newName = '';
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
-        }
-      });
+    
+    switch(this.item) {
+      case 'group':
+        this.UpdateGroup()
+        break
+      case 'form':
+        this.UpdateForm()
+        break
+      case 'question':
+        this.UpdateQuestion()
+        break
     }
-    else if (this.item == 'question' && this.NameValidator()) {
-      this.questionService.UpdateQuestion(this.id, this.newName).subscribe({
-        next: (data) => {
-          this.closeModal()
-          this.itemUpdated.emit()
-          this.newName = '';
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
-        }
-      });
-    }
+
+  }
+
+  UpdateGroup(): void {
+    this.formsGroupService.UpdateFormsGroup(this.id, this.newName).subscribe({
+      next: () => {
+        this.closeModal()
+        this.itemUpdated.emit()
+        this.newName = '';
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
+  }
+  
+  UpdateForm(): void {
+    this.formsService.UpdateForm(this.id, this.newName).subscribe({
+      next: () => {
+        this.closeModal()
+        this.itemUpdated.emit()
+        this.newName = '';
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
+  }
+
+  UpdateQuestion(): void {
+    this.questionService.UpdateQuestion(this.id, this.newName).subscribe({
+      next: () => {
+        this.closeModal()
+        this.itemUpdated.emit()
+        this.newName = '';
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
+    });
   }
 
   NameValidator(): boolean {
     if (this.newName.trim() == '') {
-      this.invalidInput = true
       return false
     }
-
     return true;
   }
 }

@@ -3,7 +3,7 @@
     <div id="header-div" *ngIf="mode == 'questionMode'">
         <div>Pergunta que deseja ver as respostas: </div>
         <div class="main-input-container">
-            <select class="selects" [(ngModel)]="selectedId" (change)="GetAnswersByQuestionId()">
+            <select class="select" [(ngModel)]="selectedId" (change)="GetAnswersByQuestionId()">
                 <option value="" disabled selected hidden>Selecione uma pergunta</option>
                 <option *ngFor="let question of questions" [value]="question.id">
                     {{ question.content }}
@@ -15,7 +15,7 @@
     <div id="header-div" *ngIf="mode == 'userMode'">
         <div>Usuário que deseja ver as respostas: </div>
         <div class="main-input-container">
-            <select class="selects" [(ngModel)]="selectedId" (change)="GetAnswersByUserId()">
+            <select class="select" [(ngModel)]="selectedId" (change)="GetAnswersByUserId()">
                 <option value="" disabled selected hidden>Selecione um usuário</option>
                 <option *ngFor="let user of users" [value]="user.id">
                     {{ user.name }}
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div id="allign-buttons-div">
-        <div class="no-answers-message" *ngIf="answersListEmpty">Não há respostas {{mode == 'userMode' ? 'deste usuário' : 'nesta pergunta'}}.</div>
+        <div class="no-items-message" *ngIf="answersListEmpty">Não há respostas {{mode == 'userMode' ? 'deste usuário' : 'nesta pergunta'}}.</div>
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
 </dialog>

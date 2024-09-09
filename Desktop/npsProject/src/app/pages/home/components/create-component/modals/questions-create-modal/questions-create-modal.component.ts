@@ -23,7 +23,7 @@ export class QuestionsCreateModalComponent {
   constructor(private formsService: FormService, private questionsService: QuestionService, private notificationService: NotificationService) { }
 
   openModal() {
-    this.createQuestionsModal.nativeElement.showModal()
+    this.createQuestionsModal.nativeElement.show()
     this.GetForms()
     this.CreateQuestion()
   }

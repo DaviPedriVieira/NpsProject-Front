@@ -10,6 +10,7 @@
     border-radius: 1rem;
     padding: 20px;
     box-shadow: 0px 5px 15px rgb(73, 73, 73);
+    z-index: 10;
 
     h2 {
         margin-top: 10px;
@@ -21,22 +22,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#group-select {
-    width: 300px;
-    height: 40px;
-    border-radius: 1rem;
-    outline: none;
-    border: none;
-    background-color: rgb(233, 233, 233);
-    text-align: center;
-    margin: 10px 0px 10px 0px;
-
-    option {
-        max-height: 150px; 
-        overflow-y: auto;  
-    }
 }
 
 .forms-input-box {
@@ -140,44 +125,4 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.close-modal-btn {
-    height: 40px;
-    width: 100px;
-    background-color: rgb(167, 45, 45);
-    border: none;
-    outline: none;
-    border-radius: 1rem;
-    color: white;
-    cursor: pointer;
-}
-
-.close-modal-btn:hover {
-    transition: 0.3s;
-    background-color: rgb(201, 55, 55);
-}
-
-.submit-btn {
-    height: 40px;
-    width: 100px;
-    background-color: rgb(36, 151, 32);
-    border: none;
-    outline: none;
-    border-radius: 1rem;
-    color: white;
-    cursor: pointer;
-}
-
-.submit-btn:hover {
-    transition: 0.3s;
-    background-color: rgb(45, 190, 40);
-}
-
-.error {
-    color: red;
-    font-size: 15px;
-    height: 10px;
-    width: 300px;
-    margin-bottom: 20px;
 }

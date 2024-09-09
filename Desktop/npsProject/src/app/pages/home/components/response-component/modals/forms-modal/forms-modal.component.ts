@@ -24,19 +24,17 @@ export class FormsModalComponent {
 
   constructor(private formService: FormService, private notificationService: NotificationService) { }
 
-  openModal() {
+  openModal(): void {
     this.authorized = localStorage.getItem('Role') == 'Administrador' ? true : false;
-    this.formsmodal.nativeElement.showModal();
-    setTimeout(() => {
-      this.loadForms()
-    })
+    this.formsmodal.nativeElement.show();
+    this.loadForms()
   }
 
-  closeModal() {
+  closeModal(): void {
     this.formsmodal.nativeElement.close();
   }
 
-  loadForms() {
+  loadForms(): void {
     this.formService.GetFormsByGroupId(this.groupId).subscribe({
       next: (data) => {
         this.forms = data;
@@ -48,19 +46,19 @@ export class FormsModalComponent {
     })
   }
 
-  openQuestionsModal(id: number) {
+  openQuestionsModal(id: number): void {
     this.formId = id;
     setTimeout(() => {
       this.questionsModalComponent.openModal();
     });
   }
 
-  openDeleteModal(id: number) {
+  openDeleteModal(id: number): void {
     this.formId = id;
     this.deleteModalComponent.openModal();
   }
 
-  openUpdateModal(id: number) {
+  openUpdateModal(id: number): void {
     this.formId = id;
     this.updateModalComponent.openModal();
   }
