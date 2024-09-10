@@ -1,4 +1,4 @@
-#align-container{
+main {
     width: 100vw;
     height: 100vh;
     justify-content: center;
@@ -19,11 +19,20 @@
     background-color: white;
 }
 
-#login-div img{
-    width: 200px;
-    height: 200px;
-    margin-bottom: 40px;
-}
+#login-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img{
+        width: 200px;
+        height: 200px;
+        margin-bottom: 40px;
+    }
+} 
+
 
 h1{
     margin-bottom: 20px;

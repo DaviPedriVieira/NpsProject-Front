@@ -21,6 +21,7 @@ export class FormsModalComponent {
   authorized!: boolean;
   forms: FormModel[] = [];
   formId: number = 0
+  formName: string = ''
 
   constructor(private formService: FormService, private notificationService: NotificationService) { }
 
@@ -58,8 +59,9 @@ export class FormsModalComponent {
     this.deleteModalComponent.openModal();
   }
 
-  openUpdateModal(id: number): void {
+  openUpdateModal(id: number, formName: string): void {
     this.formId = id;
+    this.formName = formName
     this.updateModalComponent.openModal();
   }
 }

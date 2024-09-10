@@ -8,7 +8,7 @@
             <div class="forms-div" (click)="openQuestionsModal(form.id)">
                 <div class="options" *ngIf="authorized">
                     <span class="material-symbols-outlined"
-                        (click)="openUpdateModal(form.id); $event.stopPropagation()">edit</span>
+                        (click)="openUpdateModal(form.id, form.name); $event.stopPropagation()">edit</span>
                     <span class="material-symbols-outlined"
                         (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
                 </div>
@@ -16,10 +16,10 @@
             </div>
         </div>
     </div>
-    <div id="footer">
+    <div id="allign-btn-div">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
 </dialog>
 <app-delete-modal [id]="formId" [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
-<app-update-modal [id]="formId" [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
+<app-update-modal [id]="formId" [item]="'form'" [name]="formName" (itemUpdated)="loadForms()"></app-update-modal>
 <app-questions-modal [formId]="formId"></app-questions-modal>

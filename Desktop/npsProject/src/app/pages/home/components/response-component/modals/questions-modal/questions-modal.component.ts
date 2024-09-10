@@ -25,6 +25,7 @@ export class QuestionsModalComponent {
   selectedGrades: number[] = [];
   descriptions: string[] = [];
   questionId: number = 0
+  questionContent: string = ''
   invalidInputs: boolean = false
 
   constructor(private questionService: QuestionService, private answersService: AnswerService, private notificationService: NotificationService) { }
@@ -52,8 +53,9 @@ export class QuestionsModalComponent {
     });
   }
 
-  openUpdateModal(id: number): void {
+  openUpdateModal(id: number, questionContent: string): void {
     this.questionId = id
+    this.questionContent = questionContent
     this.updateModalComponent.openModal();
   }
 

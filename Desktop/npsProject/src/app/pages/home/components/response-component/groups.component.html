@@ -1,12 +1,12 @@
-<div id="main">
+<main>
   <div id="container">
-    <h2>Grupos</h2>
+    <h1>Grupos</h1>
     <div id="groups-container">
       <div *ngFor="let group of formsGroups">
         <div class="groups-div" (click)="openFormsModal(group.id)">
           <div class="options" *ngIf="authorized">
             <span class="material-symbols-outlined"
-              (click)="openUpdateModal(group.id); $event.stopPropagation()">edit</span>
+              (click)="openUpdateModal(group.id, group.name); $event.stopPropagation()">edit</span>
             <span class="material-symbols-outlined"
               (click)="openDeleteModal(group.id); $event.stopPropagation()">delete</span>
           </div>
@@ -14,12 +14,12 @@
         </div>
       </div>
     </div>
-    <div id="no-groups-message" *ngIf="formsGroups.length == 0">
+    <div class="no-items-message" *ngIf="formsGroups.length == 0">
       Não há grupos de formulários cadastrados
     </div>
   </div>
-</div>
+</main>
 <app-forms-modal [groupId]="groupId"></app-forms-modal>
 <app-delete-modal [id]="groupId" [item]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
-<app-update-modal [id]="groupId" [item]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
+<app-update-modal [id]="groupId" [item]="'group'" [name]="groupName" (itemUpdated)="loadFormsGroups()"></app-update-modal>
 <app-sucessful-message-modal></app-sucessful-message-modal>

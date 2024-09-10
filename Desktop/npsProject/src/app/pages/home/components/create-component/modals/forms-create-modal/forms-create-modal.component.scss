@@ -1,6 +1,6 @@
 #createFormsModal {
     max-height: 650px;
-    width: 1600px;
+    width: 1300px;
     text-align: center;
     background-color: white;
     border: none;
@@ -8,12 +8,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 1rem;
-    padding: 20px;
+    padding: 0px 20px;
     box-shadow: 0px 5px 15px rgb(73, 73, 73);
     z-index: 10;
+    overflow-y: auto;
 
     h2 {
-        margin-top: 10px;
+        margin-top: 20px;
         margin-bottom: 40px;
     }
 }
@@ -59,7 +60,7 @@
 
 #questions-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
 .question-container {
@@ -113,6 +114,11 @@
 }
 
 #allign-buttons-div {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    z-index: 1;
+    padding: 20px;
     margin-top: 50px;
     display: flex;
     flex-direction: column;

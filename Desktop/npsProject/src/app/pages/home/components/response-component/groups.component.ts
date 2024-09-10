@@ -19,6 +19,7 @@ export class GroupsComponent implements OnInit {
   authorized!: boolean;
   formsGroups: FormsGroupModel[] = [];
   groupId: number = 0;
+  groupName: string = '';
 
   constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService) { }
   
@@ -56,8 +57,9 @@ export class GroupsComponent implements OnInit {
     this.deleteModalComponent.openModal();
   }
 
-  openUpdateModal(id: number): void {
+  openUpdateModal(id: number, groupName: string): void {
     this.groupId = id
+    this.groupName = groupName
     this.updateModalComponent.openModal();
   }
 }

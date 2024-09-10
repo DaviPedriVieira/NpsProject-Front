@@ -1,4 +1,4 @@
-#menu-bar{
+main {
     height: 130px;
     width: 100%;
     background-color: rgb(63, 74, 173);
@@ -12,6 +12,7 @@
     display: flex;
     min-width: 150px;
     justify-content: space-between;
+    align-items: center;
 }
 
 #logo img {
@@ -31,7 +32,7 @@
 }
 
 .material-symbols-outlined {
-    margin-right: 30px;
+    margin-right: 20px;
     font-size: 60px;
     color: white;
     cursor: pointer;

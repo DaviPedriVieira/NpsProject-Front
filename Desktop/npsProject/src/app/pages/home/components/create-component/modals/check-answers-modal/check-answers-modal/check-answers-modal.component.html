@@ -2,7 +2,7 @@
     <h2>Consultar respostas</h2>
     <div id="header-div" *ngIf="mode == 'questionMode'">
         <div>Pergunta que deseja ver as respostas: </div>
-        <div class="main-input-container">
+        <div class="select-container">
             <select class="select" [(ngModel)]="selectedId" (change)="GetAnswersByQuestionId()">
                 <option value="" disabled selected hidden>Selecione uma pergunta</option>
                 <option *ngFor="let question of questions" [value]="question.id">
@@ -14,7 +14,7 @@
     </div>
     <div id="header-div" *ngIf="mode == 'userMode'">
         <div>Usuário que deseja ver as respostas: </div>
-        <div class="main-input-container">
+        <div class="select-container">
             <select class="select" [(ngModel)]="selectedId" (change)="GetAnswersByUserId()">
                 <option value="" disabled selected hidden>Selecione um usuário</option>
                 <option *ngFor="let user of users" [value]="user.id">

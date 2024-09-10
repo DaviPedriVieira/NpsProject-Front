@@ -11,6 +11,7 @@
     border-radius: 1rem;
     padding: 20px;
     box-shadow: 0px 5px 15px rgb(73, 73, 73);
+    z-index: 10;
 }
 
 p {
@@ -19,7 +20,7 @@ p {
     font-size: 2rem;
 }
 
-#sucessful-container{
+main {
     height: 200px;
     display: flex;
     flex-direction: column;

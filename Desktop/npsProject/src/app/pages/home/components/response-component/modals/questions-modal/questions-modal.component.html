@@ -7,23 +7,13 @@
         <div *ngFor="let question of questions; let i = index">
             <div class="questions-div">
                 <div class="options" *ngIf="authorized">
-                    <span class="material-symbols-outlined" (click)="openUpdateModal(question.id)">edit</span>
+                    <span class="material-symbols-outlined" (click)="openUpdateModal(question.id, question.content)">edit</span>
                     <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
                 </div>
                 <div class="item-name-div">{{ question.content }}</div>
             </div>
-            <select id="grades-select" [(ngModel)]="selectedGrades[i]">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+            <select [(ngModel)]="selectedGrades[i]">
+                <option *ngFor="let number of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="number">{{ number }}</option>
             </select>
             <div class="description-input">
                 <input type="text" placeholder="Descrição (opcional)" [(ngModel)]="descriptions[i]">
@@ -38,6 +28,7 @@
         </div>
     </div>
 </dialog>
+
 <app-delete-modal [id]="questionId" [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-<app-update-modal [id]="questionId" [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
+<app-update-modal [id]="questionId" [item]="'question'" [name]="questionContent" (itemUpdated)="loadQuestions()"></app-update-modal>
 <app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>

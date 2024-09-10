@@ -12,16 +12,21 @@ import { QuestionService } from 'src/app/services/question-service/question.serv
 })
 export class UpdateModalComponent {
   @ViewChild('updatemodal') updatemodal!: ElementRef<HTMLDialogElement>
+  @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>
   @Input() id!: number;
   @Input() item!: string;
+  @Input() name!: string
   @Output() itemUpdated = new EventEmitter<void>();
-  newName: string = '';
   invalidInput: boolean = false;
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notificationService: NotificationService) { }
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notificationService: NotificationService) {}
 
   openModal() {
     this.updatemodal.nativeElement.show();
+    setTimeout(() => {
+      this.nameInput.nativeElement.focus()
+      this.nameInput.nativeElement.select()
+    })
   }
 
   closeModal() {
@@ -48,11 +53,11 @@ export class UpdateModalComponent {
   }
 
   UpdateGroup(): void {
-    this.formsGroupService.UpdateFormsGroup(this.id, this.newName).subscribe({
+    this.formsGroupService.UpdateFormsGroup(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
         this.itemUpdated.emit()
-        this.newName = '';
+        this.name = '';
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
@@ -62,11 +67,11 @@ export class UpdateModalComponent {
   }
   
   UpdateForm(): void {
-    this.formsService.UpdateForm(this.id, this.newName).subscribe({
+    this.formsService.UpdateForm(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
         this.itemUpdated.emit()
-        this.newName = '';
+        this.name = '';
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
@@ -76,11 +81,11 @@ export class UpdateModalComponent {
   }
 
   UpdateQuestion(): void {
-    this.questionService.UpdateQuestion(this.id, this.newName).subscribe({
+    this.questionService.UpdateQuestion(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
         this.itemUpdated.emit()
-        this.newName = '';
+        this.name = '';
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
@@ -90,7 +95,7 @@ export class UpdateModalComponent {
   }
 
   NameValidator(): boolean {
-    if (this.newName.trim() == '') {
+    if (this.name.trim() == '') {
       return false
     }
     return true;

@@ -1,7 +1,5 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/interfaces/user';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
@@ -15,7 +13,7 @@ export class NpsUsersComponent implements OnInit {
   passives: UserModel[] = []
   detractors: UserModel[] = []
 
-  constructor(private userService: UserService, private notificationService: NotificationService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.GetPromoters()
@@ -24,38 +22,20 @@ export class NpsUsersComponent implements OnInit {
   }
 
   GetPromoters(): void {
-    this.userService.GetPromoters().subscribe({
-      next: (data) => {
+    this.userService.GetPromoters().subscribe(data => {
         this.promoters = data
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
-      }
     });
   }
 
   GetPassives(): void {
-    this.userService.GetPassives().subscribe({
-      next: (data) => {
+    this.userService.GetPassives().subscribe(data => {
         this.passives = data
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
-      }
     });
   }
 
   GetDetractors(): void {
-    this.userService.GetDetractors().subscribe({
-      next: (data) => {
+    this.userService.GetDetractors().subscribe(data => {
         this.detractors = data
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
-      }
     });
   }
 }
