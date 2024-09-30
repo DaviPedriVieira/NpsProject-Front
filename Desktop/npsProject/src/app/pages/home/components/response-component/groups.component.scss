@@ -7,18 +7,25 @@ main {
 
 #container {
     min-height: 200px;
-    max-height: 510px;
+    max-height: 520px;
     width: 75%;
-    margin-top: 50px;
+    margin-top: 30px;
     border-radius: 2rem;
     border: 1px solid gray;
     box-shadow: 0px 5px 15px gray;
     text-align: center;
     overflow-y: auto;
-
+    position: relative;
+    
     h1{
         margin-top: 20px;
     }
+}
+
+#search-component-div {
+    left: 1140px;
+    top: 25px;
+    position: absolute;
 }
 
 #groups-container {

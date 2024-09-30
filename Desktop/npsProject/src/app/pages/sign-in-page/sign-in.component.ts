@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
   constructor(private loginService: LoginService, private router: Router, private notificationService: NotificationService) { }
   
   ngOnInit(): void {
-    if (localStorage.getItem('Username') != null && localStorage.getItem('Role') != null) {
+    if (localStorage.getItem('Username') != null) {
       const LastRoute = localStorage.getItem('LastRoute') || '/home'
       this.router.navigate([LastRoute])
     }

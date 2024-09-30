@@ -6,6 +6,7 @@ import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.c
 import { QuestionsModalComponent } from '../questions-modal/questions-modal.component';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from 'src/app/services/login-service/login.service';
 
 @Component({
   selector: 'app-forms-modal',
@@ -18,15 +19,18 @@ export class FormsModalComponent {
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @Input() groupId!: number;
+  @Input() groupName!: string;
   authorized!: boolean;
   forms: FormModel[] = [];
   formId: number = 0
   formName: string = ''
 
-  constructor(private formService: FormService, private notificationService: NotificationService) { }
+  constructor(private formService: FormService, private notificationService: NotificationService, private loginService: LoginService) { }
 
   openModal(): void {
-    this.authorized = localStorage.getItem('Role') == 'Administrador' ? true : false;
+    this.loginService.isAdmin().subscribe(data => {
+      this.authorized = data
+    });
     this.formsmodal.nativeElement.show();
     this.loadForms()
   }
@@ -47,8 +51,9 @@ export class FormsModalComponent {
     })
   }
 
-  openQuestionsModal(id: number): void {
+  openQuestionsModal(id: number, formName: string): void {
     this.formId = id;
+    this.formName = formName
     setTimeout(() => {
       this.questionsModalComponent.openModal();
     });

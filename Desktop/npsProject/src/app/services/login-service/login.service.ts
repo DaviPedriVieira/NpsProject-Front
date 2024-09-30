@@ -24,4 +24,9 @@ export class LoginService extends BaseService<UserModel>{
     localStorage.removeItem('Role')
     return this.Logout(`${this.basePath}/Logout`)
   }
+  
+  isAdmin(): Observable<boolean>  {
+    const username = localStorage.getItem('Username')
+    return this.IsAdmin(`${this.basePath}/Type?username=${username}`)
+  }
 }

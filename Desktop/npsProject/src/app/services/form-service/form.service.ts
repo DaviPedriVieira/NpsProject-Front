@@ -19,6 +19,10 @@ export class FormService extends BaseService<FormModel>{
     return this.Get(this.basePath)
   }
 
+  GetFormById(id: number): Observable<FormModel> {
+    return this.GetById(this.basePath, id)
+  }
+
   GetFormsByGroupId(groupId: number): Observable<FormModel[]> {
     return this.GetByFatherId(`${this.basePath}/Group`, groupId)
   }

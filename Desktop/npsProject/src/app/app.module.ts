@@ -23,6 +23,8 @@ import { CheckAnswersModalComponent } from './pages/home/components/create-compo
 import { NpsChartComponent } from './pages/nps-page/components/nps-chart-component/nps-chart/nps-chart.component';
 import { NpsUsersComponent } from './pages/nps-page/components/nps-users-component/nps-users/nps-users.component';
 import { SignUpComponent } from './pages/sign-up-page/sign-up.component';
+import { FormsPageComponent } from './pages/forms-page/forms-page.component';
+import { SearchComponentComponent } from './shared/search-component/search-component.component';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import { SignUpComponent } from './pages/sign-up-page/sign-up.component';
     NpsChartComponent,
     NpsUsersComponent,
     SignUpComponent,
+    FormsPageComponent,
+    SearchComponentComponent,
   ],
   imports: [
     BrowserModule,

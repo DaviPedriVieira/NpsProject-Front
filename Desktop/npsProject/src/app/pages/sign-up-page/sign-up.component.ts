@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit{
   constructor(private UserService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('Username') != null && localStorage.getItem('Role') != null) {
+    if (localStorage.getItem('Username') != null) {
       const LastRoute = localStorage.getItem('LastRoute') || '/home'
       this.router.navigate([LastRoute])
     }

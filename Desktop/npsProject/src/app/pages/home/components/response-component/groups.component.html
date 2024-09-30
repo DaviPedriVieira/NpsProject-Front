@@ -1,9 +1,12 @@
 <main>
   <div id="container">
     <h1>Grupos</h1>
+    <div id="search-component-div">
+      <app-search-component (itemSearched)="filterGroups()"></app-search-component>
+    </div>
     <div id="groups-container">
-      <div *ngFor="let group of formsGroups">
-        <div class="groups-div" (click)="openFormsModal(group.id)">
+      <div *ngFor="let group of filteredGroups">
+        <div class="groups-div" (click)="openFormsModal(group.id, group.name)">
           <div class="options" *ngIf="authorized">
             <span class="material-symbols-outlined"
               (click)="openUpdateModal(group.id, group.name); $event.stopPropagation()">edit</span>
@@ -14,12 +17,12 @@
         </div>
       </div>
     </div>
-    <div class="no-items-message" *ngIf="formsGroups.length == 0">
+    <div class="no-items-message" *ngIf="filteredGroups.length == 0">
       Não há grupos de formulários cadastrados
     </div>
   </div>
 </main>
-<app-forms-modal [groupId]="groupId"></app-forms-modal>
+<app-forms-modal [groupId]="groupId" [groupName]="groupName"></app-forms-modal>
 <app-delete-modal [id]="groupId" [item]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
 <app-update-modal [id]="groupId" [item]="'group'" [name]="groupName" (itemUpdated)="loadFormsGroups()"></app-update-modal>
 <app-sucessful-message-modal></app-sucessful-message-modal>

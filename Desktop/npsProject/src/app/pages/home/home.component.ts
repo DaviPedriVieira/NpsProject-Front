@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/services/login-service/login.service';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit{
 
-  userRole: string | null = '';
+  authorized: boolean = false
   
-  constructor() {}
+  constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
-    this.userRole = localStorage.getItem('Role');
+    this.loginService.isAdmin().subscribe(data => {
+      this.authorized = data
+    });
   }
 }

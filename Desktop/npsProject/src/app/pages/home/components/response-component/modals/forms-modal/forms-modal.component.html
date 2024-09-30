@@ -1,11 +1,11 @@
 <dialog id="formsmodal" #formsmodal>
-    <h2>Formulários</h2>
+    <h2>Formulários do grupo: {{ groupName }}</h2>
     <div *ngIf="forms.length == 0" class="no-items-message">
         Não há formulários nesse grupo.
     </div>
     <div id="forms-container">
         <div *ngFor="let form of forms">
-            <div class="forms-div" (click)="openQuestionsModal(form.id)">
+            <div class="forms-div" (click)="openQuestionsModal(form.id, form.name)">
                 <div class="options" *ngIf="authorized">
                     <span class="material-symbols-outlined"
                         (click)="openUpdateModal(form.id, form.name); $event.stopPropagation()">edit</span>
@@ -22,4 +22,4 @@
 </dialog>
 <app-delete-modal [id]="formId" [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
 <app-update-modal [id]="formId" [item]="'form'" [name]="formName" (itemUpdated)="loadForms()"></app-update-modal>
-<app-questions-modal [formId]="formId"></app-questions-modal>
+<app-questions-modal [formId]="formId" [formName]="formName"></app-questions-modal>

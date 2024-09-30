@@ -80,4 +80,8 @@ export class BaseService<T> {
   Logout(path: string): Observable<boolean> {
     return this.http.post<boolean>(this.buildUrl(path), null, { withCredentials: true })
   }
+
+  IsAdmin(path: string): Observable<boolean> {
+    return this.http.get<boolean>(this.buildUrl(path), { withCredentials: true })
+  }
 }

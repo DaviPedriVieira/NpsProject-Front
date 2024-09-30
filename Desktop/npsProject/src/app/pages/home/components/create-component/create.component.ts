@@ -15,8 +15,6 @@ export class CreateComponent {
   @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModalComponent!: CheckAnswersModalComponent;
 
-  constructor() {}
-
   openGroupsCreateModal() {
     this.groupsCreateModal.openModal();
   }

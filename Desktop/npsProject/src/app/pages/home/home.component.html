@@ -1,4 +1,4 @@
 <app-header [currentScreen]="'Home'"></app-header>
-<app-create *ngIf="userRole == 'Administrador'"></app-create>
+<app-create *ngIf="authorized"></app-create>
 <app-groups></app-groups>
 
