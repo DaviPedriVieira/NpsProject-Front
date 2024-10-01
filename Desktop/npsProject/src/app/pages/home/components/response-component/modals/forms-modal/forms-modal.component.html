@@ -1,10 +1,17 @@
 <dialog id="formsmodal" #formsmodal>
-    <h2>Formulários do grupo: {{ groupName }}</h2>
-    <div *ngIf="forms.length == 0" class="no-items-message">
-        Não há formulários nesse grupo.
+    <div id="header">
+        <div id="create-container">
+            <button (click)="openFormsCreateModal()">Criar formulário</button>
+            <button (click)="openCheckAnswersModal()">Consultar respostas</button>  
+        </div>
+        <h2>Formulários do grupo: {{ groupName }}</h2>
+        <app-search-component (itemSearched)="filterForms($event)"></app-search-component>
+    </div>
+    <div *ngIf="filteredForms.length == 0" class="no-items-message">
+        Nenhum formulário encontrado.
     </div>
     <div id="forms-container">
-        <div *ngFor="let form of forms">
+        <div *ngFor="let form of filteredForms">
             <div class="forms-div" (click)="openQuestionsModal(form.id, form.name)">
                 <div class="options" *ngIf="authorized">
                     <span class="material-symbols-outlined"
@@ -23,3 +30,5 @@
 <app-delete-modal [id]="formId" [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
 <app-update-modal [id]="formId" [item]="'form'" [name]="formName" (itemUpdated)="loadForms()"></app-update-modal>
 <app-questions-modal [formId]="formId" [formName]="formName"></app-questions-modal>
+<app-forms-create-modal (formCreated)="loadForms()"></app-forms-create-modal>
+<app-check-answers-modal></app-check-answers-modal>

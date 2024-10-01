@@ -3,7 +3,6 @@
     <div id="items-div">
         <div>Selecione o formulário que irá inserir: </div>
         <select class="select" [(ngModel)]="selectedFormId">
-            <option value="" disabled selected hidden>Selecione um formulário</option>
             <option *ngFor="let form of forms" [value]="form.id">
                 {{ form.name }}
             </option>
@@ -30,7 +29,7 @@
         </button>
     </div>
     <div id="allign-buttons-div">
-        <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
+        <div class="error" *ngIf="invalidInputs">{{ errorMessage }}</div>
         <div id="button-container">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
             <button class="confirm-btn" (click)="SubmitQuestions()">Enviar</button>

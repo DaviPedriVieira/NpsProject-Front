@@ -36,8 +36,8 @@
             </div>
         </div>
     </div>
+    <div class="no-items-message" *ngIf="answersListEmpty">Não há respostas {{mode == 'userMode' ? 'deste usuário' : 'nesta pergunta'}}.</div>
     <div id="allign-buttons-div">
-        <div class="no-items-message" *ngIf="answersListEmpty">Não há respostas {{mode == 'userMode' ? 'deste usuário' : 'nesta pergunta'}}.</div>
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
 </dialog>

@@ -3,7 +3,6 @@
     <div id="header-div">
         <div>Grupo que irá inserir: </div>
         <select class="select" [(ngModel)]="selectedGroupId">
-            <option value="" disabled selected hidden>Selecione um grupo</option>
             <option *ngFor="let group of groups" [value]="group.id">
                 {{ group.name }}
             </option>
@@ -32,7 +31,7 @@
         </div>
     </div>
     <div id="allign-buttons-div">
-        <div class="error" *ngIf="invalidInputs">Todos os campos são obrigatórios!</div>
+        <div class="error" *ngIf="invalidInputs">{{ errorMessage }}</div>
         <div id="button-container">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
             <button class="confirm-btn" (click)="CreateForm()">Enviar</button>

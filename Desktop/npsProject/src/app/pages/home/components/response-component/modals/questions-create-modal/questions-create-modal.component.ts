@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
@@ -15,14 +15,18 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 export class QuestionsCreateModalComponent {
   @ViewChild('createQuestionsModal') createQuestionsModal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
+  @Output() questionCreated = new EventEmitter()
+  @Input() formId!: number;
   forms: FormModel[] = []
   newQuestions: QuestionModel[] = [];
   invalidInputs: boolean = false;
-  selectedFormId: string = '';
+  selectedFormId!: number
+  errorMessage: string = ''
 
   constructor(private formsService: FormService, private questionsService: QuestionService, private notificationService: NotificationService) { }
 
   openModal() {
+    this.selectedFormId = this.formId
     this.createQuestionsModal.nativeElement.show()
     this.GetForms()
     this.CreateQuestion()
@@ -55,15 +59,26 @@ export class QuestionsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (!this.selectedFormId.trim())
+    if (!this.selectedFormId.toString().trim()){
+      this.errorMessage = 'O formulário não pode ser em branco!'
       return true
+    }
 
-    if (this.newQuestions.length == 0)
+    if (this.newQuestions.length == 0){
+      this.errorMessage = 'Nenhuma pergunta pode ser vazia!'
       return true
-
+    }
+    
     for (let question of this.newQuestions) {
-      if (!question.content.trim())
+      if (!question.content.trim()){
+        this.errorMessage = 'Nenhuma pergunta pode ser vazia!'
         return true
+      }
+
+      if (question.content.length > 150){
+        this.errorMessage = 'As perguntas tem limite de 150 caracteres!'
+        return true
+      }
     };
 
     return false;
@@ -81,6 +96,7 @@ export class QuestionsCreateModalComponent {
 
     this.questionsService.CreateQuestion(this.newQuestions).subscribe({
       next: () => {
+        this.questionCreated.emit()
         this.sucessfulMessageModal.openModal()
         this.closeModal()
       },

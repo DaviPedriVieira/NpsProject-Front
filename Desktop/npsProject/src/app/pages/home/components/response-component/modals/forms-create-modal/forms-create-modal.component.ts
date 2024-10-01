@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
@@ -16,14 +16,18 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 export class FormsCreateModalComponent {
   @ViewChild('createFormsModal') createFormsModal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
+  @Output() formCreated = new EventEmitter()
+  @Input() groupId!: number;
   newForm: FormModel = { id: 0, groupId: 0, name: '', questions: [] }
   invalidInputs: boolean = false;
-  selectedGroupId: string = '';
+  selectedGroupId!: number;
   groups: FormsGroupModel[] = [];
+  errorMessage: string = ''
 
   constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private notificationService: NotificationService) { }
 
   openModal() {
+    this.selectedGroupId = this.groupId
     this.createFormsModal.nativeElement.show();
     this.GetGroups()
   }
@@ -55,15 +59,31 @@ export class FormsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (!this.selectedGroupId.trim())
+    if (!this.selectedGroupId.toString().trim()) {
+      this.errorMessage =  'O grupo não pode ser vazio'
       return true
+    }
 
-    if (!this.newForm.name.trim())
+    if (!this.newForm.name.trim()) {
+      this.errorMessage = 'O nome do formulário não pode ser em branco!'
       return true
+    }
+
+    if (this.newForm.name.length > 50){
+      this.errorMessage = 'O nome do formulário tem limite de 50 caracteres!'
+      return true
+    }
 
     for (let question of this.newForm.questions) {
-      if (!question.content.trim())
+      if (!question.content.trim()){
+        this.errorMessage = 'Nenhuma das perguntas podem ser vazias!'
         return true
+      }
+
+      if (question.content.length > 150){
+        this.errorMessage = 'As perguntas tem limite de 150 caracteres!'
+        return true
+      }
     };
 
     return false;
@@ -80,6 +100,7 @@ export class FormsCreateModalComponent {
     this.formsService.CreateForm(this.newForm).subscribe({
       next: () => {
         this.closeModal()
+        this.formCreated.emit()
         this.sucessfulMessageModal.openModal()
       },
       error: (error: HttpErrorResponse) => {

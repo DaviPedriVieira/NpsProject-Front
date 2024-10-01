@@ -7,6 +7,8 @@ import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.c
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login-service/login.service';
+import { GroupsCreateModalComponent } from './modals/groups-create-modal/groups-create-modal.component';
+import { CheckAnswersModalComponent } from './modals/check-answers-modal/check-answers-modal.component';
 
 @Component({
   selector: 'app-groups',
@@ -15,8 +17,10 @@ import { LoginService } from 'src/app/services/login-service/login.service';
 })
 export class GroupsComponent implements OnInit {
   @ViewChild(FormsModalComponent) formsModalComponent!: FormsModalComponent;
+  @ViewChild(GroupsCreateModalComponent) groupsCreateModal!: GroupsCreateModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
+  @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   authorized!: boolean;
   formsGroups: FormsGroupModel[] = [];
   filteredGroups: FormsGroupModel[] = [];
@@ -31,10 +35,7 @@ export class GroupsComponent implements OnInit {
     });
     
     this.loadFormsGroups();
-    
-    this.notificationService.groupCreated$.subscribe(() => {
-      this.loadFormsGroups();
-    })
+
   }
   
   loadFormsGroups(): void {
@@ -50,8 +51,23 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  filterGroups() {
+  filterGroups(search: string) {
+    if(search) {
+      this.filteredGroups = this.formsGroups.filter(group => 
+        group.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      )    
+    } 
+    else {
+      this.filteredGroups = [...this.formsGroups]
+    }
+  }
 
+  openCheckAnswersModal() {
+    this.checkAnswersModal.openModal();
+  }
+
+  openGroupsCreateModal() {
+    this.groupsCreateModal.openModal();
   }
 
   openFormsModal(id: number, groupName: string): void {

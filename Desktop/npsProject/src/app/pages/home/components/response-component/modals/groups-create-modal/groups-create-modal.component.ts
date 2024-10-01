@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
@@ -15,8 +15,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class GroupsCreateModalComponent {
   @ViewChild('createGroupsModal') formsmodal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
+  @Output() groupCreated = new EventEmitter()
   newGroup: FormsGroupModel = { id: 0, name: '', forms: [] };
   invalidInputs: boolean = false;
+  errorMessage: string = ''
 
   constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService) { }
 
@@ -48,16 +50,37 @@ export class GroupsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (!this.newGroup.name.trim())
+    if (!this.newGroup.name.trim()){
+      this.errorMessage = 'O nome do grupo não pode ser vazio!'
       return true
+    }
 
+    if (this.newGroup.name.length > 50){
+      this.errorMessage = 'O nome do grupo tem limite de 50 caracteres!'
+      return true
+    }
+    
     for (let form of this.newGroup.forms) {
-      if (!form.name.trim())
-        return true
+      if (!form.name.trim()) {
+        this.errorMessage = 'Nenhum nome de formulário pode ser vazio!'
+        return true  
+      }
 
+      if (form.name.length > 50){
+        this.errorMessage = 'Os nomes de formulários tem limite de 50 caracteres!'
+        return true
+      }
+      
       for (let question of form.questions) {
-        if (!question.content.trim())
+        if (!question.content.trim()){
+          this.errorMessage = 'Nenhuma pergunta pode ser vazia!'
           return true
+        }
+
+        if (question.content.length > 150){
+          this.errorMessage = 'As perguntas tem limite de 150 caracteres!'
+          return true
+        }
       };
     };
 
@@ -73,7 +96,7 @@ export class GroupsCreateModalComponent {
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe({
       next: (data) => {
         this.closeModal()
-        this.notificationService.notifyGroupCreated();
+        this.groupCreated.emit()
         this.sucessfulMessageModal.openModal()
       },
       error: (error: HttpErrorResponse) => {

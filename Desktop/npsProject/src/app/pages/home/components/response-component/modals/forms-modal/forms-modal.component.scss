@@ -20,6 +20,36 @@
     }
 }
 
+#create-container {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    button {
+        border: none;
+        outline: none;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: white;
+        border: 1px solid black;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        transition: 0.2s;
+        transform: scale(1.02);
+    }
+}
+
+#header {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px 0px 20px;
+}
+
 #forms-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -52,7 +82,7 @@
     position: sticky;
     bottom: 0;
     background-color: white;
-    z-index: 1;
+    z-index: 6;
     padding: 15px;
     display: flex;
     align-items: center;

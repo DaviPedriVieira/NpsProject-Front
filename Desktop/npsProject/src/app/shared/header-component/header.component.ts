@@ -8,7 +8,6 @@ import { LoginService } from 'src/app/services/login-service/login.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() currentScreen!: string;
   authorized: boolean = false;
   nome: string = ''
 
@@ -16,7 +15,9 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.nome = localStorage.getItem('Username') || '';
-    this.authorized = localStorage.getItem('Role') == 'Administrador' ? true : false;
+    this.loginService.isAdmin().subscribe(data => {
+      this.authorized = data
+    })
   }
 
   Logout(): void {
@@ -29,4 +30,5 @@ export class HeaderComponent {
     localStorage.setItem('LastRoute', route)
     this.router.navigate([route])
   }
+
 }

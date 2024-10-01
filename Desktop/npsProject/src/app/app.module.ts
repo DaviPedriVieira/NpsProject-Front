@@ -8,24 +8,25 @@ import { SignInComponent } from './pages/sign-in-page/sign-in.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HeaderComponent } from './shared/header-component/header.component';
-import { CreateComponent } from './pages/home/components/create-component/create.component';
 import { GroupsComponent } from './pages/home/components/response-component/groups.component';
 import { FormsModalComponent } from './pages/home/components/response-component/modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from './shared/update-modal/update-modal.component';
 import { QuestionsModalComponent } from './pages/home/components/response-component/modals/questions-modal/questions-modal.component';
-import { GroupsCreateModalComponent } from './pages/home/components/create-component/modals/groups-create-modal/groups-create-modal.component';
-import { FormsCreateModalComponent } from './pages/home/components/create-component/modals/forms-create-modal/forms-create-modal.component';
-import { QuestionsCreateModalComponent } from './pages/home/components/create-component/modals/questions-create-modal/questions-create-modal.component';
+import { GroupsCreateModalComponent } from './pages/home/components/response-component/modals/groups-create-modal/groups-create-modal.component';
+import { FormsCreateModalComponent } from './pages/home/components/response-component/modals/forms-create-modal/forms-create-modal.component';
+import { QuestionsCreateModalComponent } from './pages/home/components/response-component/modals/questions-create-modal/questions-create-modal.component';
 import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
 import { NpsComponent } from './pages/nps-page/nps.component';
-import { CheckAnswersModalComponent } from './pages/home/components/create-component/modals/check-answers-modal/check-answers-modal/check-answers-modal.component';
+import { CheckAnswersModalComponent } from './pages/home/components/response-component/modals/check-answers-modal/check-answers-modal.component';
 import { NpsChartComponent } from './pages/nps-page/components/nps-chart-component/nps-chart/nps-chart.component';
 import { NpsUsersComponent } from './pages/nps-page/components/nps-users-component/nps-users/nps-users.component';
 import { SignUpComponent } from './pages/sign-up-page/sign-up.component';
-import { FormsPageComponent } from './pages/forms-page/forms-page.component';
+import { FormQuestionsPageComponent } from './pages/form-questions-page/form-questions-page.component';
 import { SearchComponentComponent } from './shared/search-component/search-component.component';
-
+import { CommonModule } from '@angular/common';
+import { FormsPageComponent } from './pages/forms-page/forms-page.component';
+import { QuestionsPageComponent } from './pages/questions-page/questions-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,6 @@ import { SearchComponentComponent } from './shared/search-component/search-compo
     SignInComponent,
     HomeComponent,
     HeaderComponent,
-    CreateComponent,
     GroupsComponent,
     FormsModalComponent,
     DeleteModalComponent,
@@ -48,14 +48,17 @@ import { SearchComponentComponent } from './shared/search-component/search-compo
     NpsChartComponent,
     NpsUsersComponent,
     SignUpComponent,
-    FormsPageComponent,
+    FormQuestionsPageComponent,
     SearchComponentComponent,
+    FormsPageComponent,
+    QuestionsPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    CommonModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
