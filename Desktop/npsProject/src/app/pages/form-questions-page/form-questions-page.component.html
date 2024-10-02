@@ -2,6 +2,9 @@
 <main>
     <div id="container">
         <h2>Perguntas</h2>
+        <div class="no-items-message" *ngIf="questions.length == 0">
+            Não há grupos de formulários cadastrados
+        </div>
         <div id="questions-container" (answersSubmited)="loadQuestions()">
             <div *ngFor="let question of questions; let i = index">
                 <div class="questions-div">
@@ -23,16 +26,12 @@
         </div>
         <div id="allign-buttons-div">
             <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
-            <div [ngClass]="{'buttons-div': questions.length > 0, 'buttons-div-center': questions.length == 0}">
-                <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
+            <div class="buttons-div-center">
                 <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
             </div>
         </div>
     </div>
-    <div class="no-items-message" *ngIf="questions.length == 0">
-        Não há grupos de formulários cadastrados
-    </div>
 </main>
-<app-delete-modal [id]="questionId" [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-<app-update-modal [id]="questionId" [item]="'question'" [name]="questionContent" (itemUpdated)="loadQuestions()"></app-update-modal>
+<app-delete-modal [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
+<app-update-modal [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
 <app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>

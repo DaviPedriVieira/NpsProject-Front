@@ -3,19 +3,19 @@
         <img src="assets/logo.png" alt="">
     </div>
     <div id="icons">
-        <div class="icon-div">
+        <div class="icon-div" [ngClass]="{'active': IsActive('/home')}">
             <span class="material-symbols-outlined" (click)="ChangeScreen('/home')">home</span>
             <div>Tela inicial</div>
         </div>
-        <div class="icon-div">
+        <div class="icon-div" [ngClass]="{'active': IsActive('/forms')}">
             <span class="material-symbols-outlined" (click)="ChangeScreen('/forms')">lab_profile</span>
             <div>Formulários</div>
         </div>
-        <div class="icon-div">
+        <div class="icon-div" [ngClass]="{'active': IsActive('/questions')}">
             <span class="material-symbols-outlined" (click)="ChangeScreen('/questions')">question_mark</span>
             <div>Perguntas</div>
         </div>
-        <div class="icon-div" *ngIf="authorized">
+        <div class="icon-div" [ngClass]="{'active': IsActive('/nps')}" *ngIf="authorized">
             <span class="material-symbols-outlined" (click)="ChangeScreen('/nps')">readiness_score</span>
             <div>NPS</div>
         </div>

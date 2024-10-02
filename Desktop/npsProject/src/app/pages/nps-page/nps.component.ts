@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './nps.component.html',
   styleUrls: ['./nps.component.scss']
 })
-export class NpsComponent {
+export class NpsComponent{
 
 }

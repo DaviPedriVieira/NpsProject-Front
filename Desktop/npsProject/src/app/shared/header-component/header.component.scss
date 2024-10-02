@@ -29,10 +29,31 @@ main {
         cursor: pointer;
     }
 
+    span:hover {
+        transition: 0.3s;
+        transform: scale(1.05);
+    }
+
     div {
         color: white;
         font-size: 18px;
         text-align: center;
+    }
+}
+
+.icon-div.active {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    min-width: 100px;
+    min-height: 100px;
+
+    span, div {
+        color: rgb(63, 74, 173);
+    }
+
+    div {
+        font-weight: bold;
     }
 }
 

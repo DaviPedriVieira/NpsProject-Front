@@ -71,21 +71,21 @@ export class GroupsComponent implements OnInit {
   }
 
   openFormsModal(id: number, groupName: string): void {
-    this.groupId = id
-    this.groupName = groupName
+    this.formsModalComponent.groupId = id
+    this.formsModalComponent.groupName = groupName
     setTimeout(() => {
       this.formsModalComponent.openModal();
     })
   }
 
   openDeleteModal(id: number): void {
-    this.groupId = id
+    this.deleteModalComponent.id = id
     this.deleteModalComponent.openModal();
   }
 
   openUpdateModal(id: number, groupName: string): void {
-    this.groupId = id
-    this.groupName = groupName
+    this.updateModalComponent.id = id
+    this.updateModalComponent.name = groupName
     this.updateModalComponent.openModal();
   }
 }

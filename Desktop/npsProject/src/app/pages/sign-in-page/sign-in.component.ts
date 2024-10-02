@@ -20,8 +20,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     if (localStorage.getItem('Username') != null) {
-      const LastRoute = localStorage.getItem('LastRoute') || '/home'
-      this.router.navigate([LastRoute])
+      this.router.navigate([localStorage.getItem('LastRoute') || '/home'])
     }
   }
   
@@ -46,9 +45,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
       (response) => {
         if (response) {
           localStorage.setItem('Username', `${response.name}`);
-          localStorage.setItem('Role', response.type == 0 ? 'Administrador' : 'Usuário');
-          const LastRoute = localStorage.getItem('LastRoute') || '/home'
-          this.router.navigate([LastRoute]);
+          this.router.navigate([localStorage.getItem('LastRoute') || '/home']);
         }
       },
       (error) => {

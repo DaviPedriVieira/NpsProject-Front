@@ -27,7 +27,6 @@ export class FormQuestionsPageComponent implements OnInit{
   selectedGrades: number[] = [];
   descriptions: string[] = [];
   questionId: number = 0
-  questionContent: string = ''
   invalidInputs: boolean = false
   authorized!: boolean;
   
@@ -36,25 +35,22 @@ export class FormQuestionsPageComponent implements OnInit{
     private questionService: QuestionService, 
     private answersService: AnswerService, 
     private notificationService: NotificationService, 
-    private router: Router, 
     private route: ActivatedRoute,
     private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
+    
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
+    
     this.route.params.subscribe((params) => {
       this.formId = params['id']
+      localStorage.setItem('LastRoute', `form/${this.formId}`)
       this.loadQuestions()
       this.GetForm()
     })
-  }
-
-  closeModal(): void {
-    this.router.navigate([localStorage.getItem('LastRoute')])
-    this.ResetVariables()
   }
 
   loadQuestions(): void {
@@ -82,13 +78,13 @@ export class FormQuestionsPageComponent implements OnInit{
   }
 
   openUpdateModal(id: number, questionContent: string): void {
-    this.questionId = id
-    this.questionContent = questionContent
+    this.updateModalComponent.id = id
+    this.updateModalComponent.name = questionContent
     this.updateModalComponent.openModal();
   }
-
+  
   openDeleteModal(id: number): void {
-    this.questionId = id
+    this.updateModalComponent.id = id
     this.deleteModalComponent.openModal();
   }
 
@@ -130,11 +126,9 @@ export class FormQuestionsPageComponent implements OnInit{
   SubmitAnswers(answers: AnswerModel[]): void {
     this.answersService.SubmitAnswers(answers).subscribe({
         next: () => {
-          this.closeModal()
           this.sucessfulMessageModalComponent.openModal();
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.status)
           if(error.status == 401)
             this.notificationService.notifyCookieExpired()
         }

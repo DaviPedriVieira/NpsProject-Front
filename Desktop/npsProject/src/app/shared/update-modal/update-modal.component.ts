@@ -30,11 +30,12 @@ export class UpdateModalComponent {
   }
 
   closeModal() {
+    this.invalidInput = false
     this.updatemodal.nativeElement.close();
   }
 
   UpdateItem() {
-    if (!this.NameValidator()){
+    if (!this.NameValidator(this.item)){
       this.invalidInput = true
     }
     
@@ -49,7 +50,6 @@ export class UpdateModalComponent {
         this.UpdateQuestion()
         break
     }
-
   }
 
   UpdateGroup(): void {
@@ -94,10 +94,16 @@ export class UpdateModalComponent {
     });
   }
 
-  NameValidator(): boolean {
+  NameValidator(item: string): boolean {
     if (this.name.trim() == '') {
       return false
     }
+
+    if(item == 'question' && this.name.length > 150)
+      return false
+    else if (this.name.length > 50)
+      return false
+
     return true;
   }
 }

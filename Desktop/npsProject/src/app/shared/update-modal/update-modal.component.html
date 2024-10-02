@@ -2,7 +2,7 @@
     <main>
         <p>Editar</p>
         <input #nameInput class="input" type="text" (keyup.enter)="UpdateItem()" [(ngModel)]="name">
-        <div *ngIf="invalidInput" class="error">Nome Inválido!</div>
+        <div *ngIf="invalidInput" id="error">Nome Inválido!</div>
         <div id="button-container">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
             <button class="confirm-btn" (click)="UpdateItem()">Confirmar</button>

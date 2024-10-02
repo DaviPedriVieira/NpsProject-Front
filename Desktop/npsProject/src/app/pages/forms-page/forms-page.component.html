@@ -1,16 +1,22 @@
 <app-header></app-header>
 <main>
-    <div id="container">
-        <h1>Formulários</h1>
-        <div id="search-container">
+    <div class="screen-main-container">
+        <div class="header">
+            <div class="create-container">
+                <button (click)="openFormsCreateModal()" *ngIf="authorized">Criar formulário</button>
+                <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>
+            </div>
+            <h1>Formulários</h1>
             <app-search-component (itemSearched)="filterForms($event)"></app-search-component>
         </div>
-        <div id="groups-container">
-            <div *ngFor="let form of forms">
-                <div class="groups-div" (click)="openQuestionsModal(form.id, form.name)">
+        <div id="forms-container">
+            <div *ngFor="let form of filteredForms">
+                <div class="items-div" (click)="openQuestionsModal(form.id, form.name)">
                     <div class="options" *ngIf="authorized">
-                        <span class="material-symbols-outlined" (click)="openUpdateModal(form.id, form.name); $event.stopPropagation()">edit</span>
-                        <span class="material-symbols-outlined" (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
+                        <span class="material-symbols-outlined"
+                            (click)="openUpdateModal(form.id, form.name); $event.stopPropagation()">edit</span>
+                        <span class="material-symbols-outlined"
+                            (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
                     </div>
                     <div class="item-name-div">{{ form.name }}</div>
                 </div>
@@ -21,5 +27,8 @@
         </div>
     </div>
 </main>
-
-<!-- modais -->
+<app-delete-modal [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
+<app-update-modal [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
+<app-questions-modal></app-questions-modal>
+<app-forms-create-modal (formCreated)="loadForms()"></app-forms-create-modal>
+<app-check-answers-modal></app-check-answers-modal>

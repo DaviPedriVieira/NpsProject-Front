@@ -1,16 +1,16 @@
 <main>
-  <div id="container">
-    <div id="header">
-      <div id="create-container">
-        <button (click)="openGroupsCreateModal()">Criar grupo</button>  
-        <button (click)="openCheckAnswersModal()">Consultar respostas</button>  
+  <div class="screen-main-container">
+    <div class="header">
+      <div class="create-container">
+        <button (click)="openGroupsCreateModal()" *ngIf="authorized">Criar grupo</button>  
+        <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>  
       </div>
       <h1>Grupos</h1>
       <app-search-component (itemSearched)="filterGroups($event)"></app-search-component>
     </div>
     <div id="groups-container">
       <div *ngFor="let group of filteredGroups">
-        <div class="groups-div" (click)="openFormsModal(group.id, group.name)">
+        <div class="items-div" (click)="openFormsModal(group.id, group.name)">
           <div class="options" *ngIf="authorized">
             <span class="material-symbols-outlined"
               (click)="openUpdateModal(group.id, group.name); $event.stopPropagation()">edit</span>
@@ -26,9 +26,9 @@
     </div>
   </div>
 </main>
-<app-forms-modal [groupId]="groupId" [groupName]="groupName"></app-forms-modal>
-<app-delete-modal [id]="groupId" [item]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
-<app-update-modal [id]="groupId" [item]="'group'" [name]="groupName" (itemUpdated)="loadFormsGroups()"></app-update-modal>
+<app-forms-modal></app-forms-modal>
+<app-delete-modal [item]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
+<app-update-modal [item]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
 <app-sucessful-message-modal></app-sucessful-message-modal>
 <app-groups-create-modal (groupCreated)="loadFormsGroups()"></app-groups-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

@@ -22,6 +22,7 @@ export class HeaderComponent {
 
   Logout(): void {
     this.loginService.logout().subscribe(() => {
+      localStorage.removeItem('Username')
       this.router.navigate(['/login'])
     }) 
   }
@@ -31,4 +32,7 @@ export class HeaderComponent {
     this.router.navigate([route])
   }
 
+  IsActive(route: string): boolean {
+    return localStorage.getItem('LastRoute') == route
+  }
 }

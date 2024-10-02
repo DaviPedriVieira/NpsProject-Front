@@ -1,1 +1,32 @@
-<p>questions-page works!</p>
+<app-header></app-header>
+<main>
+    <div class="screen-main-container">
+        <div class="header">
+            <div class="create-container">
+                <button (click)="openQuestionsCreateModal()" *ngIf="authorized">Criar perguntas</button>
+                <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>
+            </div>
+            <h1>Perguntas</h1>
+            <app-search-component (itemSearched)="filterQuestions($event)"></app-search-component>
+        </div>
+        <div id="questions-container">
+            <div *ngFor="let question of filteredQuestions">
+                <div class="items-div">
+                    <div class="options" *ngIf="authorized">
+                        <span class="material-symbols-outlined" (click)="openUpdateModal(question.id, question.content); $event.stopPropagation()">edit</span>
+                        <span class="material-symbols-outlined" (click)="openDeleteModal(question.id); $event.stopPropagation()">delete</span>
+                    </div>
+                    <div class="item-name-div">{{ question.content }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="no-items-message" *ngIf="questions.length == 0">
+            Nenhum formulário encontrado
+        </div>
+    </div>
+</main>
+<app-delete-modal [id]="formId" [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
+<app-update-modal [id]="formId" [item]="'question'" [name]="formName" (itemUpdated)="loadQuestions()"></app-update-modal>
+<app-questions-modal [formId]="formId" [formName]="formName"></app-questions-modal>
+<app-questions-create-modal (questionCreated)="loadQuestions()"></app-questions-create-modal>
+<app-check-answers-modal></app-check-answers-modal>

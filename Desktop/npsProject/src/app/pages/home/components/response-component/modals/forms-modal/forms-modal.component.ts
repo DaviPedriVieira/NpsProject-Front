@@ -27,7 +27,6 @@ export class FormsModalComponent {
   authorized!: boolean;
   forms: FormModel[] = [];
   filteredForms: FormModel[] = [];
-  formId: number = 0
   formName: string = ''
 
   constructor(private formService: FormService, private notificationService: NotificationService, private loginService: LoginService) { }
@@ -78,21 +77,21 @@ export class FormsModalComponent {
   }
 
   openQuestionsModal(id: number, formName: string): void {
-    this.formId = id;
-    this.formName = formName
+    this.questionsModalComponent.formId = id;
+    this.questionsModalComponent.formName = formName
     setTimeout(() => {
       this.questionsModalComponent.openModal();
     });
   }
 
   openDeleteModal(id: number): void {
-    this.formId = id;
+    this.deleteModalComponent.id = id;
     this.deleteModalComponent.openModal();
   }
 
   openUpdateModal(id: number, formName: string): void {
-    this.formId = id;
-    this.formName = formName
+    this.updateModalComponent.id = id;
+    this.updateModalComponent.name = formName
     this.updateModalComponent.openModal();
   }
 }

@@ -1,9 +1,13 @@
 <dialog id="questionsmodal" #questionsmodal>
-    <div id="create-container">
-        <button (click)="openQuestionsCreateModal()">Criar pergunta</button>
-        <button (click)="openCheckAnswersModal()">Consultar respostas</button>  
+    <div id="header-container">
+        <div id="create-container">
+            <button (click)="openQuestionsCreateModal()" *ngIf="authorized">Criar pergunta</button>
+            <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>
+        </div>
+        <div>    
+            <h2>Perguntas do formulário: {{ formName }}</h2>
+        </div>
     </div>
-    <h2>Perguntas do formulário: {{ formName }}</h2>
     <div *ngIf="questions.length == 0" class="no-items-message">
         Nenhuma pergunta encontrada.
     </div>
@@ -11,11 +15,13 @@
         <div *ngFor="let question of questions; let i = index">
             <div class="questions-div">
                 <div class="options" *ngIf="authorized">
-                    <span class="material-symbols-outlined" (click)="openUpdateModal(question.id, question.content)">edit</span>
+                    <span class="material-symbols-outlined"
+                        (click)="openUpdateModal(question.id, question.content)">edit</span>
                     <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
                 </div>
-                <div class="item-name-div">{{ question.content }}</div>
+                <div class="item-name-div" [ngStyle]="{'font-size': question.content.length > 100 ? '14px' : '16px'}">{{ question.content }}</div>                
             </div>
+            <div id="answers-container">
             <select [(ngModel)]="selectedGrades[i]">
                 <option *ngFor="let number of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="number">{{ number }}</option>
             </select>
@@ -23,9 +29,10 @@
                 <input type="text" placeholder="Descrição (opcional)" [(ngModel)]="descriptions[i]">
             </div>
         </div>
+        </div>
     </div>
     <div id="allign-buttons-div">
-        <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
+        <div class="error" *ngIf="invalidInputs">{{ errorMessage }}</div>
         <div [ngClass]="{'buttons-div': questions.length > 0, 'buttons-div-center': questions.length == 0}">
             <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
             <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
@@ -33,7 +40,7 @@
     </div>
 </dialog>
 <app-questions-create-modal (questionCreated)="loadQuestions()"></app-questions-create-modal>
-<app-delete-modal [id]="questionId" [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-<app-update-modal [id]="questionId" [item]="'question'" [name]="questionContent" (itemUpdated)="loadQuestions()"></app-update-modal>
+<app-delete-modal [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
+<app-update-modal [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
 <app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>
 <app-check-answers-modal></app-check-answers-modal>

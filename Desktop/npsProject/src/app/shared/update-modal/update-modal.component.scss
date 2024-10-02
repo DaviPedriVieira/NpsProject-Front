@@ -1,6 +1,6 @@
 #updatemodal {
-    width: 25%;
-    height: 25%;
+    min-width: 25%;
+    min-height: 25%;
     text-align: center;
     background-color: white;
     border: none;
@@ -11,6 +11,7 @@
     border-radius: 1rem;
     padding: 20px;
     box-shadow: 0px 5px 15px rgb(73, 73, 73);
+    transition: min-height 0.3s ease;
 }
 
 p {
@@ -32,4 +33,12 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+#error {
+    color: red;
+    font-size: 15px;
+    height: auto;
+    width: 300px;
+    margin-top: 20px;
 }

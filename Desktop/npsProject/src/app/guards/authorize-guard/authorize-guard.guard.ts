@@ -5,9 +5,9 @@ import { LoginService } from 'src/app/services/login-service/login.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorizeGuard implements CanActivate {
+export class AuthorizeGuardGuard implements CanActivate {
   
-  constructor(private router: Router, private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   canActivate(): boolean {
     let authorized = false
@@ -16,11 +16,12 @@ export class AuthorizeGuard implements CanActivate {
       authorized = data
     });
 
-    if (authorized) {
+    if (!authorized) {
       this.router.navigate(['/home']);
       return false
     }
     
     return true 
   }
+  
 }

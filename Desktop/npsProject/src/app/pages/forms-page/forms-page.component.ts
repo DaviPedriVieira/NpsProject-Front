@@ -4,6 +4,11 @@ import { QuestionsModalComponent } from '../home/components/response-component/m
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { FormService } from 'src/app/services/form-service/form.service';
+import { LoginService } from 'src/app/services/login-service/login.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CheckAnswersModalComponent } from '../home/components/response-component/modals/check-answers-modal/check-answers-modal.component';
+import { FormsCreateModalComponent } from '../home/components/response-component/modals/forms-create-modal/forms-create-modal.component';
 
 @Component({
   selector: 'app-forms-page',
@@ -14,18 +19,34 @@ export class FormsPageComponent implements OnInit{
   @ViewChild(QuestionsModalComponent) questionsModalComponent!: QuestionsModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
+  @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
+  @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
   formId: number = 0
-  formName: string = '' // mudar 
+  formName: string = '' 
   forms: FormModel[] = []
   filteredForms: FormModel[] = []
   authorized: boolean = false
 
-  constructor(private formsService: FormService) {}
+  constructor(private formsService: FormService, private loginService: LoginService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    this.formsService.GetForms().subscribe(data => {
-      this.forms = data
-      this.filteredForms = data
+    this.loginService.isAdmin().subscribe(data => {
+      this.authorized = data
+    });
+
+    this.loadForms()
+  }
+  
+  loadForms() {
+    this.formsService.GetForms().subscribe({
+      next: (data) => {
+        this.forms = data;
+        this.filteredForms = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        if(error.status == 401)
+          this.notificationService.notifyCookieExpired()
+      }
     })
   }
 
@@ -40,22 +61,30 @@ export class FormsPageComponent implements OnInit{
     }
   }
 
+  openFormsCreateModal() {
+    this.formsCreateModal.openModal()
+  }
+
+  openCheckAnswersModal() {
+    this.checkAnswersModal.openModal();
+  }
+
   openQuestionsModal(id: number, formName: string): void {
-    this.formId = id;
-    this.formName = formName
+    this.questionsModalComponent.formId = id;
+    this.questionsModalComponent.formName = formName
     setTimeout(() => {
       this.questionsModalComponent.openModal();
     });
   }
 
   openDeleteModal(id: number): void {
-    this.formId = id;
+    this.updateModalComponent.id = id
     this.deleteModalComponent.openModal();
   }
 
   openUpdateModal(id: number, formName: string): void {
-    this.formId = id;
-    this.formName = formName
+    this.updateModalComponent.id = id
+    this.updateModalComponent.name = formName
     this.updateModalComponent.openModal();
   }
 }

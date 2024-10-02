@@ -11,6 +11,7 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { QuestionsCreateModalComponent } from '../questions-create-modal/questions-create-modal.component';
 import { CheckAnswersModalComponent } from '../check-answers-modal/check-answers-modal.component';
+import { FormModel } from 'src/app/interfaces/form';
 
 @Component({
   selector: 'app-questions-modal',
@@ -33,6 +34,7 @@ export class QuestionsModalComponent {
   questionId: number = 0
   questionContent: string = ''
   invalidInputs: boolean = false
+  errorMessage: string = ''
 
   constructor(
     private questionService: QuestionService,
@@ -76,23 +78,25 @@ export class QuestionsModalComponent {
   }
 
   openUpdateModal(id: number, questionContent: string): void {
-    this.questionId = id
-    this.questionContent = questionContent
+    this.updateModalComponent.id = id
+    this.updateModalComponent.name = questionContent
     this.updateModalComponent.openModal();
   }
 
   openDeleteModal(id: number): void {
-    this.questionId = id
+    this.deleteModalComponent.id = id
     this.deleteModalComponent.openModal();
   }
 
   ValidSelects(): boolean {
-    if (this.selectedGrades.length == 0) {
-      return false;
-    }
-
     for (let i = 0; i < this.questions.length; i++) {
       if (this.selectedGrades[i] == null) {
+        this.errorMessage = 'Todas as perguntas são obrigatórias!'
+        return false
+      }
+
+      if (this.descriptions[i] && this.descriptions[i].length > 200) {
+        this.errorMessage = 'As descrições tem limite de 200 caracteres!'
         return false
       }
     }

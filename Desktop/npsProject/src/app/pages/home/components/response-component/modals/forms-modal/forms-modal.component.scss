@@ -1,7 +1,7 @@
 #formsmodal {
     width: 70%;
     min-height: 25%;
-    max-height: 60%;;
+    max-height: 70%;;
     text-align: center;
     background-color: white;
     border: none;
@@ -20,62 +20,12 @@
     }
 }
 
-#create-container {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    
-    button {
-        border: none;
-        outline: none;
-        padding: 10px;
-        border-radius: 10px;
-        background-color: white;
-        border: 1px solid black;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        transition: 0.2s;
-        transform: scale(1.02);
-    }
-}
-
-#header {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 20px 0px 20px;
-}
-
 #forms-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     align-items: center;
     justify-items: center;
-}
-
-.forms-div {
-    height: 195px;
-    width: 280px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: flex-end;
-    border-radius: 1rem;
-    background-color: white;
-    border: 1px solid gray;
-    position: relative;
-    margin-bottom: 30px;
-    padding: 10px;
-}
-
-.forms-div:hover {
-    border: 1px solid black;
-    transition: 0.3s;
-    transform: scale(1.02);
+    gap: 20px;
 }
 
 #allign-btn-div {
