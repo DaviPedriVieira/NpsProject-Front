@@ -22,12 +22,13 @@ export class SignInComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('Username') != null) {
       this.router.navigate([localStorage.getItem('LastRoute') || '/home'])
     }
-  }
-  
-  ngAfterViewInit(): void {
+    
     this.notificationService.cookieExpired$.subscribe(() => {
       this.sucessfulMessageDialog.openModal()
     })
+  }
+  
+  ngAfterViewInit(): void {
   }
 
   canSubmit(): boolean {

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ export class HeaderComponent {
 
   constructor(private loginService: LoginService, private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.nome = localStorage.getItem('Username') || '';
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
@@ -22,7 +23,6 @@ export class HeaderComponent {
 
   Logout(): void {
     this.loginService.logout().subscribe(() => {
-      localStorage.removeItem('Username')
       this.router.navigate(['/login'])
     }) 
   }

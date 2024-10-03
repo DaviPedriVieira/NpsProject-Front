@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
@@ -6,7 +6,8 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './search-component.component.html',
   styleUrls: ['./search-component.component.scss']
 })
-export class SearchComponentComponent {
+export class SearchComponentComponent  {
+  @ViewChild('searchInput') searchInput!: ElementRef
   @Output() itemSearched = new EventEmitter<string>();
   searched = new Subject<string>()
 

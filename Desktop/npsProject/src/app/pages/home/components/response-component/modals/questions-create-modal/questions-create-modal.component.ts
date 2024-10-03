@@ -33,6 +33,7 @@ export class QuestionsCreateModalComponent {
   }
 
   closeModal() {
+    this.invalidInputs = false
     this.newQuestions = [];
     this.createQuestionsModal.nativeElement.close()
   }
@@ -59,13 +60,8 @@ export class QuestionsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (!this.selectedFormId.toString().trim()){
+    if (this.selectedFormId == undefined){
       this.errorMessage = 'O formulário não pode ser em branco!'
-      return true
-    }
-
-    if (this.newQuestions.length == 0){
-      this.errorMessage = 'Nenhuma pergunta pode ser vazia!'
       return true
     }
     

@@ -1,7 +1,7 @@
 main {
-    height: 130px;
+    height: 15vh;
     width: 100%;
-    background-color: rgb(63, 74, 173); // rgb(29, 48, 86);
+    background-color: rgb(26, 54, 109);
     align-items: center;
     justify-content: space-between;
     display: flex;
@@ -25,7 +25,7 @@ main {
     
     span {
         color: white;
-        font-size: 60px;
+        font-size: 3vw;
         cursor: pointer;
     }
 
@@ -36,7 +36,7 @@ main {
 
     div {
         color: white;
-        font-size: 18px;
+        font-size: 0.9vw;
         text-align: center;
     }
 }
@@ -45,11 +45,11 @@ main {
     background-color: white;
     border-radius: 10px;
     padding: 5px;
-    min-width: 100px;
-    min-height: 100px;
+    min-width: 5.5vw;
+    min-height: 110%;
 
     span, div {
-        color: rgb(63, 74, 173);
+        color: rgb(26, 54, 109);    
     }
 
     div {
@@ -59,7 +59,7 @@ main {
 
 #logo img {
     margin-left: 20px;
-    height: 100px;
+    height: 12vh;
     margin-right: 50px;
     background-color: white;
     border-radius: 100%;

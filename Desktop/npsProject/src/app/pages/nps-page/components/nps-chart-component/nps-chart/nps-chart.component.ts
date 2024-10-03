@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login-service/login.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { NpsService } from 'src/app/services/nps-service/nps.service';
 
@@ -15,6 +17,10 @@ export class NpsChartComponent implements OnInit {
   constructor(private npsService: NpsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.GetNps()
+  }
+  
+  GetNps() {
     this.npsService.GetNpsScore().subscribe({
       next: (data) => {
         this.npsScore = data;

@@ -59,7 +59,7 @@ export class FormsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (!this.selectedGroupId.toString().trim()) {
+    if (this.selectedGroupId == undefined) {
       this.errorMessage =  'O grupo não pode ser vazio'
       return true
     }

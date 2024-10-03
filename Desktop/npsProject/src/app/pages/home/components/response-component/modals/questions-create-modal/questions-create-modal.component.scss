@@ -33,6 +33,12 @@
     background-color: rgb(233, 233, 233);
 }
 
+.question-container:first-child {
+    button {
+        display: none;
+    }
+}
+
 .input-box {
     width: 100%;
     height: 80px;

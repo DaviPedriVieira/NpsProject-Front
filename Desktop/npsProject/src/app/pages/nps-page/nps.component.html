@@ -1,5 +1,5 @@
 <app-header></app-header>
-<main>
+<main *ngIf="authorized">
     <app-nps-users></app-nps-users>
     <app-nps-chart></app-nps-chart>
 </main>

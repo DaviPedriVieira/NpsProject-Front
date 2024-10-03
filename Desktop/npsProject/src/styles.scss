@@ -63,7 +63,7 @@
     height: 60px;
     border-radius: 1rem;
     border: none;
-    background-color: rgb(63, 74, 173);
+    background-color: rgb(26, 54, 109);
     color: white;
     font-size: 1rem;
     cursor: pointer;
@@ -72,7 +72,7 @@
 .login-button:hover {
     transform: scale(1.03);
     transition: 0.3s;
-    background-color: rgb(95, 110, 240);
+    background-color: rgb(54, 79, 128);
 }
 
 .select {
@@ -108,7 +108,7 @@
     min-height: 200px;
     max-height: 640px;
     width: 75%;
-    margin-top: 5%;
+    margin-top: 8.5vh;
     border-radius: 2rem;
     border: 1px solid gray;
     box-shadow: 0px 5px 15px gray;
@@ -146,6 +146,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px 20px 0px 20px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; 
+        align-items: flex-start; 
+
+        div, h1 {
+            margin-bottom: 15px; 
+        }
+    }
 }
 
 .items-div{

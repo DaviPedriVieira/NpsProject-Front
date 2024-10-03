@@ -20,6 +20,7 @@ export class LoginService extends BaseService<UserModel>{
   }
 
   logout(): Observable<boolean> {
+    localStorage.removeItem('Username')
     return this.Logout(`${this.basePath}/Logout`)
   }
   

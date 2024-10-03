@@ -23,19 +23,19 @@ export class NpsUsersComponent implements OnInit {
 
   GetPromoters(): void {
     this.userService.GetPromoters().subscribe(data => {
-        this.promoters = data
+      this.promoters = data
     });
   }
 
   GetPassives(): void {
     this.userService.GetPassives().subscribe(data => {
-        this.passives = data
+      this.passives = data
     });
   }
 
   GetDetractors(): void {
     this.userService.GetDetractors().subscribe(data => {
-        this.detractors = data
+      this.detractors = data
     });
   }
 }

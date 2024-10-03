@@ -16,6 +16,8 @@ export class NotificationService {
   notifyCookieExpired() {
     this.loginService.logout()
     this.router.navigate(['/login'])
-    this.cookieExpired.next()
+    setTimeout(() => {
+      this.cookieExpired.next()
+    })
   }
 }
