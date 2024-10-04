@@ -3,12 +3,12 @@ import { FormService } from 'src/app/services/form-service/form.service';
 import { FormModel } from 'src/app/interfaces/form';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
-import { QuestionsModalComponent } from '../questions-modal/questions-modal.component';
+import { QuestionsModalComponent } from '../../../../shared/questions-modal/questions-modal.component';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { FormsCreateModalComponent } from '../forms-create-modal/forms-create-modal.component';
-import { CheckAnswersModalComponent } from '../check-answers-modal/check-answers-modal.component';
+import { FormsCreateModalComponent } from '../../../../shared/forms-create-modal/forms-create-modal.component';
+import { CheckAnswersModalComponent } from '../../../../shared/check-answers-modal/check-answers-modal.component';
 import { SearchComponentComponent } from 'src/app/shared/search-component/search-component.component';
 
 @Component({

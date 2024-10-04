@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormsCreateModalComponent } from './forms-create-modal.component';
+import { FormsCreateModalComponent } from '../../pages/home/components/response-component/modals/forms-create-modal/forms-create-modal.component';
 
 describe('FormsCreateModalComponent', () => {
   let component: FormsCreateModalComponent;

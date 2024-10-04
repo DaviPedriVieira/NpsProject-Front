@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
-import { QuestionsModalComponent } from '../home/components/response-component/modals/questions-modal/questions-modal.component';
+import { QuestionsModalComponent } from '../../shared/questions-modal/questions-modal.component';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
-import { CheckAnswersModalComponent } from '../home/components/response-component/modals/check-answers-modal/check-answers-modal.component';
-import { FormsCreateModalComponent } from '../home/components/response-component/modals/forms-create-modal/forms-create-modal.component';
+import { CheckAnswersModalComponent } from '../../shared/check-answers-modal/check-answers-modal.component';
+import { FormsCreateModalComponent } from '../../shared/forms-create-modal/forms-create-modal.component';
 
 @Component({
   selector: 'app-forms-page',
@@ -78,7 +78,7 @@ export class FormsPageComponent implements OnInit{
   }
 
   openDeleteModal(id: number): void {
-    this.updateModalComponent.id = id
+    this.deleteModalComponent.id = id
     this.deleteModalComponent.openModal();
   }
 

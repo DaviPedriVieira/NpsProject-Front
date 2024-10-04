@@ -36,11 +36,10 @@ export class FormQuestionsPageComponent implements OnInit{
     private answersService: AnswerService, 
     private CookieService: CookieService, 
     private route: ActivatedRoute,
-    private loginService: LoginService
+    private loginService: LoginService,
   ) { }
 
   ngOnInit(): void {
-    
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
@@ -127,6 +126,7 @@ export class FormQuestionsPageComponent implements OnInit{
     this.answersService.SubmitAnswers(answers).subscribe({
         next: () => {
           this.sucessfulMessageModalComponent.openModal();
+          this.ResetVariables()
         },
         error: (error: HttpErrorResponse) => {
           if(error.status == 401)

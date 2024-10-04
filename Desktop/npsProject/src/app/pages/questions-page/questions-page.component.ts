@@ -5,8 +5,8 @@ import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
-import { CheckAnswersModalComponent } from '../home/components/response-component/modals/check-answers-modal/check-answers-modal.component';
-import { QuestionsCreateModalComponent } from '../home/components/response-component/modals/questions-create-modal/questions-create-modal.component';
+import { CheckAnswersModalComponent } from '../../shared/check-answers-modal/check-answers-modal.component';
+import { QuestionsCreateModalComponent } from '../../shared/questions-create-modal/questions-create-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

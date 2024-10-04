@@ -6,33 +6,22 @@ main {
     justify-content: center;
 }
 
-#container {
-    min-height: 200px;
-    max-height: 770px;
-    width: 75%;
-    margin-top: 4vh;
-    border-radius: 2rem;
-    border: 1px solid gray;
-    box-shadow: 0px 5px 15px gray;
-    text-align: center;
-    overflow-y: auto;
-
-    h2{
-        margin-top: 40px;
-        margin-bottom: 30px;
-    }
+h1 {
+    margin: 20px 0px;
 }
+
 
 #questions-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     align-items: center;
     justify-items: center;
+    padding: 10px;
 }
 
-.questions-div{
-    height: 150px;
-    width: 200px;
+.questions-div {
+    height: 180px;
+    width: 220px;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -46,11 +35,11 @@ main {
     margin-bottom: 10px;
 }
 
-.questions-div:hover{
+.questions-div:hover {
     border: 1px solid black;
     transition: 0.3s;
     transform: scale(1.02);
-} 
+}
 
 select {
     width: 200px;
@@ -59,20 +48,20 @@ select {
     outline: none;
     border: 1px solid gray;
     text-align: center;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
-.description-input input{
+.description-input input {
     width: 180px;
     height: 30px;
     border-radius: 1rem;
     border: 1px solid gray;
     outline: none;
     padding-left: 15px;
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
 }
 
-#allign-buttons-div{
+#allign-buttons-div {
     position: sticky;
     bottom: 0;
     background-color: white;
