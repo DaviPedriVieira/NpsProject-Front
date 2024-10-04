@@ -4,11 +4,12 @@ import { FormModel } from 'src/app/interfaces/form';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { QuestionsModalComponent } from '../questions-modal/questions-modal.component';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { FormsCreateModalComponent } from '../forms-create-modal/forms-create-modal.component';
 import { CheckAnswersModalComponent } from '../check-answers-modal/check-answers-modal.component';
+import { SearchComponentComponent } from 'src/app/shared/search-component/search-component.component';
 
 @Component({
   selector: 'app-forms-modal',
@@ -22,6 +23,7 @@ export class FormsModalComponent {
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
+  @ViewChild(SearchComponentComponent) SearchComponent!: SearchComponentComponent;
   @Input() groupId!: number;
   @Input() groupName!: string;
   authorized!: boolean;
@@ -29,7 +31,7 @@ export class FormsModalComponent {
   filteredForms: FormModel[] = [];
   formName: string = ''
 
-  constructor(private formService: FormService, private notificationService: NotificationService, private loginService: LoginService) { }
+  constructor(private formService: FormService, private CookieService: CookieService, private loginService: LoginService) { }
 
   openModal(): void {
     this.loginService.isAdmin().subscribe(data => {
@@ -40,6 +42,7 @@ export class FormsModalComponent {
   }
   
   closeModal(): void {
+    this.SearchComponent.resetSearch()
     this.formsmodal.nativeElement.close();
   }
   
@@ -51,7 +54,7 @@ export class FormsModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     })
   }

@@ -6,7 +6,7 @@ import { LoginService } from '../login-service/login.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
+export class CookieService {
   private cookieExpired = new Subject<void>();
 
   constructor(private router: Router, private loginService: LoginService) {}

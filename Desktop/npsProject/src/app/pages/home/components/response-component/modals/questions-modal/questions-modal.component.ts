@@ -1,17 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { QuestionsCreateModalComponent } from '../questions-create-modal/questions-create-modal.component';
 import { CheckAnswersModalComponent } from '../check-answers-modal/check-answers-modal.component';
-import { FormModel } from 'src/app/interfaces/form';
 
 @Component({
   selector: 'app-questions-modal',
@@ -39,7 +38,7 @@ export class QuestionsModalComponent {
   constructor(
     private questionService: QuestionService,
     private answersService: AnswerService, 
-    private notificationService: NotificationService,
+    private CookieService: CookieService,
     private loginService: LoginService
   ) { }
 
@@ -63,7 +62,7 @@ export class QuestionsModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -134,7 +133,7 @@ export class QuestionsModalComponent {
       error: (error: HttpErrorResponse) => {
         console.log(error.status)
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

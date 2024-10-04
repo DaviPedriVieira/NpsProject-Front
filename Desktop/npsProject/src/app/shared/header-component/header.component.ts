@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 
 @Component({
   selector: 'app-header',

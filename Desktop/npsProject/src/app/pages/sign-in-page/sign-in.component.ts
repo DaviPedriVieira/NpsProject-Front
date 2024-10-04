@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
@@ -9,34 +9,27 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit, AfterViewInit {
+export class SignInComponent implements OnInit {
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageDialog!: SucessfulMessageModalComponent; 
   username: string = '';
   password: string = '';
   invalidInputs: boolean = false;
   errorMessage: string = '';
 
-  constructor(private loginService: LoginService, private router: Router, private notificationService: NotificationService) { }
+  constructor(private loginService: LoginService, private router: Router, private CookieService: CookieService) { }
   
   ngOnInit(): void {
     if (localStorage.getItem('Username') != null) {
       this.router.navigate([localStorage.getItem('LastRoute') || '/home'])
     }
     
-    this.notificationService.cookieExpired$.subscribe(() => {
+    this.CookieService.cookieExpired$.subscribe(() => {
       this.sucessfulMessageDialog.openModal()
     })
   }
-  
-  ngAfterViewInit(): void {
-  }
-
-  canSubmit(): boolean {
-    return this.username.trim() !== '' && this.password.trim() !== '';
-  }
 
   Login(): void {
-    if (!this.canSubmit()) {
+    if (this.username.trim() == '' && this.password.trim() == '') {
       this.errorMessage = 'Nenhum dos campos pode ser vazio!';
       this.invalidInputs = true;
       return;

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
@@ -25,7 +25,7 @@ export class QuestionsPageComponent {
   filteredQuestions: QuestionModel[] = []
   authorized: boolean = false
 
-  constructor(private questionsService: QuestionService, private loginService: LoginService, private notificationService: NotificationService) {}
+  constructor(private questionsService: QuestionService, private loginService: LoginService, private CookieService: CookieService) {}
 
   ngOnInit(): void {
     this.loginService.isAdmin().subscribe(data => {
@@ -43,7 +43,7 @@ export class QuestionsPageComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     })
   }

@@ -23,13 +23,9 @@ export class SignUpComponent implements OnInit{
       this.router.navigate([LastRoute])
     }
   }
-  
-  canSubmit(): boolean {
-    return this.username.trim() !== '' && this.password.trim() !== '';
-  }
 
   CreateUser(): void { 
-    if (!this.canSubmit()) {
+    if (this.username.trim() == '' && this.password.trim() == '') {
       this.errorMessage = 'Nenhum dos campos pode ser vazio!';
       this.invalidInputs = true;
       return;

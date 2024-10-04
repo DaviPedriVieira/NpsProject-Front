@@ -4,7 +4,7 @@ import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { UserModel } from 'src/app/interfaces/user';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { UserService } from 'src/app/services/user-service/user.service';
 
@@ -22,7 +22,7 @@ export class CheckAnswersModalComponent {
   mode: string = 'questionMode'
   answersListEmpty: boolean = false
 
-  constructor(private answersService: AnswerService, private questionService: QuestionService, private userService: UserService, private notificationService: NotificationService) { }
+  constructor(private answersService: AnswerService, private questionService: QuestionService, private userService: UserService, private CookieService: CookieService) { }
 
   openModal() {
     this.GetQuestions()
@@ -67,7 +67,7 @@ export class CheckAnswersModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -91,7 +91,7 @@ export class CheckAnswersModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -103,7 +103,7 @@ export class CheckAnswersModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -115,7 +115,7 @@ export class CheckAnswersModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

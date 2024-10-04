@@ -5,7 +5,7 @@
             <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>
         </div>
         <div>    
-            <h2>Perguntas do formulário: {{ formName }}</h2>
+            <h2>Perguntas do formulário {{ formName }}</h2>
         </div>
     </div>
     <div id="questions-container" (answersSubmited)="loadQuestions()">

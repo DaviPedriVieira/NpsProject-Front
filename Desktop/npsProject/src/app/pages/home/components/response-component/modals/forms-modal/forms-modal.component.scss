@@ -1,12 +1,11 @@
 #formsmodal {
     width: 70%;
-    min-height: 25%;
-    max-height: 70%;;
+    max-height: 66%;;
     text-align: center;
     background-color: white;
     border: none;
     position: fixed;
-    top: 50%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 1rem;
@@ -26,6 +25,7 @@
     align-items: center;
     justify-items: center;
     gap: 20px;
+    padding: 10px;
 }
 
 #allign-btn-div {

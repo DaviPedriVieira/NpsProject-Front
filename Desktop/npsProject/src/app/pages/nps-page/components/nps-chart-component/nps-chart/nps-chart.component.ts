@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { NpsService } from 'src/app/services/nps-service/nps.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class NpsChartComponent implements OnInit {
   @ViewChild('pointer') pointer!: ElementRef<HTMLImageElement>;
   npsScore: number = 0;
 
-  constructor(private npsService: NpsService, private notificationService: NotificationService) { }
+  constructor(private npsService: NpsService, private CookieService: CookieService) { }
 
   ngOnInit(): void {
     this.GetNps()
@@ -28,7 +28,7 @@ export class NpsChartComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

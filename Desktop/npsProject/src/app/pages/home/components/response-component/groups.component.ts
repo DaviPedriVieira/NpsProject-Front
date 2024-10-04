@@ -4,7 +4,7 @@ import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { FormsModalComponent } from './modals/forms-modal/forms-modal.component';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { GroupsCreateModalComponent } from './modals/groups-create-modal/groups-create-modal.component';
@@ -27,7 +27,7 @@ export class GroupsComponent implements OnInit {
   groupId: number = 0;
   groupName: string = '';
 
-  constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService, private loginService: LoginService) { }
+  constructor(private formsGroupService: FormsGroupService, private CookieService: CookieService, private loginService: LoginService) { }
   
   ngOnInit(): void {
     this.loginService.isAdmin().subscribe(data => {
@@ -45,7 +45,7 @@ export class GroupsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

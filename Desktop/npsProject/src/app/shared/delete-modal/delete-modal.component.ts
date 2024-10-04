@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
+import { SucessfulMessageModalComponent } from '../sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-delete-modal',
@@ -11,12 +12,18 @@ import { QuestionService } from 'src/app/services/question-service/question.serv
   styleUrls: ['./delete-modal.component.scss']
 })
 export class DeleteModalComponent {
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   @ViewChild('deletemodal') deletemodal!: ElementRef<HTMLDialogElement>
   @Input() id!: number;
   @Input() item!: string;
   @Output() itemDeleted = new EventEmitter<void>()
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notificationService: NotificationService) { }
+  constructor(
+    private formsGroupService: FormsGroupService,
+    private formsService: FormService,
+    private questionService: QuestionService,
+    private CookieService: CookieService
+  ) { }
 
   openModal(): void {
     this.deletemodal.nativeElement.show();
@@ -43,12 +50,13 @@ export class DeleteModalComponent {
   DeleteGroup(): void {
     this.formsGroupService.DeleteFormsGroup(this.id).subscribe({
       next: () => {
+        this.openMessageModal()
         this.closeModal()
         this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -56,12 +64,13 @@ export class DeleteModalComponent {
   DeleteForm(): void {
     this.formsService.DeleteForm(this.id).subscribe({
       next: () => {
+        this.openMessageModal()
         this.closeModal()
         this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -69,13 +78,18 @@ export class DeleteModalComponent {
   DeleteQuestion(): void {
     this.questionService.DeleteQuestion(this.id).subscribe({
       next: () => {
+        this.openMessageModal()
         this.closeModal()
         this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
+  }
+
+  openMessageModal() {
+    this.sucessfulMessageModal.openModal()
   }
 }

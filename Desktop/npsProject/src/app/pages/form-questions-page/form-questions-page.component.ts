@@ -6,7 +6,7 @@ import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
@@ -34,7 +34,7 @@ export class FormQuestionsPageComponent implements OnInit{
     private formService: FormService, 
     private questionService: QuestionService, 
     private answersService: AnswerService, 
-    private notificationService: NotificationService, 
+    private CookieService: CookieService, 
     private route: ActivatedRoute,
     private loginService: LoginService
   ) { }
@@ -60,7 +60,7 @@ export class FormQuestionsPageComponent implements OnInit{
       },
       error: (error : HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -72,7 +72,7 @@ export class FormQuestionsPageComponent implements OnInit{
       },
       error: (error : HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -130,7 +130,7 @@ export class FormQuestionsPageComponent implements OnInit{
         },
         error: (error: HttpErrorResponse) => {
           if(error.status == 401)
-            this.notificationService.notifyCookieExpired()
+            this.CookieService.notifyCookieExpired()
         }
       });
   }

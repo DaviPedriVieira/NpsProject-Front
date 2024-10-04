@@ -102,13 +102,17 @@
     margin-bottom: 20px;
     text-align: center;
     font-size: 20px;
+    height: 175px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .screen-main-container {
     min-height: 200px;
-    max-height: 640px;
+    max-height: 510px;
     width: 75%;
-    margin-top: 8.5vh;
+    margin-top: 13vh;
     border-radius: 2rem;
     border: 1px solid gray;
     box-shadow: 0px 5px 15px gray;

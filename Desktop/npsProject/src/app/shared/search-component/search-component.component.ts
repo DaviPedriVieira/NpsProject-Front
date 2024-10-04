@@ -6,17 +6,21 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './search-component.component.html',
   styleUrls: ['./search-component.component.scss']
 })
-export class SearchComponentComponent  {
+export class SearchComponentComponent {
   @ViewChild('searchInput') searchInput!: ElementRef
   @Output() itemSearched = new EventEmitter<string>();
   searched = new Subject<string>()
 
   constructor() {
     this.searched.pipe(
-      debounceTime(50)
+      debounceTime(200)
     ).subscribe((value) => {
       this.itemSearched.emit(value)
     })
+  }
+  
+  resetSearch() {
+    this.searchInput.nativeElement.value = ''
   }
 
   OnInputChange(changed: Event) {

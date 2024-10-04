@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
+import { SucessfulMessageModalComponent } from '../sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-update-modal',
@@ -11,6 +12,7 @@ import { QuestionService } from 'src/app/services/question-service/question.serv
   styleUrls: ['./update-modal.component.scss']
 })
 export class UpdateModalComponent {
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
   @ViewChild('updatemodal') updatemodal!: ElementRef<HTMLDialogElement>
   @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>
   @Input() id!: number;
@@ -19,7 +21,12 @@ export class UpdateModalComponent {
   @Output() itemUpdated = new EventEmitter<void>();
   invalidInput: boolean = false;
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private questionService: QuestionService, private notificationService: NotificationService) {}
+  constructor(
+    private formsGroupService: FormsGroupService,
+    private formsService: FormService, 
+    private questionService: QuestionService, 
+    private CookieService: CookieService
+  ) {}
 
   openModal() {
     this.updatemodal.nativeElement.show();
@@ -32,6 +39,10 @@ export class UpdateModalComponent {
   closeModal() {
     this.invalidInput = false
     this.updatemodal.nativeElement.close();
+  }
+
+  openMessageModal() {
+    this.sucessfulMessageModal.openModal()
   }
 
   UpdateItem() {
@@ -56,12 +67,13 @@ export class UpdateModalComponent {
     this.formsGroupService.UpdateFormsGroup(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
+        this.openMessageModal()
         this.itemUpdated.emit()
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -70,26 +82,28 @@ export class UpdateModalComponent {
     this.formsService.UpdateForm(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
+        this.openMessageModal()
         this.itemUpdated.emit()
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
-
+  
   UpdateQuestion(): void {
     this.questionService.UpdateQuestion(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
+        this.openMessageModal()
         this.itemUpdated.emit()
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

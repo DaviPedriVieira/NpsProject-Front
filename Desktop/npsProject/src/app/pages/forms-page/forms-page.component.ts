@@ -6,7 +6,7 @@ import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.c
 import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { CheckAnswersModalComponent } from '../home/components/response-component/modals/check-answers-modal/check-answers-modal.component';
 import { FormsCreateModalComponent } from '../home/components/response-component/modals/forms-create-modal/forms-create-modal.component';
 
@@ -27,7 +27,7 @@ export class FormsPageComponent implements OnInit{
   filteredForms: FormModel[] = []
   authorized: boolean = false
 
-  constructor(private formsService: FormService, private loginService: LoginService, private notificationService: NotificationService) {}
+  constructor(private formsService: FormService, private loginService: LoginService, private CookieService: CookieService) {}
 
   ngOnInit(): void {
     this.loginService.isAdmin().subscribe(data => {
@@ -45,7 +45,7 @@ export class FormsPageComponent implements OnInit{
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     })
   }

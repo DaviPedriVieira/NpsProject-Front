@@ -5,7 +5,7 @@ import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
@@ -24,7 +24,7 @@ export class FormsCreateModalComponent {
   groups: FormsGroupModel[] = [];
   errorMessage: string = ''
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private notificationService: NotificationService) { }
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private CookieService: CookieService) { }
 
   openModal() {
     this.selectedGroupId = this.groupId
@@ -44,7 +44,7 @@ export class FormsCreateModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -105,7 +105,7 @@ export class FormsCreateModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 500)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

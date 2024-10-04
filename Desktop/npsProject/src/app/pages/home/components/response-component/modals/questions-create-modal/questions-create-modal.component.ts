@@ -3,7 +3,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { FormModel } from 'src/app/interfaces/form';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
@@ -23,7 +23,7 @@ export class QuestionsCreateModalComponent {
   selectedFormId!: number
   errorMessage: string = ''
 
-  constructor(private formsService: FormService, private questionsService: QuestionService, private notificationService: NotificationService) { }
+  constructor(private formsService: FormService, private questionsService: QuestionService, private CookieService: CookieService) { }
 
   openModal() {
     this.selectedFormId = this.formId
@@ -45,7 +45,7 @@ export class QuestionsCreateModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
@@ -98,7 +98,7 @@ export class QuestionsCreateModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }

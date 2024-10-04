@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
-import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,7 +20,7 @@ export class GroupsCreateModalComponent {
   invalidInputs: boolean = false;
   errorMessage: string = ''
 
-  constructor(private formsGroupService: FormsGroupService, private notificationService: NotificationService) { }
+  constructor(private formsGroupService: FormsGroupService, private CookieService: CookieService) { }
 
   openModal() {
     this.formsmodal.nativeElement.show();
@@ -101,7 +101,7 @@ export class GroupsCreateModalComponent {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 401)
-          this.notificationService.notifyCookieExpired()
+          this.CookieService.notifyCookieExpired()
       }
     });
   }
