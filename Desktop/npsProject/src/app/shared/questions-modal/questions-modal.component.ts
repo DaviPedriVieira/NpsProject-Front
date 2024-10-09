@@ -30,8 +30,6 @@ export class QuestionsModalComponent {
   questions: QuestionModel[] = [];
   selectedGrades: number[] = [];
   descriptions: string[] = [];
-  questionId: number = 0
-  questionContent: string = ''
   invalidInputs: boolean = false
   errorMessage: string = ''
 
@@ -46,7 +44,7 @@ export class QuestionsModalComponent {
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
-    this.formsmodal.nativeElement.show();
+    this.formsmodal.nativeElement.showModal();
     this.loadQuestions()
   }
 
@@ -112,14 +110,7 @@ export class QuestionsModalComponent {
     const answers: AnswerModel[] = []
 
     for (let i = 0; i < this.selectedGrades.length; i++) {
-      const newAnswer: AnswerModel = {
-        id: 0,
-        userId: 0,
-        grade: this.selectedGrades[i],
-        description: this.descriptions[i],
-        questionId: this.questions[i].id,
-      }
-      answers[i] = newAnswer;
+      answers[i] = { id: 0, userId: 0, grade: this.selectedGrades[i], description: this.descriptions[i], questionId: this.questions[i].id };
     }
     this.SubmitAnswers(answers)
   }

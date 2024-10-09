@@ -20,13 +20,13 @@ export class CheckAnswersModalComponent {
   users: UserModel[] = [];
   answers: AnswerModel[] = []
   mode: string = 'questionMode'
-  answersListEmpty: boolean = false
+  emptyList: boolean = false
 
   constructor(private answersService: AnswerService, private questionService: QuestionService, private userService: UserService, private CookieService: CookieService) { }
 
   openModal() {
     this.GetQuestions()
-    this.checkAnswersModal.nativeElement.show()
+    this.checkAnswersModal.nativeElement.showModal()
   }
 
   closeModal() {
@@ -49,13 +49,13 @@ export class CheckAnswersModalComponent {
   }
 
   GetAnswersByQuestionId() {
-    this.answersListEmpty = false
+    this.emptyList = false
     this.answersService.GetAnswersByQuestionId(Number(this.selectedId)).subscribe({
       next: (data) => {
         this.answers = data;
 
         if (this.answers.length == 0) {
-          this.answersListEmpty = true
+          this.emptyList = true
           return
         }
 
@@ -73,13 +73,13 @@ export class CheckAnswersModalComponent {
   }
 
   GetAnswersByUserId() {
-    this.answersListEmpty = false
+    this.emptyList = false
     this.answersService.GetAnswersByUserId(Number(this.selectedId)).subscribe({
       next: (data) => {
         this.answers = data
 
         if (this.answers.length == 0) {
-          this.answersListEmpty = true
+          this.emptyList = true
           return
         }
 
@@ -121,7 +121,7 @@ export class CheckAnswersModalComponent {
   }
 
   ResetVariables() {
-    this.answersListEmpty = false
+    this.emptyList = false
     this.answers = []
   }
 }

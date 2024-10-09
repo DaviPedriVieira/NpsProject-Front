@@ -2,7 +2,7 @@
     <h2>Criar perguntas</h2>
     <div id="items-div">
         <div>Selecione o formulário que irá inserir: </div>
-        <select class="select" [(ngModel)]="selectedFormId">
+        <select class="select" [(ngModel)]="formId">
             <option *ngFor="let form of forms" [value]="form.id">
                 {{ form.name }}
             </option>

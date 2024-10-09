@@ -19,16 +19,14 @@ export class FormsCreateModalComponent {
   @Output() formCreated = new EventEmitter()
   @Input() groupId!: number;
   newForm: FormModel = { id: 0, groupId: 0, name: '', questions: [] }
-  invalidInputs: boolean = false;
-  selectedGroupId!: number;
   groups: FormsGroupModel[] = [];
+  invalidInputs: boolean = false;
   errorMessage: string = ''
 
   constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private CookieService: CookieService) { }
 
   openModal() {
-    this.selectedGroupId = this.groupId
-    this.createFormsModal.nativeElement.show();
+    this.createFormsModal.nativeElement.showModal();
     this.GetGroups()
   }
 
@@ -50,7 +48,7 @@ export class FormsCreateModalComponent {
   }
 
   CreateQuestion() {
-    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '' }
+    const newQuestion: QuestionModel = {id: 0, formId: 0, content: ''}
     this.newForm.questions.push(newQuestion)
   }
 
@@ -59,8 +57,8 @@ export class FormsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (this.selectedGroupId == undefined) {
-      this.errorMessage =  'O grupo não pode ser vazio'
+    if (this.groupId == undefined) {
+      this.errorMessage = 'O grupo não pode ser vazio'
       return true
     }
 
@@ -95,7 +93,7 @@ export class FormsCreateModalComponent {
       return
     }
 
-    this.newForm.groupId = Number(this.selectedGroupId);
+    this.newForm.groupId = this.groupId;
 
     this.formsService.CreateForm(this.newForm).subscribe({
       next: () => {

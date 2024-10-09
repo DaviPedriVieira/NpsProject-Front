@@ -1,0 +1,12 @@
+<div class="items-div" (click)="openItemModal()">
+    <div class="options" *ngIf="authorized">
+        <span class="material-symbols-outlined" (click)="openUpdateModal(); $event.stopPropagation()">edit</span>
+        <span class="material-symbols-outlined" (click)="openDeleteModal(); $event.stopPropagation()">delete</span>
+    </div>
+    <div class="item-name-div">{{ itemName }}</div>
+</div>
+<app-forms-modal></app-forms-modal>
+<app-questions-modal></app-questions-modal>
+<app-delete-modal></app-delete-modal> <!-- (itemDeleted)="listChanged.emit()" -->
+<app-update-modal></app-update-modal> <!-- (itemUpdated)="listChanged.emit()" -->
+<app-sucessful-message-modal></app-sucessful-message-modal>

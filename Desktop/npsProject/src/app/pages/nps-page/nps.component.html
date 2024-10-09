@@ -1,5 +1,15 @@
 <app-header></app-header>
 <main *ngIf="authorized">
     <app-nps-users></app-nps-users>
-    <app-nps-chart></app-nps-chart>
+    <div id="chart-div">
+        <div id="halfChartContainer">
+            <div id="chartBorderDiv">
+                <div id="chartCenterDiv">
+                    <div id="score">{{ npsScore }}</div>
+                    <img id="pointer" #pointer src="assets/nps-pointer.png"/>
+                </div>
+            </div>
+        </div>
+        <h2>NPS</h2>
+    </div>
 </main>

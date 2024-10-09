@@ -12,13 +12,13 @@ import { SucessfulMessageModalComponent } from '../sucessful-message-modal/suces
   styleUrls: ['./update-modal.component.scss']
 })
 export class UpdateModalComponent {
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
+  @ViewChild(SucessfulMessageModalComponent) SucessfulMessageModal!: SucessfulMessageModalComponent
   @ViewChild('updatemodal') updatemodal!: ElementRef<HTMLDialogElement>
   @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>
   @Input() id!: number;
-  @Input() item!: string;
   @Input() name!: string
-  @Output() itemUpdated = new EventEmitter<void>();
+  @Input() item!: string;
+  @Output() itemUpdated = new EventEmitter<string>();
   invalidInput: boolean = false;
 
   constructor(
@@ -29,7 +29,7 @@ export class UpdateModalComponent {
   ) {}
 
   openModal() {
-    this.updatemodal.nativeElement.show();
+    this.updatemodal.nativeElement.showModal();
     setTimeout(() => {
       this.nameInput.nativeElement.focus()
       this.nameInput.nativeElement.select()
@@ -39,10 +39,6 @@ export class UpdateModalComponent {
   closeModal() {
     this.invalidInput = false
     this.updatemodal.nativeElement.close();
-  }
-
-  openMessageModal() {
-    this.sucessfulMessageModal.openModal()
   }
 
   UpdateItem() {
@@ -67,8 +63,8 @@ export class UpdateModalComponent {
     this.formsGroupService.UpdateFormsGroup(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
-        this.openMessageModal()
-        this.itemUpdated.emit()
+        this.SucessfulMessageModal.openModal()
+        this.itemUpdated.emit(this.name)
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {
@@ -82,7 +78,7 @@ export class UpdateModalComponent {
     this.formsService.UpdateForm(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
-        this.openMessageModal()
+        this.SucessfulMessageModal.openModal()
         this.itemUpdated.emit()
         this.name = '';
       },
@@ -97,7 +93,7 @@ export class UpdateModalComponent {
     this.questionService.UpdateQuestion(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
-        this.openMessageModal()
+        this.SucessfulMessageModal.openModal()
         this.itemUpdated.emit()
         this.name = '';
       },

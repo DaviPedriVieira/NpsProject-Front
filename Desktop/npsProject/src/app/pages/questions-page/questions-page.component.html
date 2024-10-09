@@ -25,8 +25,7 @@
         </div>
     </div>
 </main>
-<app-delete-modal [id]="formId" [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-<app-update-modal [id]="formId" [item]="'question'" [name]="formName" (itemUpdated)="loadQuestions()"></app-update-modal>
-<app-questions-modal [formId]="formId" [formName]="formName"></app-questions-modal>
+<app-delete-modal [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
+<app-update-modal [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
 <app-questions-create-modal (questionCreated)="loadQuestions()"></app-questions-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

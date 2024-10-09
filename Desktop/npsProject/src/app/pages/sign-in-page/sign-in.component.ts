@@ -48,9 +48,5 @@ export class SignInComponent implements OnInit {
       }
     );
   }
-
-  closeModal(): void {
-    this.sucessfulMessageDialog.closeModal()
-  }
 }
 

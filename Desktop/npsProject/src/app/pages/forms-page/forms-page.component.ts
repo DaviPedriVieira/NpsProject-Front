@@ -21,8 +21,6 @@ export class FormsPageComponent implements OnInit{
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
-  formId: number = 0
-  formName: string = '' 
   forms: FormModel[] = []
   filteredForms: FormModel[] = []
   authorized: boolean = false
@@ -57,7 +55,7 @@ export class FormsPageComponent implements OnInit{
       )    
     } 
     else {
-      this.filteredForms = [...this.forms]
+      this.filteredForms = this.forms
     }
   }
 

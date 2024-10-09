@@ -19,8 +19,6 @@ export class QuestionsPageComponent {
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
-  formId: number = 0
-  formName: string = '' 
   questions: QuestionModel[] = []
   filteredQuestions: QuestionModel[] = []
   authorized: boolean = false
@@ -55,7 +53,7 @@ export class QuestionsPageComponent {
       )    
     } 
     else {
-      this.filteredQuestions = [...this.questions]
+      this.filteredQuestions = this.questions
     }
   }
 
@@ -68,13 +66,13 @@ export class QuestionsPageComponent {
   }
 
   openDeleteModal(id: number): void {
-    this.formId = id;
+    this.deleteModalComponent.id = id;
     this.deleteModalComponent.openModal();
   }
 
   openUpdateModal(id: number, question: string): void {
-    this.formId = id;
-    this.formName = question
+    this.updateModalComponent.id = id;
+    this.updateModalComponent.name = question
     this.updateModalComponent.openModal();
   }
 }

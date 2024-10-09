@@ -29,6 +29,6 @@
 </dialog>
 <app-delete-modal [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
 <app-update-modal [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
-<app-questions-modal [formName]="formName"></app-questions-modal>
-<app-forms-create-modal (formCreated)="loadForms()"></app-forms-create-modal>
+<app-questions-modal></app-questions-modal>
+<app-forms-create-modal [groupId]="groupId" (formCreated)="loadForms()"></app-forms-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

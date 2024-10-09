@@ -2,7 +2,7 @@
     <h2>Criar formulário</h2>
     <div id="header-div">
         <div>Grupo que irá inserir: </div>
-        <select class="select" [(ngModel)]="selectedGroupId">
+        <select class="select" [(ngModel)]="groupId">
             <option *ngFor="let group of groups" [value]="group.id">
                 {{ group.name }}
             </option>

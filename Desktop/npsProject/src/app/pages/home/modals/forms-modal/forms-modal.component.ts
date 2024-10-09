@@ -26,10 +26,9 @@ export class FormsModalComponent {
   @ViewChild(SearchComponentComponent) SearchComponent!: SearchComponentComponent;
   @Input() groupId!: number;
   @Input() groupName!: string;
-  authorized!: boolean;
   forms: FormModel[] = [];
   filteredForms: FormModel[] = [];
-  formName: string = ''
+  authorized!: boolean;
 
   constructor(private formService: FormService, private CookieService: CookieService, private loginService: LoginService) { }
 
@@ -37,7 +36,7 @@ export class FormsModalComponent {
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
-    this.formsmodal.nativeElement.show();
+    this.formsmodal.nativeElement.showModal();
     this.loadForms()
   }
   
@@ -66,7 +65,7 @@ export class FormsModalComponent {
       )    
     } 
     else {
-      this.filteredForms = [...this.forms]
+      this.filteredForms = this.forms
     }
   }
 
@@ -75,7 +74,6 @@ export class FormsModalComponent {
   }
 
   openFormsCreateModal() {
-    this.formsCreateModal.groupId = this.groupId
     this.formsCreateModal.openModal();
   }
 

@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sucessful-message-modal',
@@ -8,12 +9,20 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 export class SucessfulMessageModalComponent {
   @ViewChild('sucessfullMessageModal') sucessfulMessageModal!: ElementRef<HTMLDialogElement>
   @Input() message!: string;
+  @Input() navigateToHome!: boolean;
+
+  constructor(private router: Router) {}
 
   openModal() {
-    this.sucessfulMessageModal.nativeElement.show();
+    this.sucessfulMessageModal.nativeElement.showModal();
   }
 
   closeModal() {
     this.sucessfulMessageModal.nativeElement.close();
+    
+    if(this.navigateToHome){
+      localStorage.setItem('LastRoute', '/home')
+      this.router.navigate(['/home'])
+    }
   }
 }

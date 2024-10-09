@@ -21,11 +21,9 @@ export class HomeComponent{
   @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
   @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
-  authorized!: boolean;
   formsGroups: FormsGroupModel[] = [];
   filteredGroups: FormsGroupModel[] = [];
-  groupId: number = 0;
-  groupName: string = '';
+  authorized!: boolean;
 
   constructor(private formsGroupService: FormsGroupService, private CookieService: CookieService, private loginService: LoginService) { }
   
@@ -57,7 +55,7 @@ export class HomeComponent{
       )    
     } 
     else {
-      this.filteredGroups = [...this.formsGroups]
+      this.filteredGroups = this.formsGroups
     }
   }
 

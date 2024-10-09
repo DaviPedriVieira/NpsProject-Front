@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NpsChartComponent } from './nps-chart.component';
+import { ItemBoxComponent } from './item-box.component';
 
-describe('NpsChartComponent', () => {
-  let component: NpsChartComponent;
-  let fixture: ComponentFixture<NpsChartComponent>;
+describe('ItemBoxComponent', () => {
+  let component: ItemBoxComponent;
+  let fixture: ComponentFixture<ItemBoxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NpsChartComponent ]
+      declarations: [ ItemBoxComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NpsChartComponent);
+    fixture = TestBed.createComponent(ItemBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

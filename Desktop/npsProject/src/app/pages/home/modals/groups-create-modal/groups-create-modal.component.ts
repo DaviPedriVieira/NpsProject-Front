@@ -23,7 +23,7 @@ export class GroupsCreateModalComponent {
   constructor(private formsGroupService: FormsGroupService, private CookieService: CookieService) { }
 
   openModal() {
-    this.formsmodal.nativeElement.show();
+    this.formsmodal.nativeElement.showModal();
   }
 
   closeModal() {
@@ -94,7 +94,7 @@ export class GroupsCreateModalComponent {
     }
 
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe({
-      next: (data) => {
+      next: () => {
         this.closeModal()
         this.groupCreated.emit()
         this.sucessfulMessageModal.openModal()

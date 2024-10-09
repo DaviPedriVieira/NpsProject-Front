@@ -20,14 +20,12 @@ export class QuestionsCreateModalComponent {
   forms: FormModel[] = []
   newQuestions: QuestionModel[] = [];
   invalidInputs: boolean = false;
-  selectedFormId!: number
   errorMessage: string = ''
 
   constructor(private formsService: FormService, private questionsService: QuestionService, private CookieService: CookieService) { }
 
   openModal() {
-    this.selectedFormId = this.formId
-    this.createQuestionsModal.nativeElement.show()
+    this.createQuestionsModal.nativeElement.showModal()
     this.GetForms()
     this.CreateQuestion()
   }
@@ -51,7 +49,7 @@ export class QuestionsCreateModalComponent {
   }
 
   CreateQuestion() {
-    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '' }
+    const newQuestion: QuestionModel = {id: 0, formId: 0, content: ''}
     this.newQuestions.push(newQuestion)
   }
 
@@ -60,7 +58,7 @@ export class QuestionsCreateModalComponent {
   }
 
   AreAnyEmptyInputs() {
-    if (this.selectedFormId == undefined){
+    if (this.formId == undefined){
       this.errorMessage = 'O formulário não pode ser em branco!'
       return true
     }
@@ -87,7 +85,7 @@ export class QuestionsCreateModalComponent {
     }
 
     for (let question of this.newQuestions) {
-      question.formId = Number(this.selectedFormId);
+      question.formId = this.formId
     }
 
     this.questionsService.CreateQuestion(this.newQuestions).subscribe({

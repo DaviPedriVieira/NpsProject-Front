@@ -19,6 +19,10 @@ export class FormsGroupService extends BaseService<FormsGroupModel>{
     return this.Get(this.basePath)
   }
 
+  GetFormsGroupById(id: number): Observable<FormsGroupModel> {
+    return this.GetById(this.basePath, id)
+  }
+
   CreateFormsGroup(group: FormsGroupModel): Observable<FormsGroupModel> {
     return this.Create(this.basePath, group)
   }

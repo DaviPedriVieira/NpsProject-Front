@@ -18,7 +18,6 @@ import { QuestionsCreateModalComponent } from './shared/questions-create-modal/q
 import { SucessfulMessageModalComponent } from './shared/sucessful-message-modal/sucessful-message-modal.component';
 import { NpsComponent } from './pages/nps-page/nps.component';
 import { CheckAnswersModalComponent } from './shared/check-answers-modal/check-answers-modal.component';
-import { NpsChartComponent } from './pages/nps-page/components/nps-chart-component/nps-chart/nps-chart.component';
 import { NpsUsersComponent } from './pages/nps-page/components/nps-users-component/nps-users/nps-users.component';
 import { SignUpComponent } from './pages/sign-up-page/sign-up.component';
 import { FormQuestionsPageComponent } from './pages/form-questions-page/form-questions-page.component';
@@ -26,6 +25,7 @@ import { SearchComponentComponent } from './shared/search-component/search-compo
 import { CommonModule } from '@angular/common';
 import { FormsPageComponent } from './pages/forms-page/forms-page.component';
 import { QuestionsPageComponent } from './pages/questions-page/questions-page.component';
+import { ItemBoxComponent } from './shared/item-box/item-box.component';
 
 @NgModule({
   declarations: [
@@ -43,13 +43,13 @@ import { QuestionsPageComponent } from './pages/questions-page/questions-page.co
     QuestionsCreateModalComponent,
     NpsComponent,
     CheckAnswersModalComponent,
-    NpsChartComponent,
     NpsUsersComponent,
     SignUpComponent,
     FormQuestionsPageComponent,
     SearchComponentComponent,
     FormsPageComponent,
     QuestionsPageComponent,
+    ItemBoxComponent,
   ],
   imports: [
     BrowserModule,

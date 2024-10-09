@@ -4,19 +4,19 @@
     </div>
     <div id="icons">
         <div class="icon-div" [ngClass]="{'active': IsActive('/home')}">
-            <span class="material-symbols-outlined" (click)="ChangeScreen('/home')">home</span>
+            <span class="material-symbols-outlined to-click-icon" (click)="ChangeScreen('/home')">home</span>
             <div>Tela inicial</div>
         </div>
         <div class="icon-div" [ngClass]="{'active': IsActive('/forms')}">
-            <span class="material-symbols-outlined" (click)="ChangeScreen('/forms')">lab_profile</span>
+            <span class="material-symbols-outlined to-click-icon" (click)="ChangeScreen('/forms')">lab_profile</span>
             <div>Formulários</div>
         </div>
         <div class="icon-div" [ngClass]="{'active': IsActive('/questions')}">
-            <span class="material-symbols-outlined" (click)="ChangeScreen('/questions')">question_mark</span>
+            <span class="material-symbols-outlined to-click-icon" (click)="ChangeScreen('/questions')">question_mark</span>
             <div>Perguntas</div>
         </div>
         <div class="icon-div" [ngClass]="{'active': IsActive('/nps')}" *ngIf="authorized">
-            <span class="material-symbols-outlined" (click)="ChangeScreen('/nps')">readiness_score</span>
+            <span class="material-symbols-outlined to-click-icon" (click)="ChangeScreen('/nps')">readiness_score</span>
             <div>NPS</div>
         </div>
         <div class="icon-div">
@@ -24,7 +24,7 @@
             <div>{{nome}}</div>
         </div>
         <div class="icon-div" (click)="Logout()">
-            <span class="material-symbols-outlined">logout</span>
+            <span class="material-symbols-outlined to-click-icon">logout</span>
         </div>
     </div>
 </main>

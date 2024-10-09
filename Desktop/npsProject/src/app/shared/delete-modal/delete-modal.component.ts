@@ -12,7 +12,7 @@ import { SucessfulMessageModalComponent } from '../sucessful-message-modal/suces
   styleUrls: ['./delete-modal.component.scss']
 })
 export class DeleteModalComponent {
-  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
+  @ViewChild(SucessfulMessageModalComponent) SucessfulMessageModal!: SucessfulMessageModalComponent
   @ViewChild('deletemodal') deletemodal!: ElementRef<HTMLDialogElement>
   @Input() id!: number;
   @Input() item!: string;
@@ -26,7 +26,7 @@ export class DeleteModalComponent {
   ) { }
 
   openModal(): void {
-    this.deletemodal.nativeElement.show();
+    this.deletemodal.nativeElement.showModal();
   }
 
   closeModal(): void {
@@ -50,8 +50,8 @@ export class DeleteModalComponent {
   DeleteGroup(): void {
     this.formsGroupService.DeleteFormsGroup(this.id).subscribe({
       next: () => {
-        this.openMessageModal()
         this.closeModal()
+        this.SucessfulMessageModal.openModal()
         this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
@@ -64,8 +64,8 @@ export class DeleteModalComponent {
   DeleteForm(): void {
     this.formsService.DeleteForm(this.id).subscribe({
       next: () => {
-        this.openMessageModal()
         this.closeModal()
+        this.SucessfulMessageModal.openModal()
         this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
@@ -74,12 +74,12 @@ export class DeleteModalComponent {
       }
     });
   }
-
+  
   DeleteQuestion(): void {
     this.questionService.DeleteQuestion(this.id).subscribe({
       next: () => {
-        this.openMessageModal()
         this.closeModal()
+        this.SucessfulMessageModal.openModal()
         this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
@@ -87,9 +87,5 @@ export class DeleteModalComponent {
           this.CookieService.notifyCookieExpired()
       }
     });
-  }
-
-  openMessageModal() {
-    this.sucessfulMessageModal.openModal()
   }
 }

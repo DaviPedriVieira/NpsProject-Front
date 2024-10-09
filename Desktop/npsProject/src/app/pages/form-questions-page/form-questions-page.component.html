@@ -1,20 +1,18 @@
 <app-header></app-header>
 <main>
     <div class="screen-main-container">
-        <h1>Perguntas</h1>
-        <div class="no-items-message" *ngIf="questions.length == 0">
-            Não há grupos de formulários cadastrados
-        </div>
-        <div id="questions-container" (answersSubmited)="loadQuestions()">
+        <h1 *ngIf="questions.length > 0">Perguntas do formulário {{ formName }}</h1>
+        <h1 *ngIf="questions.length == 0">Formulário não encontrado!</h1>
+        <div id="questions-container" (answersSubmited)="GetForm()">
             <div *ngFor="let question of questions; let i = index">
                 <div class="questions-div">
                     <div class="options" *ngIf="authorized">
                         <span class="material-symbols-outlined" 
-                            (click)="openUpdateModal(question.id, question.content)">edit</span>
+                        (click)="openUpdateModal(question.id, question.content)">edit</span>
                         <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
                     </div>
                     <div class="item-name-div">{{ question.content }}</div>
-                </div>
+                </div>  
                 <select [(ngModel)]="selectedGrades[i]">
                     <option *ngFor="let number of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="number">{{ number }}
                     </option>
@@ -24,14 +22,17 @@
                 </div>
             </div>
         </div>
+        <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
         <div id="allign-buttons-div">
-            <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
             <div class="buttons-div-center">
                 <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
             </div>
         </div>
+        <div class="no-items-message" *ngIf="questions.length == 0">
+            Não há perguntas cadastradas neste formulário
+        </div>
     </div>
 </main>
-<app-delete-modal [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-<app-update-modal [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
+<app-delete-modal [item]="'question'" (itemDeleted)="GetForm()"></app-delete-modal>
+<app-update-modal [item]="'question'" (itemUpdated)="GetForm()"></app-update-modal>
 <app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>

@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user-service/user.service';
+import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/services/user-service/user.service';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit{
-  @ViewChild('sucessMessageDialog') sucessfulMessageDialog!: ElementRef<HTMLDialogElement>; 
+  @ViewChild(SucessfulMessageModalComponent) sucessfulMessageDialog!: SucessfulMessageModalComponent; 
   username: string = '';
   password: string = '';
   invalidInputs: boolean = false;
@@ -19,8 +20,7 @@ export class SignUpComponent implements OnInit{
 
   ngOnInit(): void {
     if (localStorage.getItem('Username') != null) {
-      const LastRoute = localStorage.getItem('LastRoute') || '/home'
-      this.router.navigate([LastRoute])
+      this.router.navigate([localStorage.getItem('LastRoute') || '/home'])
     }
   }
 
@@ -32,9 +32,10 @@ export class SignUpComponent implements OnInit{
     }
 
     const newUser: UserModel = {id: 0, name: this.username, password: this.password, type: 1}
+
     this.UserService.CreateUser(newUser).subscribe((data) => {
       if(data){
-        this.sucessfulMessageDialog.nativeElement.showModal()
+        this.openMessageModal()
       }
     },
     (error) => {
@@ -43,10 +44,8 @@ export class SignUpComponent implements OnInit{
     })
   }
 
-  goToLoginPage(): void {
-    this.username = '';
-    this.password = '';
-    this.invalidInputs = false
-    this.router.navigate(["/login"])
+  openMessageModal() {
+    this.sucessfulMessageDialog.navigateToHome = true
+    this.sucessfulMessageDialog.openModal()
   }
 }
