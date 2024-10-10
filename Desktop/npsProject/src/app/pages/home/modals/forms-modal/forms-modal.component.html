@@ -1,7 +1,7 @@
 <dialog id="formsmodal" #formsmodal>
     <div class="header">
         <div class="create-container">
-            <button (click)="openFormsCreateModal()" *ngIf="authorized">Criar formulário</button>
+            <button type="button" (click)="openFormsCreateModal()" *ngIf="authorized">Criar formulário</button>
             <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>  
         </div>
         <h2>Formulários do grupo {{ groupName }}</h2>
@@ -12,23 +12,12 @@
     </div>
     <div id="forms-container">
         <div *ngFor="let form of filteredForms">
-            <div class="items-div" (click)="openQuestionsModal(form.id, form.name)">
-                <div class="options" *ngIf="authorized">
-                    <span class="material-symbols-outlined"
-                        (click)="openUpdateModal(form.id, form.name); $event.stopPropagation()">edit</span>
-                    <span class="material-symbols-outlined"
-                        (click)="openDeleteModal(form.id); $event.stopPropagation()">delete</span>
-                </div>
-                <div class="item-name-div">{{ form.name }}</div>
-            </div>
+            <app-item-box [itemName]="form.name" [itemId]="form.id" [itemType]="'form'"></app-item-box>
         </div>
     </div>
     <div id="allign-btn-div">
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
 </dialog>
-<app-delete-modal [item]="'form'" (itemDeleted)="loadForms()"></app-delete-modal>
-<app-update-modal [item]="'form'" (itemUpdated)="loadForms()"></app-update-modal>
-<app-questions-modal></app-questions-modal>
-<app-forms-create-modal [groupId]="groupId" (formCreated)="loadForms()"></app-forms-create-modal>
+<app-forms-create-modal (formCreated)="loadForms()"></app-forms-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

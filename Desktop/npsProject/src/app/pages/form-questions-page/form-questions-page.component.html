@@ -1,21 +1,13 @@
 <app-header></app-header>
-<main>
+<main >
     <div class="screen-main-container">
-        <h1 *ngIf="questions.length > 0">Perguntas do formulário {{ formName }}</h1>
-        <h1 *ngIf="questions.length == 0">Formulário não encontrado!</h1>
-        <div id="questions-container" (answersSubmited)="GetForm()">
-            <div *ngFor="let question of questions; let i = index">
-                <div class="questions-div">
-                    <div class="options" *ngIf="authorized">
-                        <span class="material-symbols-outlined" 
-                        (click)="openUpdateModal(question.id, question.content)">edit</span>
-                        <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
-                    </div>
-                    <div class="item-name-div">{{ question.content }}</div>
-                </div>  
+        <h1 *ngIf="form.questions.length > 0">Perguntas do formulário {{ form.name }}</h1>
+        <h1 *ngIf="form.questions.length == 0">Formulário não encontrado!</h1>
+        <div id="questions-container" >
+            <div *ngFor="let question of form.questions; let i = index">
+                <app-item-box [itemName]="question.content" [itemId]="question.id" [itemType]="'question'"></app-item-box>
                 <select [(ngModel)]="selectedGrades[i]">
-                    <option *ngFor="let number of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="number">{{ number }}
-                    </option>
+                    <option *ngFor="let number of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="number">{{ number }}</option>
                 </select>
                 <div class="description-input">
                     <input type="text" placeholder="Descrição (opcional)" [(ngModel)]="descriptions[i]">
@@ -25,14 +17,12 @@
         <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
         <div id="allign-buttons-div">
             <div class="buttons-div-center">
-                <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="questions.length > 0">Enviar</button>
+                <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="form.questions.length > 0">Enviar</button>
             </div>
         </div>
-        <div class="no-items-message" *ngIf="questions.length == 0">
+        <div class="no-items-message" *ngIf="form.questions.length == 0">
             Não há perguntas cadastradas neste formulário
         </div>
     </div>
 </main>
-<app-delete-modal [item]="'question'" (itemDeleted)="GetForm()"></app-delete-modal>
-<app-update-modal [item]="'question'" (itemUpdated)="GetForm()"></app-update-modal>
 <app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>

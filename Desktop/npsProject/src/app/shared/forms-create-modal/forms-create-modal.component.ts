@@ -36,7 +36,7 @@ export class FormsCreateModalComponent {
   }
 
   GetGroups() {
-    this.formsGroupService.GetFormsGroups().subscribe({
+    this.formsGroupService.formsGroups$.subscribe({
       next: (data) => {
         this.groups = data;
       },
@@ -45,6 +45,18 @@ export class FormsCreateModalComponent {
           this.CookieService.notifyCookieExpired()
       }
     });
+
+    if(this.groups.length == 0) {
+      this.formsGroupService.GetFormsGroups().subscribe({
+        next: (data) => {
+          this.groups = data;
+        },
+        error: (error: HttpErrorResponse) => {
+          if(error.status == 401)
+            this.CookieService.notifyCookieExpired()
+        }
+      })
+    }
   }
 
   CreateQuestion() {

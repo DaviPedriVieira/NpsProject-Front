@@ -11,15 +11,7 @@
         </div>
         <div id="groups-container">
             <div *ngFor="let group of filteredGroups">
-                <div class="items-div" (click)="openFormsModal(group.id, group.name)">
-                    <div class="options" *ngIf="authorized">
-                        <span class="material-symbols-outlined"
-                            (click)="openUpdateModal(group.id, group.name); $event.stopPropagation()">edit</span>
-                        <span class="material-symbols-outlined"
-                            (click)="openDeleteModal(group.id); $event.stopPropagation()">delete</span>
-                    </div>
-                    <div class="item-name-div">{{ group.name }}</div>
-                </div>
+                <app-item-box [itemName]="group.name" [itemId]="group.id" [itemType]="'group'"></app-item-box>
             </div>
         </div>
         <div class="no-items-message" *ngIf="filteredGroups.length == 0">
@@ -27,8 +19,5 @@
         </div>
     </div>
 </main>
-<app-forms-modal></app-forms-modal>
-<app-delete-modal [item]="'group'" (itemDeleted)="loadFormsGroups()"></app-delete-modal>
-<app-update-modal [item]="'group'" (itemUpdated)="loadFormsGroups()"></app-update-modal>
 <app-groups-create-modal (groupCreated)="loadFormsGroups()"></app-groups-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

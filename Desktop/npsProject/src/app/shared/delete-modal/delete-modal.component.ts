@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
-import { SucessfulMessageModalComponent } from '../sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-delete-modal',
@@ -12,11 +11,9 @@ import { SucessfulMessageModalComponent } from '../sucessful-message-modal/suces
   styleUrls: ['./delete-modal.component.scss']
 })
 export class DeleteModalComponent {
-  @ViewChild(SucessfulMessageModalComponent) SucessfulMessageModal!: SucessfulMessageModalComponent
   @ViewChild('deletemodal') deletemodal!: ElementRef<HTMLDialogElement>
   @Input() id!: number;
   @Input() item!: string;
-  @Output() itemDeleted = new EventEmitter<void>()
 
   constructor(
     private formsGroupService: FormsGroupService,
@@ -51,8 +48,6 @@ export class DeleteModalComponent {
     this.formsGroupService.DeleteFormsGroup(this.id).subscribe({
       next: () => {
         this.closeModal()
-        this.SucessfulMessageModal.openModal()
-        this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
@@ -60,13 +55,11 @@ export class DeleteModalComponent {
       }
     });
   }
-
+  
   DeleteForm(): void {
     this.formsService.DeleteForm(this.id).subscribe({
       next: () => {
         this.closeModal()
-        this.SucessfulMessageModal.openModal()
-        this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)
@@ -79,8 +72,6 @@ export class DeleteModalComponent {
     this.questionService.DeleteQuestion(this.id).subscribe({
       next: () => {
         this.closeModal()
-        this.SucessfulMessageModal.openModal()
-        this.itemDeleted.emit()
       },
       error: (error: HttpErrorResponse) => {
         if (error.status == 401)

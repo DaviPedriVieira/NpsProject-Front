@@ -4,7 +4,6 @@ import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
-import { SucessfulMessageModalComponent } from '../sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
   selector: 'app-update-modal',
@@ -12,13 +11,11 @@ import { SucessfulMessageModalComponent } from '../sucessful-message-modal/suces
   styleUrls: ['./update-modal.component.scss']
 })
 export class UpdateModalComponent {
-  @ViewChild(SucessfulMessageModalComponent) SucessfulMessageModal!: SucessfulMessageModalComponent
   @ViewChild('updatemodal') updatemodal!: ElementRef<HTMLDialogElement>
   @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>
   @Input() id!: number;
   @Input() name!: string
   @Input() item!: string;
-  @Output() itemUpdated = new EventEmitter<string>();
   invalidInput: boolean = false;
 
   constructor(
@@ -63,8 +60,6 @@ export class UpdateModalComponent {
     this.formsGroupService.UpdateFormsGroup(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
-        this.SucessfulMessageModal.openModal()
-        this.itemUpdated.emit(this.name)
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {
@@ -78,8 +73,6 @@ export class UpdateModalComponent {
     this.formsService.UpdateForm(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
-        this.SucessfulMessageModal.openModal()
-        this.itemUpdated.emit()
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {
@@ -93,8 +86,6 @@ export class UpdateModalComponent {
     this.questionService.UpdateQuestion(this.id, this.name).subscribe({
       next: () => {
         this.closeModal()
-        this.SucessfulMessageModal.openModal()
-        this.itemUpdated.emit()
         this.name = '';
       },
       error: (error: HttpErrorResponse) => {

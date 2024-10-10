@@ -3,11 +3,10 @@ import { QuestionModel } from 'src/app/interfaces/question';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
-import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
-import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { CheckAnswersModalComponent } from '../../shared/check-answers-modal/check-answers-modal.component';
 import { QuestionsCreateModalComponent } from '../../shared/questions-create-modal/questions-create-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-questions-page',
@@ -15,8 +14,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./questions-page.component.scss']
 })
 export class QuestionsPageComponent {
-  @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
-  @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
   questions: QuestionModel[] = []
@@ -25,25 +22,29 @@ export class QuestionsPageComponent {
 
   constructor(private questionsService: QuestionService, private loginService: LoginService, private CookieService: CookieService) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
 
-    this.loadQuestions()
+    await this.loadQuestions()
+
+    this.questionsService.questions$.subscribe(data => {
+      this.questions = data,
+      this.filteredQuestions = data
+    })
   }
   
-  loadQuestions() {
-    this.questionsService.GetQuestions().subscribe({
-      next: (data) => {
-        this.questions = data;
-        this.filteredQuestions = data;
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
-    })
+  async loadQuestions(): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.questionsService.GetQuestions())
+      this.questions = data
+      this.filteredQuestions = data
+    } catch (error) {
+      const httpError = error as HttpErrorResponse
+      if (httpError.status == 401)
+        this.CookieService.notifyCookieExpired()
+    }
   }
 
   filterQuestions(search: string) {
@@ -63,17 +64,6 @@ export class QuestionsPageComponent {
 
   openCheckAnswersModal() {
     this.checkAnswersModal.openModal();
-  }
-
-  openDeleteModal(id: number): void {
-    this.deleteModalComponent.id = id;
-    this.deleteModalComponent.openModal();
-  }
-
-  openUpdateModal(id: number, question: string): void {
-    this.updateModalComponent.id = id;
-    this.updateModalComponent.name = question
-    this.updateModalComponent.openModal();
   }
 }
 

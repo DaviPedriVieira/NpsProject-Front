@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
@@ -8,58 +8,67 @@ import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
-import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
-import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
+import { firstValueFrom } from 'rxjs';
+import { FormModel } from 'src/app/interfaces/form';
 
 @Component({
   selector: 'app-form-questions-page',
   templateUrl: './form-questions-page.component.html',
   styleUrls: ['./form-questions-page.component.scss']
 })
-export class FormQuestionsPageComponent implements OnInit{
-  @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
-  @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
+export class FormQuestionsPageComponent implements OnInit {
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent;
-  formId!: number;
-  formName: string = '';
-  questions: QuestionModel[] = []; 
+  form: FormModel = {id: 0, name: '', groupId: 0, questions: []};
   selectedGrades: number[] = [];
   descriptions: string[] = [];
   invalidInputs: boolean = false
   authorized!: boolean;
-  
+
+
   constructor(
-    private formService: FormService, 
-    private answersService: AnswerService, 
-    private CookieService: CookieService, 
+    private formService: FormService,
+    private questionService: QuestionService,
+    private answersService: AnswerService,
+    private CookieService: CookieService,
     private route: ActivatedRoute,
     private loginService: LoginService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.route.params.subscribe((params) => {
+      this.form.id = params['id']
+      localStorage.setItem('LastRoute', `form/${this.form.id}`)
+    })
+
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
+
+    this.GetFormById()
+    await this.GetQuestions()
     
-    this.route.params.subscribe((params) => {
-      this.formId = params['id']
-      localStorage.setItem('LastRoute', `form/${this.formId}`)
-      this.GetForm()
+    this.questionService.questions$.subscribe(data => {
+      this.form.questions = data
     })
+
   }
 
-  GetForm(): void {
-    this.formService.GetFormById(this.formId).subscribe({
-      next: (data) => {
-        this.formName = data.name;
-        this.questions = data.questions
-      },
-      error: (error : HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
-    });
+  async GetQuestions(): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.questionService.GetQuestionsByFormId(this.form.id))
+      this.form.questions = data
+    } catch (error) {
+      const httpError = error as HttpErrorResponse
+      if (httpError.status == 401)
+        this.CookieService.notifyCookieExpired()
+    }
+  }
+
+  GetFormById() {
+    this.formService.GetFormById(this.form.id).subscribe(data => {
+      this.form.name = data.name
+    })
   }
 
   openMessageModal() {
@@ -67,33 +76,20 @@ export class FormQuestionsPageComponent implements OnInit{
     this.sucessfulMessageModal.openModal()
   }
 
-  openUpdateModal(id: number, questionContent: string): void {
-    this.updateModalComponent.id = id
-    this.updateModalComponent.name = questionContent
-    this.updateModalComponent.openModal();
-  }
-  
-  openDeleteModal(id: number): void {
-    this.updateModalComponent.id = id
-    this.deleteModalComponent.openModal();
-  }
-
   ValidateSelects(): boolean {
-    if(this.selectedGrades.length == 0){
+    if (this.selectedGrades.length == 0)
       return false;
-    }
 
-    for (let i = 0; i < this.questions.length; i++) {
-      if(this.selectedGrades[i] == null){
+    for (let i = 0; i < this.form.questions.length; i++) {
+      if (this.selectedGrades[i] == null)
         return false
-      }
     }
 
     return true
   }
 
   PopulateAnswers(): void {
-    if(!this.ValidateSelects()){
+    if (!this.ValidateSelects()) {
       this.invalidInputs = true;
       return
     }
@@ -106,7 +102,7 @@ export class FormQuestionsPageComponent implements OnInit{
         userId: 0,
         grade: this.selectedGrades[i],
         description: this.descriptions[i],
-        questionId: this.questions[i].id,
+        questionId: this.form.questions[i].id,
       }
       answers[i] = newAnswer;
     }
@@ -115,15 +111,15 @@ export class FormQuestionsPageComponent implements OnInit{
 
   SubmitAnswers(answers: AnswerModel[]): void {
     this.answersService.SubmitAnswers(answers).subscribe({
-        next: () => {
-          this.openMessageModal()
-          this.ResetVariables()
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.CookieService.notifyCookieExpired()
-        }
-      });
+      next: () => {
+        this.openMessageModal()
+        this.ResetVariables()
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 401)
+          this.CookieService.notifyCookieExpired()
+      }
+    });
   }
 
   ResetVariables(): void {

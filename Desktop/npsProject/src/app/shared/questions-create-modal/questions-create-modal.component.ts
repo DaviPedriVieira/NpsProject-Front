@@ -37,15 +37,28 @@ export class QuestionsCreateModalComponent {
   }
 
   GetForms() {
-    this.formsService.GetForms().subscribe({
+    this.formsService.forms$.subscribe({
       next: (data) => {
-        this.forms = data;
+        this.forms = data
       },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
+      error: (error) => {
+        const httpError = error as HttpErrorResponse
+        if (httpError.status == 401)
           this.CookieService.notifyCookieExpired()
       }
-    });
+    })
+
+    if(this.forms.length == 0){
+      this.formsService.GetForms().subscribe( {
+        next: (data) => {
+          this.forms = data;
+        },
+        error: (error: HttpErrorResponse) => {
+          if(error.status == 401)
+            this.CookieService.notifyCookieExpired()
+        }
+      })
+    }
   }
 
   CreateQuestion() {

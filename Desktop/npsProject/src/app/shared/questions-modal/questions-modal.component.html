@@ -8,16 +8,9 @@
             <h2>Perguntas do formulário {{ formName }}</h2>
         </div>
     </div>
-    <div id="questions-container" (answersSubmited)="loadQuestions()">
+    <div id="questions-container">
         <div *ngFor="let question of questions; let i = index">
-            <div class="questions-div">
-                <div class="options" *ngIf="authorized">
-                    <span class="material-symbols-outlined"
-                    (click)="openUpdateModal(question.id, question.content)">edit</span>
-                    <span class="material-symbols-outlined" (click)="openDeleteModal(question.id)">delete</span>
-                </div>
-                <div class="item-name-div" [ngStyle]="{'font-size': question.content.length > 100 ? '14px' : '16px'}">{{ question.content }}</div>                
-            </div>
+            <app-item-box [itemName]="question.content" [itemId]="question.id" [itemType]="'question'"></app-item-box>
             <div id="answers-container">
                 <select [(ngModel)]="selectedGrades[i]">
                     <option *ngFor="let number of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="number">{{ number }}</option>
@@ -40,7 +33,5 @@
     </div>
 </dialog>
 <app-questions-create-modal (questionCreated)="loadQuestions()"></app-questions-create-modal>
-<app-delete-modal [item]="'question'" (itemDeleted)="loadQuestions()"></app-delete-modal>
-<app-update-modal [item]="'question'" (itemUpdated)="loadQuestions()"></app-update-modal>
 <app-sucessful-message-modal [message]="'Respostas Enviadas!'"></app-sucessful-message-modal>
 <app-check-answers-modal></app-check-answers-modal>

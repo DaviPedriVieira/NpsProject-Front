@@ -6,11 +6,10 @@ import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
-import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
-import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
 import { QuestionsCreateModalComponent } from '../questions-create-modal/questions-create-modal.component';
 import { CheckAnswersModalComponent } from '../check-answers-modal/check-answers-modal.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-questions-modal',
@@ -19,8 +18,6 @@ import { CheckAnswersModalComponent } from '../check-answers-modal/check-answers
 })
 export class QuestionsModalComponent {
   @ViewChild('questionsmodal') formsmodal!: ElementRef<HTMLDialogElement>
-  @ViewChild(DeleteModalComponent) deleteModalComponent!: DeleteModalComponent;
-  @ViewChild(UpdateModalComponent) updateModalComponent!: UpdateModalComponent;
   @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModalComponent!: SucessfulMessageModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
@@ -40,12 +37,18 @@ export class QuestionsModalComponent {
     private loginService: LoginService
   ) { }
 
-  openModal(): void {
+  async openModal(): Promise<void> {
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
+
+    await this.loadQuestions()
+
+    this.questionService.questions$.subscribe(data => {
+      this.questions = data
+    })
+    
     this.formsmodal.nativeElement.showModal();
-    this.loadQuestions()
   }
 
   closeModal(): void {
@@ -53,16 +56,15 @@ export class QuestionsModalComponent {
     this.ResetVariables()
   }
 
-  loadQuestions(): void {
-    this.questionService.GetQuestionsByFormId(this.formId).subscribe({
-      next: (data) => {
-        this.questions = data;
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
-    });
+  async loadQuestions(): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.questionService.GetQuestionsByFormId(this.formId))
+      this.questions = data
+    } catch (error) {
+      const httpError = error as HttpErrorResponse
+      if (httpError.status == 401)
+        this.CookieService.notifyCookieExpired()
+    }
   }
 
   openCheckAnswersModal() {
@@ -72,17 +74,6 @@ export class QuestionsModalComponent {
   openQuestionsCreateModal() {
     this.questionsCreateModal.formId = this.formId
     this.questionsCreateModal.openModal();
-  }
-
-  openUpdateModal(id: number, questionContent: string): void {
-    this.updateModalComponent.id = id
-    this.updateModalComponent.name = questionContent
-    this.updateModalComponent.openModal();
-  }
-
-  openDeleteModal(id: number): void {
-    this.deleteModalComponent.id = id
-    this.deleteModalComponent.openModal();
   }
 
   ValidSelects(): boolean {
