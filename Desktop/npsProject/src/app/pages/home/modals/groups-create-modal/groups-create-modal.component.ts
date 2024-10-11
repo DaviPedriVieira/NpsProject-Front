@@ -15,7 +15,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class GroupsCreateModalComponent {
   @ViewChild('createGroupsModal') formsmodal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
-  @Output() groupCreated = new EventEmitter()
   newGroup: FormsGroupModel = { id: 0, name: '', forms: [] };
   invalidInputs: boolean = false;
   errorMessage: string = ''
@@ -96,7 +95,6 @@ export class GroupsCreateModalComponent {
     this.formsGroupService.CreateFormsGroup(this.newGroup).subscribe({
       next: () => {
         this.closeModal()
-        this.groupCreated.emit()
         this.sucessfulMessageModal.openModal()
       },
       error: (error: HttpErrorResponse) => {

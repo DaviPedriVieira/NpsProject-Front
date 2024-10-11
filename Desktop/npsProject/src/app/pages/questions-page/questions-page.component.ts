@@ -17,21 +17,19 @@ export class QuestionsPageComponent {
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   @ViewChild(QuestionsCreateModalComponent) questionsCreateModal!: QuestionsCreateModalComponent;
   questions: QuestionModel[] = []
-  filteredQuestions: QuestionModel[] = []
   authorized: boolean = false
+  search: string = ''
 
   constructor(private questionsService: QuestionService, private loginService: LoginService, private CookieService: CookieService) {}
 
   async ngOnInit(): Promise<void> {
-    this.loginService.isAdmin().subscribe(data => {
-      this.authorized = data
-    });
+    this.loginService.isAdmin().subscribe(data => this.authorized = data);
 
     await this.loadQuestions()
 
     this.questionsService.questions$.subscribe(data => {
       this.questions = data,
-      this.filteredQuestions = data
+      this.filterQuestions(this.search)
     })
   }
   
@@ -39,7 +37,6 @@ export class QuestionsPageComponent {
     try {
       const data = await firstValueFrom(this.questionsService.GetQuestions())
       this.questions = data
-      this.filteredQuestions = data
     } catch (error) {
       const httpError = error as HttpErrorResponse
       if (httpError.status == 401)
@@ -49,12 +46,13 @@ export class QuestionsPageComponent {
 
   filterQuestions(search: string) {
     if(search) {
-      this.filteredQuestions = this.questions.filter(question => 
+      this.search = search
+      this.questions = this.questions.filter(question => 
         question.content.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       )    
     } 
     else {
-      this.filteredQuestions = this.questions
+      this.questionsService.questions$.subscribe(data => this.questions = data)
     }
   }
 

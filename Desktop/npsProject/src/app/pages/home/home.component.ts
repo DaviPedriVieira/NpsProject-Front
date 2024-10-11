@@ -16,8 +16,7 @@ import { firstValueFrom } from 'rxjs';
 export class HomeComponent {
   @ViewChild(GroupsCreateModalComponent) groupsCreateModal!: GroupsCreateModalComponent;
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
-  formsGroups: FormsGroupModel[] = [];
-  filteredGroups: FormsGroupModel[] = [];
+  groups: FormsGroupModel[] = [];
   authorized!: boolean;
   search: string = ''
 
@@ -31,8 +30,7 @@ export class HomeComponent {
     await this.loadFormsGroups();
 
     this.formsGroupService.formsGroups$.subscribe(data => {
-      this.formsGroups = data
-      this.filteredGroups = data
+      this.groups = data
       this.filterGroups(this.search)
     })
   }
@@ -40,8 +38,7 @@ export class HomeComponent {
   async loadFormsGroups(): Promise<void> {
     try {
       const data = await firstValueFrom(this.formsGroupService.GetFormsGroups())
-      this.formsGroups = data
-      this.filteredGroups = data
+      this.groups = data
     } catch (error) {
       const httpError = error as HttpErrorResponse
       if (httpError.status == 401)
@@ -52,12 +49,12 @@ export class HomeComponent {
   filterGroups(search: string) {
     if (search) {
       this.search = search
-      this.filteredGroups = this.formsGroups.filter(group =>
+      this.groups = this.groups.filter(group =>
         group.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       )
     }
     else {
-      this.filteredGroups = this.formsGroups
+      this.formsGroupService.formsGroups$.subscribe(data => this.groups = data )
     }
   }
 

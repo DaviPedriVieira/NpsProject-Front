@@ -10,29 +10,29 @@ import { NpsService } from 'src/app/services/nps-service/nps.service';
   templateUrl: './nps.component.html',
   styleUrls: ['./nps.component.scss']
 })
-export class NpsComponent implements OnInit{
+export class NpsComponent implements OnInit {
   @ViewChild('pointer') pointer!: ElementRef<HTMLImageElement>;
   npsScore: number = 0;
   authorized: boolean = false
 
-  constructor(private loginService: LoginService, private router: Router, private CookieService: CookieService, private npsService: NpsService) {}
-  
+  constructor(private loginService: LoginService, private router: Router, private CookieService: CookieService, private npsService: NpsService) { }
+
   ngOnInit(): void {
     this.loginService.isAdmin().subscribe({
       next: data => {
         this.authorized = data
-        if(!data) {
-          localStorage.setItem('LastRoute', '/home')
+        if (data) {
+          this.GetNps()
+        } else[
+          localStorage.setItem('LastRoute', '/home'),
           this.router.navigate(['/home'])
-        }
+        ]
       },
       error: error => {
-        if(error.status == 401)
+        if (error.status == 401)
           this.CookieService.notifyCookieExpired()
       }
     })
-
-    this.GetNps()
   }
 
   GetNps() {

@@ -12,6 +12,7 @@ export class AuthGuardGuard implements CanActivate {
     if(localStorage.getItem('Username') != null){
       return true;
     } else {
+      console.log(state.url)
       localStorage.setItem('LastRoute', state.url)
       this.router.navigate(['/login']);
       return false;

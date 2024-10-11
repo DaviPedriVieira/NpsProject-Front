@@ -15,7 +15,6 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 export class QuestionsCreateModalComponent {
   @ViewChild('createQuestionsModal') createQuestionsModal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
-  @Output() questionCreated = new EventEmitter()
   @Input() formId!: number;
   forms: FormModel[] = []
   newQuestions: QuestionModel[] = [];
@@ -103,7 +102,6 @@ export class QuestionsCreateModalComponent {
 
     this.questionsService.CreateQuestion(this.newQuestions).subscribe({
       next: () => {
-        this.questionCreated.emit()
         this.sucessfulMessageModal.openModal()
         this.closeModal()
       },

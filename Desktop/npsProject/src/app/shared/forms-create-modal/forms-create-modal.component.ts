@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
@@ -16,7 +16,6 @@ import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message
 export class FormsCreateModalComponent {
   @ViewChild('createFormsModal') createFormsModal!: ElementRef<HTMLDialogElement>
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent
-  @Output() formCreated = new EventEmitter()
   @Input() groupId!: number;
   newForm: FormModel = { id: 0, groupId: 0, name: '', questions: [] }
   groups: FormsGroupModel[] = [];
@@ -110,7 +109,6 @@ export class FormsCreateModalComponent {
     this.formsService.CreateForm(this.newForm).subscribe({
       next: () => {
         this.closeModal()
-        this.formCreated.emit()
         this.sucessfulMessageModal.openModal()
       },
       error: (error: HttpErrorResponse) => {

@@ -7,11 +7,11 @@
         <h2>Formulários do grupo {{ groupName }}</h2>
         <app-search-component (itemSearched)="filterForms($event)"></app-search-component>
     </div>
-    <div *ngIf="filteredForms.length == 0" class="no-items-message">
+    <div *ngIf="forms.length == 0" class="no-items-message">
         Nenhum formulário encontrado.
     </div>
     <div id="forms-container">
-        <div *ngFor="let form of filteredForms">
+        <div *ngFor="let form of forms">
             <app-item-box [itemName]="form.name" [itemId]="form.id" [itemType]="'form'"></app-item-box>
         </div>
     </div>
@@ -19,5 +19,5 @@
         <button class="close-modal-btn" (click)="closeModal()">Fechar</button>
     </div>
 </dialog>
-<app-forms-create-modal (formCreated)="loadForms()"></app-forms-create-modal>
+<app-forms-create-modal></app-forms-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

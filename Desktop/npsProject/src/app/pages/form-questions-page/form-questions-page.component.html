@@ -16,9 +16,7 @@
         </div>
         <div class="error" *ngIf="invalidInputs">Todos as perguntas são obrigatórias!</div>
         <div id="allign-buttons-div">
-            <div class="buttons-div-center">
-                <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="form.questions.length > 0">Enviar</button>
-            </div>
+            <button class="confirm-btn" (click)="PopulateAnswers()" *ngIf="form.questions.length > 0">Enviar</button>
         </div>
         <div class="no-items-message" *ngIf="form.questions.length == 0">
             Não há perguntas cadastradas neste formulário

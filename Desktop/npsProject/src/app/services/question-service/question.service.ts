@@ -18,13 +18,13 @@ export class QuestionService extends BaseService<QuestionModel>{
 
   GetQuestions(): Observable<QuestionModel[]> {
     return this.Get(this.basePath).pipe(
-      tap(questions => this.questionsSubject.next(questions))
+      tap((questions) => this.questionsSubject.next(questions))
     )
   }
 
   GetQuestionsByFormId(formId: number): Observable<QuestionModel[]> {
     return this.GetByFatherId(`${this.basePath}/Form`, formId).pipe(
-      tap(questions => this.questionsSubject.next(questions))
+      tap((questions) => this.questionsSubject.next(questions))
     )
   }
 
@@ -33,7 +33,12 @@ export class QuestionService extends BaseService<QuestionModel>{
   }
 
   CreateQuestion(questions: QuestionModel[]): Observable<QuestionModel[]> {
-    return this.BulkCreate(this.basePath, questions)
+    return this.BulkCreate(this.basePath, questions).pipe(
+      tap((newQuestions) => {
+        this.questionsSubject.value.push(...newQuestions)
+        this.questionsSubject.next(this.questionsSubject.value)
+      })
+    )
   }
 
   DeleteQuestion(id: number): Observable<boolean> {

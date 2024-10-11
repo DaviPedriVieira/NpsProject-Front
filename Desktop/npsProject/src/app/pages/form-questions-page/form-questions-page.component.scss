@@ -20,28 +20,6 @@ h1 {
     gap: 10px;
 }
 
-.questions-div {
-    height: 180px;
-    width: 220px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: flex-end;
-    border-radius: 1rem;
-    background-color: white;
-    border: 1px solid gray;
-    position: relative;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-}
-
-.questions-div:hover {
-    border: 1px solid black;
-    transition: 0.3s;
-    transform: scale(1.02);
-}
-
 select {
     width: 100%;
     height: 30px;
@@ -78,10 +56,4 @@ select {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.buttons-div-center {
-    width: 100%;
-    justify-content: center;
-    margin-left: 0;
 }

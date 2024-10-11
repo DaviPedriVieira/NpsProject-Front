@@ -9,15 +9,15 @@
             <h1>Formulários</h1>
             <app-search-component (itemSearched)="filterForms($event)"></app-search-component>
         </div>
-        <div class="no-items-message" *ngIf="filteredForms.length == 0">
+        <div class="no-items-message" *ngIf="forms.length == 0">
             Nenhum formulário encontrado
         </div>
         <div id="forms-container">
-            <div *ngFor="let form of filteredForms">
+            <div *ngFor="let form of forms">
                 <app-item-box [itemName]="form.name" [itemId]="form.id" [itemType]="'form'"></app-item-box>
             </div>
         </div>
     </div>
 </main>
-<app-forms-create-modal (formCreated)="loadForms()"></app-forms-create-modal>
+<app-forms-create-modal></app-forms-create-modal>
 <app-check-answers-modal></app-check-answers-modal>

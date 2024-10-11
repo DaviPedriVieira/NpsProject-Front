@@ -17,7 +17,6 @@ export class FormsPageComponent implements OnInit{
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
   forms: FormModel[] = []
-  filteredForms: FormModel[] = []
   authorized: boolean = false
   search: string = ''
 
@@ -32,7 +31,7 @@ export class FormsPageComponent implements OnInit{
   
     this.formsService.forms$.subscribe(data => [
       this.forms = data,
-      this.filteredForms = data
+      this.filterForms(this.search)
     ])
   }
   
@@ -40,7 +39,6 @@ export class FormsPageComponent implements OnInit{
     try {
       const data = await firstValueFrom(this.formsService.GetForms())
       this.forms = data
-      this.filteredForms = data
     } catch (error) {
       const httpError = error as HttpErrorResponse
       if (httpError.status == 401)
@@ -51,12 +49,12 @@ export class FormsPageComponent implements OnInit{
   filterForms(search: string) {
     if(search) {
       this.search = search
-      this.filteredForms = this.forms.filter(form => 
+      this.forms = this.forms.filter(form => 
         form.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       )    
     } 
     else {
-      this.filteredForms = this.forms
+      this.formsService.forms$.subscribe(data => this.forms = data)
     }
   }
 

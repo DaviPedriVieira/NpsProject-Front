@@ -7,7 +7,7 @@ import { BaseService } from '../base-service/base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class FormService extends BaseService<FormModel>{
+export class FormService extends BaseService<FormModel> {
   basePath: string = '/Forms'
   private formsSubject = new BehaviorSubject<FormModel[]>([])
   forms$ = this.formsSubject.asObservable()
@@ -33,14 +33,19 @@ export class FormService extends BaseService<FormModel>{
   }
 
   CreateForm(form: FormModel): Observable<FormModel> {
-    return this.Create(this.basePath, form)
+    return this.Create(this.basePath, form).pipe(
+      tap((newForm) => {
+        this.formsSubject.value.push(newForm)
+        this.formsSubject.next(this.formsSubject.value)
+      })
+    )
   }
 
   DeleteForm(id: number): Observable<boolean> {
     return this.Delete(this.basePath, id).pipe(
       tap(() => {
         const forms = this.formsSubject.value.filter(form => form.id != id)
-        this.formsSubject.next(forms)  
+        this.formsSubject.next(forms)
       })
     )
   }
@@ -48,8 +53,8 @@ export class FormService extends BaseService<FormModel>{
   UpdateForm(id: number, newName: string): Observable<boolean> {
     return this.Update(this.basePath, id, newName).pipe(
       tap(() => {
-        const forms = this.formsSubject.value.map(form => 
-          form.id == id ? {...form, name: newName} : form
+        const forms = this.formsSubject.value.map(form =>
+          form.id == id ? { ...form, name: newName } : form
         )
         this.formsSubject.next(forms)
       })

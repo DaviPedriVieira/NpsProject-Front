@@ -8,10 +8,9 @@ import { LoginService } from '../login-service/login.service';
 })
 export class CookieService {
   private cookieExpired = new Subject<void>();
+  cookieExpired$ = this.cookieExpired.asObservable();
 
   constructor(private router: Router, private loginService: LoginService) {}
-
-  cookieExpired$ = this.cookieExpired.asObservable();
 
   notifyCookieExpired() {
     this.loginService.logout()

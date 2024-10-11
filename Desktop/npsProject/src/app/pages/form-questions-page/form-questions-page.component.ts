@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerModel } from 'src/app/interfaces/answer';
-import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';

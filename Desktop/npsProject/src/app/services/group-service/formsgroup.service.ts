@@ -27,7 +27,12 @@ export class FormsGroupService extends BaseService<FormsGroupModel>{
   }
 
   CreateFormsGroup(group: FormsGroupModel): Observable<FormsGroupModel> {
-    return this.Create(this.basePath, group)
+    return this.Create(this.basePath, group).pipe(
+      tap((newGroup) => {
+        this.formsGroupsSubject.value.push(newGroup)
+        this.formsGroupsSubject.next(this.formsGroupsSubject.value)
+      })
+    )
   }
 
   DeleteFormsGroup(id: number): Observable<boolean> {

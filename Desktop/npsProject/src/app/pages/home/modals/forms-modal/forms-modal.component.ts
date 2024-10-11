@@ -1,9 +1,6 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormModel } from 'src/app/interfaces/form';
-import { DeleteModalComponent } from 'src/app/shared/delete-modal/delete-modal.component';
-import { UpdateModalComponent } from 'src/app/shared/update-modal/update-modal.component';
-import { QuestionsModalComponent } from '../../../../shared/questions-modal/questions-modal.component';
 import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login-service/login.service';
@@ -25,7 +22,6 @@ export class FormsModalComponent {
   @Input() groupId!: number;
   @Input() groupName!: string;
   forms: FormModel[] = [];
-  filteredForms: FormModel[] = [];
   authorized!: boolean;
   search: string = ''
 
@@ -40,7 +36,7 @@ export class FormsModalComponent {
 
     this.formService.forms$.subscribe(data => {
       this.forms = data
-      this.filteredForms = data
+      this.filterForms(this.search)
     })
 
     this.formsmodal.nativeElement.showModal();
@@ -55,7 +51,6 @@ export class FormsModalComponent {
     try {
       const data = await firstValueFrom(this.formService.GetFormsByGroupId(this.groupId))
       this.forms = data
-      this.filteredForms = data
     } catch (error) {
       const httpError = error as HttpErrorResponse
       if (httpError.status == 401)
@@ -66,12 +61,12 @@ export class FormsModalComponent {
   filterForms(search: string) {
     if(search) {
       this.search = search
-      this.filteredForms = this.forms.filter(form => 
+      this.forms = this.forms.filter(form => 
         form.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       )    
     } 
     else {
-      this.filteredForms = this.forms
+      this.formService.forms$.subscribe(data => this.forms = data)
     }
   }
 

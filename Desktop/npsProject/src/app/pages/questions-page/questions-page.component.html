@@ -10,7 +10,7 @@
             <app-search-component (itemSearched)="filterQuestions($event)"></app-search-component>
         </div>
         <div id="questions-container">
-            <div *ngFor="let question of filteredQuestions">
+            <div *ngFor="let question of questions">
                 <app-item-box [itemName]="question.content" [itemId]="question.id" [itemType]="'question'"></app-item-box>
             </div>
         </div>
@@ -19,5 +19,5 @@
         </div>
     </div>
 </main>
-<app-questions-create-modal (questionCreated)="loadQuestions()"></app-questions-create-modal>
+<app-questions-create-modal></app-questions-create-modal>
 <app-check-answers-modal></app-check-answers-modal>
