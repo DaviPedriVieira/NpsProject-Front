@@ -18,7 +18,7 @@ export class ItemBoxComponent implements OnInit {
   @Input() itemId!: number
   @Input() itemName!: string
   @Input() itemType!: string
-  authorized!: boolean
+  protected authorized!: boolean
 
   constructor(private loginService: LoginService) { }
 
@@ -28,7 +28,7 @@ export class ItemBoxComponent implements OnInit {
     })
   }
 
-  openItemModal() {
+  openItemModal(): void {
     switch (this.itemType) {
       case 'group':
         this.openFormsModal()

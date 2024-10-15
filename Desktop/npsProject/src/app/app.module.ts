@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './pages/sign-in-page/sign-in.component';
@@ -26,6 +26,8 @@ import { CommonModule } from '@angular/common';
 import { FormsPageComponent } from './pages/forms-page/forms-page.component';
 import { QuestionsPageComponent } from './pages/questions-page/questions-page.component';
 import { ItemBoxComponent } from './shared/item-box/item-box.component';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
+import { ItemsContainerHeaderComponent } from './shared/items-container-header/items-container-header.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { ItemBoxComponent } from './shared/item-box/item-box.component';
     FormsPageComponent,
     QuestionsPageComponent,
     ItemBoxComponent,
+    ItemsContainerHeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,7 @@ import { ItemBoxComponent } from './shared/item-box/item-box.component';
     HttpClientModule,
     CommonModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

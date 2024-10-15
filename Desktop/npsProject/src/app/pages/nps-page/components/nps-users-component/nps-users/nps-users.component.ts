@@ -8,7 +8,6 @@ import { UserService } from 'src/app/services/user-service/user.service';
   styleUrls: ['./nps-users.component.scss']
 })
 export class NpsUsersComponent implements OnInit {
-
   promoters: UserModel[] = []
   passives: UserModel[] = []
   detractors: UserModel[] = []

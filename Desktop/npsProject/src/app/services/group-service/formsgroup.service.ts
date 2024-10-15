@@ -2,32 +2,29 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormsGroupModel } from '../../interfaces/forms-group';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormsGroupService extends BaseService<FormsGroupModel>{
+export class FormsGroupService {
   basePath: string = '/FormsGroups'
   private formsGroupsSubject = new BehaviorSubject<FormsGroupModel[]>([])
   formsGroups$ = this.formsGroupsSubject.asObservable()
 
-  constructor(http: HttpClient) {
-    super(http);
-  }
+  constructor(private http: HttpClient) {}
 
   GetFormsGroups(): Observable<FormsGroupModel[]> {
-    return this.Get(this.basePath).pipe(
+    return this.http.get<FormsGroupModel[]>(this.basePath).pipe(
       tap(groups => this.formsGroupsSubject.next(groups))
     )
   }
 
   GetFormsGroupById(id: number): Observable<FormsGroupModel> {
-    return this.GetById(this.basePath, id)
+    return this.http.get<FormsGroupModel>(`${this.basePath}/${id}`)
   }
 
   CreateFormsGroup(group: FormsGroupModel): Observable<FormsGroupModel> {
-    return this.Create(this.basePath, group).pipe(
+    return this.http.post<FormsGroupModel>(this.basePath, group).pipe(
       tap((newGroup) => {
         this.formsGroupsSubject.value.push(newGroup)
         this.formsGroupsSubject.next(this.formsGroupsSubject.value)
@@ -36,7 +33,7 @@ export class FormsGroupService extends BaseService<FormsGroupModel>{
   }
 
   DeleteFormsGroup(id: number): Observable<boolean> {
-    return this.Delete(this.basePath, id).pipe(
+    return this.http.delete<boolean>(`${this.basePath}/${id}`).pipe(
       tap(() => {
         const groups = this.formsGroupsSubject.value.filter(group => group.id != id)
         this.formsGroupsSubject.next(groups)
@@ -45,7 +42,7 @@ export class FormsGroupService extends BaseService<FormsGroupModel>{
   }
 
   UpdateFormsGroup(id: number, newName: string): Observable<boolean> {
-    return this.Update(this.basePath, id, newName).pipe(
+    return this.http.put<boolean>(`${this.basePath}/${id}?newName=${newName}`, null).pipe(
       tap(() => {
         const groups = this.formsGroupsSubject.value.map(group => 
           group.id == id ? {...group, name: newName} : group

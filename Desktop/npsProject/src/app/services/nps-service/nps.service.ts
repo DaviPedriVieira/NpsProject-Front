@@ -1,20 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NpsService extends BaseService<number>{
+export class NpsService {
   
   basePath: string = '/Nps'
 
-  constructor(http: HttpClient) {
-    super(http)
-  }
+  constructor(private http: HttpClient) {}
 
   GetNpsScore(): Observable<number> {
-    return this.GetScore(this.basePath)
+    return this.http.get<number>(this.basePath)
   }
 }

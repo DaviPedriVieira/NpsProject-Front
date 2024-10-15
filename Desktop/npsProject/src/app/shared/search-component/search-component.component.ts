@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
@@ -7,7 +7,6 @@ import { debounceTime, Subject } from 'rxjs';
   styleUrls: ['./search-component.component.scss']
 })
 export class SearchComponentComponent {
-  @ViewChild('searchInput') searchInput!: ElementRef
   @Output() itemSearched = new EventEmitter<string>();
   searched = new Subject<string>()
 
@@ -18,14 +17,9 @@ export class SearchComponentComponent {
       this.itemSearched.emit(value)
     })
   }
-  
-  resetSearch() {
-    this.searchInput.nativeElement.value = ''
-  }
 
-  OnInputChange(changed: Event) {
+  OnInputChange(changed: Event): void {
     const input = changed.target as HTMLInputElement
-    const value = input.value.trim()
-    this.searched.next(value)
+    this.searched.next(input.value.trim())
   }
 }

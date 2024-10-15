@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { CheckAnswersModalComponent } from '../../shared/check-answers-modal/check-answers-modal.component';
 import { FormsCreateModalComponent } from '../../shared/forms-create-modal/forms-create-modal.component';
 import { firstValueFrom } from 'rxjs';
@@ -18,9 +16,9 @@ export class FormsPageComponent implements OnInit{
   @ViewChild(FormsCreateModalComponent) formsCreateModal!: FormsCreateModalComponent;
   forms: FormModel[] = []
   authorized: boolean = false
-  search: string = ''
+  protected search: string = ''
 
-  constructor(private formsService: FormService, private loginService: LoginService, private CookieService: CookieService) {}
+  constructor(private formsService: FormService, private loginService: LoginService) {}
 
   async ngOnInit(): Promise<void> {
     this.loginService.isAdmin().subscribe(data => {
@@ -36,17 +34,11 @@ export class FormsPageComponent implements OnInit{
   }
   
   async loadForms(): Promise<void> {
-    try {
-      const data = await firstValueFrom(this.formsService.GetForms())
-      this.forms = data
-    } catch (error) {
-      const httpError = error as HttpErrorResponse
-      if (httpError.status == 401)
-        this.CookieService.notifyCookieExpired()
-    }
+    const data = await firstValueFrom(this.formsService.GetForms())
+    this.forms = data
   }
 
-  filterForms(search: string) {
+  filterForms(search: string): void {
     if(search) {
       this.search = search
       this.forms = this.forms.filter(form => 
@@ -58,11 +50,11 @@ export class FormsPageComponent implements OnInit{
     }
   }
 
-  openFormsCreateModal() {
+  openFormsCreateModal(): void {
     this.formsCreateModal.openModal()
   }
 
-  openCheckAnswersModal() {
+  openCheckAnswersModal(): void {
     this.checkAnswersModal.openModal();
   }
 }

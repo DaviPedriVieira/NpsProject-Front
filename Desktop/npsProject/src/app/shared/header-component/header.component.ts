@@ -8,7 +8,7 @@ import { LoginService } from 'src/app/services/login-service/login.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  authorized: boolean = false;
+  protected authorized: boolean = false;
   nome: string = ''
 
   constructor(private loginService: LoginService, private router: Router) {}

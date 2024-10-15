@@ -1,10 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { QuestionsCreateModalComponent } from '../questions-create-modal/questions-create-modal.component';
@@ -23,7 +21,7 @@ export class QuestionsModalComponent {
   @ViewChild(CheckAnswersModalComponent) checkAnswersModal!: CheckAnswersModalComponent;
   @Input() formId!: number;
   @Input() formName!: string;
-  authorized!: boolean;
+  protected authorized!: boolean;
   questions: QuestionModel[] = [];
   selectedGrades: number[] = [];
   descriptions: string[] = [];
@@ -32,8 +30,7 @@ export class QuestionsModalComponent {
 
   constructor(
     private questionService: QuestionService,
-    private answersService: AnswerService, 
-    private CookieService: CookieService,
+    private answersService: AnswerService,
     private loginService: LoginService
   ) { }
 
@@ -47,7 +44,7 @@ export class QuestionsModalComponent {
     this.questionService.questions$.subscribe(data => {
       this.questions = data
     })
-    
+
     this.formsmodal.nativeElement.showModal();
   }
 
@@ -57,43 +54,37 @@ export class QuestionsModalComponent {
   }
 
   async loadQuestions(): Promise<void> {
-    try {
-      const data = await firstValueFrom(this.questionService.GetQuestionsByFormId(this.formId))
-      this.questions = data
-    } catch (error) {
-      const httpError = error as HttpErrorResponse
-      if (httpError.status == 401)
-        this.CookieService.notifyCookieExpired()
-    }
+    const data = await firstValueFrom(this.questionService.GetQuestionsByFormId(this.formId))
+    this.questions = data
   }
 
-  openCheckAnswersModal() {
+  openCheckAnswersModal(): void {
     this.checkAnswersModal.openModal()
   }
-  
-  openQuestionsCreateModal() {
+
+  openQuestionsCreateModal(): void {
     this.questionsCreateModal.formId = this.formId
     this.questionsCreateModal.openModal();
   }
 
-  ValidSelects(): boolean {
+  InvalidSelects(): boolean {
     for (let i = 0; i < this.questions.length; i++) {
       if (this.selectedGrades[i] == null) {
         this.errorMessage = 'Todas as perguntas são obrigatórias!'
-        return false
+        return true
       }
 
       if (this.descriptions[i] && this.descriptions[i].length > 200) {
         this.errorMessage = 'As descrições tem limite de 200 caracteres!'
-        return false
+        return true
       }
     }
 
-    return true
+    return false
   }
 
   PopulateAnswers(): void {
-    if (!this.ValidSelects()) {
+    if (this.InvalidSelects()) {
       this.invalidInputs = true;
       return
     }
@@ -107,16 +98,9 @@ export class QuestionsModalComponent {
   }
 
   SubmitAnswers(answers: AnswerModel[]): void {
-    this.answersService.SubmitAnswers(answers).subscribe({
-      next: () => {
-        this.closeModal()
-        this.sucessfulMessageModalComponent.openModal();
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log(error.status)
-        if (error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.answersService.SubmitAnswers(answers).subscribe(() => {
+      this.closeModal()
+      this.sucessfulMessageModalComponent.openModal();
     });
   }
 

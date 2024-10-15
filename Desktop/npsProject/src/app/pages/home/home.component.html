@@ -1,14 +1,15 @@
 <app-header></app-header>
 <main>
     <div class="screen-main-container">
-        <div class="header">
+        <app-items-container-header [title]="'Grupos'" [itemType]="'group'" (itemSearched)="filterGroups($event)"></app-items-container-header>
+        <!-- <div class="header">
             <div class="create-container">
                 <button (click)="openGroupsCreateModal()" *ngIf="authorized">Criar grupo</button>
                 <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>
             </div>
             <h1>Grupos</h1>
             <app-search-component (itemSearched)="filterGroups($event)"></app-search-component>
-        </div>
+        </div> -->
         <div id="groups-container">
             <div *ngFor="let group of groups">
                 <app-item-box [itemName]="group.name" [itemId]="group.id" [itemType]="'group'"></app-item-box>

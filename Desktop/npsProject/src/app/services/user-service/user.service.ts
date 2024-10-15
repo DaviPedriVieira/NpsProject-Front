@@ -2,40 +2,37 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserModel } from 'src/app/interfaces/user';
-import { BaseService } from '../base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseService<UserModel>{
+export class UserService {
 
   basePath: string = '/Users'
 
-  constructor(http: HttpClient) {
-    super(http)
-  }
+  constructor(private http: HttpClient) {}
 
   CreateUser(newUser: UserModel): Observable<UserModel> {
-    return this.Create(this.basePath, newUser)
+    return this.http.post<UserModel>(this.basePath, newUser)
   }
   
   GetUsers(): Observable<UserModel[]> {
-    return this.Get(this.basePath)
+    return this.http.get<UserModel[]>(this.basePath)
   }
 
   GetUserById(id: number): Observable<UserModel> {
-    return this.GetById(this.basePath, id)
+    return this.http.get<UserModel>(`${this.basePath}/${id}`)
   }
 
   GetPromoters(): Observable<UserModel[]> {
-    return this.Get(`${this.basePath}/Promoters`)
+    return this.http.get<UserModel[]>(`${this.basePath}/Promoters`)
   }
 
   GetPassives(): Observable<UserModel[]> {
-    return this.Get(`${this.basePath}/Passives`)
+    return this.http.get<UserModel[]>(`${this.basePath}/Passives`)
   }
 
   GetDetractors(): Observable<UserModel[]> {
-    return this.Get(`${this.basePath}/Detractors`)
+    return this.http.get<UserModel[]>(`${this.basePath}/Detractors`)
   }
 }

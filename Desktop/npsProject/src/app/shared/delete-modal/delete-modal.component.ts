@@ -1,8 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 
 @Component({
@@ -19,7 +17,6 @@ export class DeleteModalComponent {
     private formsGroupService: FormsGroupService,
     private formsService: FormService,
     private questionService: QuestionService,
-    private CookieService: CookieService
   ) { }
 
   openModal(): void {
@@ -45,38 +42,20 @@ export class DeleteModalComponent {
   }
 
   DeleteGroup(): void {
-    this.formsGroupService.DeleteFormsGroup(this.id).subscribe({
-      next: () => {
-        this.closeModal()
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.formsGroupService.DeleteFormsGroup(this.id).subscribe(() => {
+      this.closeModal()
     });
   }
-  
+
   DeleteForm(): void {
-    this.formsService.DeleteForm(this.id).subscribe({
-      next: () => {
-        this.closeModal()
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.formsService.DeleteForm(this.id).subscribe(() => {
+      this.closeModal()
     });
   }
-  
+
   DeleteQuestion(): void {
-    this.questionService.DeleteQuestion(this.id).subscribe({
-      next: () => {
-        this.closeModal()
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.questionService.DeleteQuestion(this.id).subscribe(() => {
+      this.closeModal()
     });
   }
 }

@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { FormsGroupModel } from 'src/app/interfaces/forms-group';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
 @Component({
@@ -22,52 +20,40 @@ export class FormsCreateModalComponent {
   invalidInputs: boolean = false;
   errorMessage: string = ''
 
-  constructor(private formsGroupService: FormsGroupService, private formsService: FormService, private CookieService: CookieService) { }
+  constructor(private formsGroupService: FormsGroupService, private formsService: FormService) { }
 
-  openModal() {
+  openModal(): void {
     this.createFormsModal.nativeElement.showModal();
     this.GetGroups()
   }
 
-  closeModal() {
+  closeModal(): void {
     this.ResetVariables();
     this.createFormsModal.nativeElement.close();
   }
 
-  GetGroups() {
-    this.formsGroupService.formsGroups$.subscribe({
-      next: (data) => {
-        this.groups = data;
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+  GetGroups(): void {
+    this.formsGroupService.formsGroups$.subscribe(data => {
+      this.groups = data;
     });
 
-    if(this.groups.length == 0) {
-      this.formsGroupService.GetFormsGroups().subscribe({
-        next: (data) => {
-          this.groups = data;
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.CookieService.notifyCookieExpired()
-        }
+    if (this.groups.length == 0) {
+      this.formsGroupService.GetFormsGroups().subscribe(data => {
+        this.groups = data;
       })
     }
   }
 
-  CreateQuestion() {
-    const newQuestion: QuestionModel = {id: 0, formId: 0, content: ''}
+  CreateQuestion(): void {
+    const newQuestion: QuestionModel = { id: 0, formId: 0, content: '' }
     this.newForm.questions.push(newQuestion)
   }
 
-  DeleteQuestion(questionIndex: number) {
+  DeleteQuestion(questionIndex: number): void {
     this.newForm.questions.splice(questionIndex, 1)
   }
 
-  AreAnyEmptyInputs() {
+  AreAnyEmptyInputs(): boolean {
     if (this.groupId == undefined) {
       this.errorMessage = 'O grupo não pode ser vazio'
       return true
@@ -78,18 +64,18 @@ export class FormsCreateModalComponent {
       return true
     }
 
-    if (this.newForm.name.length > 50){
+    if (this.newForm.name.length > 50) {
       this.errorMessage = 'O nome do formulário tem limite de 50 caracteres!'
       return true
     }
 
     for (let question of this.newForm.questions) {
-      if (!question.content.trim()){
+      if (!question.content.trim()) {
         this.errorMessage = 'Nenhuma das perguntas podem ser vazias!'
         return true
       }
 
-      if (question.content.length > 150){
+      if (question.content.length > 150) {
         this.errorMessage = 'As perguntas tem limite de 150 caracteres!'
         return true
       }
@@ -98,7 +84,7 @@ export class FormsCreateModalComponent {
     return false;
   }
 
-  CreateForm() {
+  CreateForm(): void {
     if (this.AreAnyEmptyInputs()) {
       this.invalidInputs = true;
       return
@@ -106,19 +92,13 @@ export class FormsCreateModalComponent {
 
     this.newForm.groupId = this.groupId;
 
-    this.formsService.CreateForm(this.newForm).subscribe({
-      next: () => {
-        this.closeModal()
-        this.sucessfulMessageModal.openModal()
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 500)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.formsService.CreateForm(this.newForm).subscribe(() => {
+      this.closeModal();
+      this.sucessfulMessageModal.openModal();
     });
   }
 
-  ResetVariables() {
+  ResetVariables(): void {
     this.newForm = { id: 0, groupId: 0, name: '', questions: [] }
     this.invalidInputs = false;
   }

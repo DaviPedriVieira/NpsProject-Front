@@ -1,9 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormModel } from 'src/app/interfaces/form';
 import { QuestionModel } from 'src/app/interfaces/question';
 import { FormService } from 'src/app/services/form-service/form.service';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 
@@ -21,55 +19,42 @@ export class QuestionsCreateModalComponent {
   invalidInputs: boolean = false;
   errorMessage: string = ''
 
-  constructor(private formsService: FormService, private questionsService: QuestionService, private CookieService: CookieService) { }
+  constructor(private formsService: FormService, private questionsService: QuestionService) { }
 
-  openModal() {
+  openModal(): void {
     this.createQuestionsModal.nativeElement.showModal()
     this.GetForms()
     this.CreateQuestion()
   }
 
-  closeModal() {
+  closeModal(): void {
     this.invalidInputs = false
     this.newQuestions = [];
     this.createQuestionsModal.nativeElement.close()
   }
 
-  GetForms() {
-    this.formsService.forms$.subscribe({
-      next: (data) => {
+  GetForms(): void {
+    this.formsService.forms$.subscribe(data => {
         this.forms = data
-      },
-      error: (error) => {
-        const httpError = error as HttpErrorResponse
-        if (httpError.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
     })
 
     if(this.forms.length == 0){
-      this.formsService.GetForms().subscribe( {
-        next: (data) => {
+      this.formsService.GetForms().subscribe(data => {
           this.forms = data;
-        },
-        error: (error: HttpErrorResponse) => {
-          if(error.status == 401)
-            this.CookieService.notifyCookieExpired()
-        }
       })
     }
   }
 
-  CreateQuestion() {
+  CreateQuestion(): void {
     const newQuestion: QuestionModel = {id: 0, formId: 0, content: ''}
     this.newQuestions.push(newQuestion)
   }
 
-  DeleteQuestion(index: number) {
+  DeleteQuestion(index: number): void {
     this.newQuestions.splice(index, 1)
   }
 
-  AreAnyEmptyInputs() {
+  AreAnyEmptyInputs(): boolean {
     if (this.formId == undefined){
       this.errorMessage = 'O formulário não pode ser em branco!'
       return true
@@ -90,7 +75,7 @@ export class QuestionsCreateModalComponent {
     return false;
   }
 
-  SubmitQuestions() {
+  SubmitQuestions(): void {
     if (this.AreAnyEmptyInputs()) {
       this.invalidInputs = true;
       return
@@ -100,15 +85,9 @@ export class QuestionsCreateModalComponent {
       question.formId = this.formId
     }
 
-    this.questionsService.CreateQuestion(this.newQuestions).subscribe({
-      next: () => {
+    this.questionsService.CreateQuestion(this.newQuestions).subscribe(() => {
         this.sucessfulMessageModal.openModal()
         this.closeModal()
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
     });
   }
 }

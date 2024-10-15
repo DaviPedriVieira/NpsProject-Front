@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerModel } from 'src/app/interfaces/answer';
 import { AnswerService } from 'src/app/services/answer-service/answer.service';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 import { SucessfulMessageModalComponent } from 'src/app/shared/sucessful-message-modal/sucessful-message-modal.component';
 import { firstValueFrom } from 'rxjs';
@@ -18,18 +16,16 @@ import { FormModel } from 'src/app/interfaces/form';
 })
 export class FormQuestionsPageComponent implements OnInit {
   @ViewChild(SucessfulMessageModalComponent) sucessfulMessageModal!: SucessfulMessageModalComponent;
-  form: FormModel = {id: 0, name: '', groupId: 0, questions: []};
+  form: FormModel = { id: 0, name: '', groupId: 0, questions: [] };
   selectedGrades: number[] = [];
   descriptions: string[] = [];
   invalidInputs: boolean = false
-  authorized!: boolean;
-
+  protected authorized!: boolean;
 
   constructor(
     private formService: FormService,
     private questionService: QuestionService,
     private answersService: AnswerService,
-    private CookieService: CookieService,
     private route: ActivatedRoute,
     private loginService: LoginService,
   ) { }
@@ -46,7 +42,7 @@ export class FormQuestionsPageComponent implements OnInit {
 
     this.GetFormById()
     await this.GetQuestions()
-    
+
     this.questionService.questions$.subscribe(data => {
       this.form.questions = data
     })
@@ -54,23 +50,17 @@ export class FormQuestionsPageComponent implements OnInit {
   }
 
   async GetQuestions(): Promise<void> {
-    try {
-      const data = await firstValueFrom(this.questionService.GetQuestionsByFormId(this.form.id))
-      this.form.questions = data
-    } catch (error) {
-      const httpError = error as HttpErrorResponse
-      if (httpError.status == 401)
-        this.CookieService.notifyCookieExpired()
-    }
+    const data = await firstValueFrom(this.questionService.GetQuestionsByFormId(this.form.id))
+    this.form.questions = data
   }
 
-  GetFormById() {
+  GetFormById(): void {
     this.formService.GetFormById(this.form.id).subscribe(data => {
       this.form.name = data.name
     })
   }
 
-  openMessageModal() {
+  openMessageModal(): void {
     this.sucessfulMessageModal.navigateToHome = true
     this.sucessfulMessageModal.openModal()
   }
@@ -109,15 +99,9 @@ export class FormQuestionsPageComponent implements OnInit {
   }
 
   SubmitAnswers(answers: AnswerModel[]): void {
-    this.answersService.SubmitAnswers(answers).subscribe({
-      next: () => {
-        this.openMessageModal()
-        this.ResetVariables()
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.answersService.SubmitAnswers(answers).subscribe(() => {
+      this.openMessageModal()
+      this.ResetVariables()
     });
   }
 

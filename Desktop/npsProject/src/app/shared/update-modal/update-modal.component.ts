@@ -1,8 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormsGroupService } from 'src/app/services/group-service/formsgroup.service';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
 import { QuestionService } from 'src/app/services/question-service/question.service';
 
 @Component({
@@ -20,12 +18,11 @@ export class UpdateModalComponent {
 
   constructor(
     private formsGroupService: FormsGroupService,
-    private formsService: FormService, 
-    private questionService: QuestionService, 
-    private CookieService: CookieService
-  ) {}
+    private formsService: FormService,
+    private questionService: QuestionService,
+  ) { }
 
-  openModal() {
+  openModal(): void {
     this.updatemodal.nativeElement.showModal();
     setTimeout(() => {
       this.nameInput.nativeElement.focus()
@@ -33,17 +30,17 @@ export class UpdateModalComponent {
     })
   }
 
-  closeModal() {
+  closeModal(): void {
     this.invalidInput = false
     this.updatemodal.nativeElement.close();
   }
 
-  UpdateItem() {
-    if (!this.NameValidator(this.item)){
+  UpdateItem(): void {
+    if (!this.NameValidator(this.item)) {
       this.invalidInput = true
     }
-    
-    switch(this.item) {
+
+    switch (this.item) {
       case 'group':
         this.UpdateGroup()
         break
@@ -57,41 +54,23 @@ export class UpdateModalComponent {
   }
 
   UpdateGroup(): void {
-    this.formsGroupService.UpdateFormsGroup(this.id, this.name).subscribe({
-      next: () => {
-        this.closeModal()
-        this.name = '';
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.formsGroupService.UpdateFormsGroup(this.id, this.name).subscribe(() => {
+      this.closeModal()
+      this.name = '';
     });
   }
-  
+
   UpdateForm(): void {
-    this.formsService.UpdateForm(this.id, this.name).subscribe({
-      next: () => {
-        this.closeModal()
-        this.name = '';
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.formsService.UpdateForm(this.id, this.name).subscribe(() => {
+      this.closeModal()
+      this.name = '';
     });
   }
-  
+
   UpdateQuestion(): void {
-    this.questionService.UpdateQuestion(this.id, this.name).subscribe({
-      next: () => {
-        this.closeModal()
-        this.name = '';
-      },
-      error: (error: HttpErrorResponse) => {
-        if(error.status == 401)
-          this.CookieService.notifyCookieExpired()
-      }
+    this.questionService.UpdateQuestion(this.id, this.name).subscribe(() => {
+      this.closeModal()
+      this.name = '';
     });
   }
 
@@ -100,7 +79,7 @@ export class UpdateModalComponent {
       return false
     }
 
-    if(item == 'question' && this.name.length > 150)
+    if (item == 'question' && this.name.length > 150)
       return false
     else if (this.name.length > 50)
       return false

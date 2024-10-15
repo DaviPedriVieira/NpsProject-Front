@@ -1,12 +1,13 @@
 <dialog id="formsmodal" #formsmodal>
-    <div class="header">
+    <app-items-container-header [title]="'Formulários do grupo ' + groupName" [itemType]="'form'" (itemSearched)="filterForms($event)"></app-items-container-header>
+    <!-- <div class="header">
         <div class="create-container">
             <button type="button" (click)="openFormsCreateModal()" *ngIf="authorized">Criar formulário</button>
             <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>  
         </div>
         <h2>Formulários do grupo {{ groupName }}</h2>
         <app-search-component (itemSearched)="filterForms($event)"></app-search-component>
-    </div>
+    </div> -->
     <div *ngIf="forms.length == 0" class="no-items-message">
         Nenhum formulário encontrado.
     </div>

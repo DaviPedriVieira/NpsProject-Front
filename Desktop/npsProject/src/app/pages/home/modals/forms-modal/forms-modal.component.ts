@@ -1,8 +1,6 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/services/form-service/form.service';
 import { FormModel } from 'src/app/interfaces/form';
-import { CookieService } from 'src/app/services/cookie-service/cookie.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { FormsCreateModalComponent } from '../../../../shared/forms-create-modal/forms-create-modal.component';
 import { CheckAnswersModalComponent } from '../../../../shared/check-answers-modal/check-answers-modal.component';
@@ -22,16 +20,16 @@ export class FormsModalComponent {
   @Input() groupId!: number;
   @Input() groupName!: string;
   forms: FormModel[] = [];
-  authorized!: boolean;
   search: string = ''
+  protected authorized!: boolean;
 
-  constructor(private formService: FormService, private CookieService: CookieService, private loginService: LoginService) { }
+  constructor(private formService: FormService, private loginService: LoginService) { }
 
   async openModal(): Promise<void> {
     this.loginService.isAdmin().subscribe(data => {
       this.authorized = data
     });
-    
+
     await this.loadForms()
 
     this.formService.forms$.subscribe(data => {
@@ -41,40 +39,33 @@ export class FormsModalComponent {
 
     this.formsmodal.nativeElement.showModal();
   }
-  
+
   closeModal(): void {
-    this.SearchComponent.resetSearch()
     this.formsmodal.nativeElement.close();
   }
-  
+
   async loadForms(): Promise<void> {
-    try {
-      const data = await firstValueFrom(this.formService.GetFormsByGroupId(this.groupId))
-      this.forms = data
-    } catch (error) {
-      const httpError = error as HttpErrorResponse
-      if (httpError.status == 401)
-        this.CookieService.notifyCookieExpired()
-    }
+    const data = await firstValueFrom(this.formService.GetFormsByGroupId(this.groupId))
+    this.forms = data
   }
 
-  filterForms(search: string) {
-    if(search) {
+  filterForms(search: string): void {
+    if (search) {
       this.search = search
-      this.forms = this.forms.filter(form => 
+      this.forms = this.forms.filter(form =>
         form.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-      )    
-    } 
+      )
+    }
     else {
       this.formService.forms$.subscribe(data => this.forms = data)
     }
   }
 
-  openCheckAnswersModal() {
+  openCheckAnswersModal(): void {
     this.checkAnswersModal.openModal();
   }
 
-  openFormsCreateModal() {
+  openFormsCreateModal(): void {
     this.formsCreateModal.groupId = this.groupId
     this.formsCreateModal.openModal();
   }

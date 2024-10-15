@@ -13,11 +13,11 @@ export class SucessfulMessageModalComponent {
 
   constructor(private router: Router) {}
 
-  openModal() {
+  openModal(): void {
     this.sucessfulMessageModal.nativeElement.showModal();
   }
 
-  closeModal() {
+  closeModal(): void {
     this.sucessfulMessageModal.nativeElement.close();
     
     if(this.navigateToHome){

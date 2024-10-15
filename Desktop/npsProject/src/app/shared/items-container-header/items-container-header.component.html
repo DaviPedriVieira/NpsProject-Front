@@ -1,0 +1,17 @@
+<div class="header">
+    <div class="create-container">
+        <button (click)="openGroupsCreateModal()" *ngIf="authorized && itemType == 'group'">Criar grupo</button>
+        <button (click)="openFormsCreateModal()" *ngIf="authorized && itemType == 'form'">Criar formulário</button>
+        <button (click)="openQuestionsCreateModal()" *ngIf="authorized && itemType == 'question'">Criar pergunta</button>
+        <button (click)="openCheckAnswersModal()" *ngIf="authorized">Consultar respostas</button>
+    </div>
+    <h2>{{ title }}</h2>
+    <div id="input-div">
+        <input type="text" #searchInput (input)="OnInputChange($event)" placeholder="Busque aqui...">
+        <span class="material-symbols-outlined">search</span>
+    </div>
+</div>
+<app-groups-create-modal></app-groups-create-modal>
+<app-forms-create-modal></app-forms-create-modal>
+<app-questions-create-modal></app-questions-create-modal>
+<app-check-answers-modal></app-check-answers-modal>

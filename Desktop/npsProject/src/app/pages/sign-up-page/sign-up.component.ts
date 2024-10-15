@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit{
     })
   }
 
-  openMessageModal() {
+  openMessageModal(): void {
     this.sucessfulMessageDialog.navigateToHome = true
     this.sucessfulMessageDialog.openModal()
   }
